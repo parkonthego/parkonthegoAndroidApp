@@ -1,9 +1,16 @@
 package edu.scu.smurali.parkonthego;
 
+import android.*;
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
+import android.util.Log;
 
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -15,6 +22,8 @@ import com.google.android.gms.maps.model.MarkerOptions;
 public class Locations_on_map extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
+    public final int permissions = 100;
+    int counter = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +33,23 @@ public class Locations_on_map extends FragmentActivity implements OnMapReadyCall
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) !=
+                PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            ActivityCompat.requestPermissions(Locations_on_map.this,
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION,
+                            Manifest.permission.ACCESS_COARSE_LOCATION},
+                    permissions);
+
+
+
+        }
     }
 
 
@@ -40,21 +66,46 @@ public class Locations_on_map extends FragmentActivity implements OnMapReadyCall
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
+
         // Add a marker in Sydney and move the camera
         LatLng sydney = new LatLng(-34, 151);
-        LatLng santaclarauniversity = new LatLng(37.3496,-121.9390);
-        LatLng lafayette = new LatLng(37.347562,-121.932221);
+        LatLng santaclarauniversity = new LatLng(37.3496, -121.9390);
+        LatLng lafayette = new LatLng(37.347562, -121.932221);
 
         mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(santaclarauniversity));
         mMap.addMarker(new MarkerOptions().position(santaclarauniversity).title("Marker in scu"));
         mMap.addMarker(new MarkerOptions().position(lafayette).title("Marker in domicilio"));
 
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(santaclarauniversity));
 
-        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+        mapAnimationToLocation(santaclarauniversity);
+
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(santaclarauniversity));
+        try {
+            mMap.setMyLocationEnabled(true);
+        }
+        catch (SecurityException $ex){
+            Log.d("Location permission*S", "onMapReady:Permission not given ");
+
+        }
+            mMap.getUiSettings().setMyLocationButtonEnabled(true);
+
+
+
+
+
+
+
+
+
+
+
+
+
+        mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
             @Override
-            public boolean onMarkerClick(Marker marker) {
+            public void onInfoWindowClick(Marker marker) {
+
                 LatLng clickedLocation= marker.getPosition();
                 String title = marker.getTitle();
                 Intent intent = new Intent(Locations_on_map.this ,ConfirmationActivity.class);
@@ -62,9 +113,25 @@ public class Locations_on_map extends FragmentActivity implements OnMapReadyCall
                 intent.putExtra("title", title);
 
                 startActivity(intent);
-                return false;
+
             }
         });
-       //mMap.animateCamera();
+
     }
-}
+   // method to animate camera to specified location
+    private void mapAnimationToLocation(LatLng location) {
+
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location,15));
+        // Zoom in, animating the camera.
+        mMap.animateCamera(CameraUpdateFactory.zoomIn());
+        // Zoom out to zoom level 10, animating with a duration of 2 seconds.
+        mMap.animateCamera(CameraUpdateFactory.zoomTo(15), 2000, null);
+
+
+    }
+
+    }
+
+
+
+
