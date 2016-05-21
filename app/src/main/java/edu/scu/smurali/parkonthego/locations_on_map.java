@@ -1,5 +1,6 @@
 package edu.scu.smurali.parkonthego;
 
+import android.content.Intent;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 
@@ -8,6 +9,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 public class Locations_on_map extends FragmentActivity implements OnMapReadyCallback {
@@ -49,6 +51,20 @@ public class Locations_on_map extends FragmentActivity implements OnMapReadyCall
         mMap.addMarker(new MarkerOptions().position(lafayette).title("Marker in domicilio"));
 
         mMap.moveCamera(CameraUpdateFactory.newLatLng(santaclarauniversity));
+
+        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(Marker marker) {
+                LatLng clickedLocation= marker.getPosition();
+                String title = marker.getTitle();
+                Intent intent = new Intent(Locations_on_map.this ,ConfirmationActivity.class);
+                intent.putExtra("ltdLng",clickedLocation);
+                intent.putExtra("title", title);
+
+                startActivity(intent);
+                return false;
+            }
+        });
        //mMap.animateCamera();
     }
 }
