@@ -9,10 +9,19 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="edu.scu.smurali.parkonthego.LoginActivity">
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/scrollView3">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
     <EditText
         android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:text="Email"
+        android:hint="Email"
         android:id="@+id/eMailEditText"
         android:layout_marginTop="29dp"
         android:layout_alignParentStart="true"
@@ -28,7 +37,7 @@
         android:layout_below="@+id/eMailEditText"
         android:layout_alignStart="@+id/eMailEditText"
         android:layout_alignEnd="@+id/eMailEditText"
-        android:text="Password" />
+        android:hint="Password" />
 
     <CheckBox
         android:layout_width="wrap_content"
@@ -36,9 +45,9 @@
         android:text="Stay Logged In"
         android:id="@+id/stayLoggedInCheckBox"
         android:checked="true"
+        android:layout_marginTop="29dp"
         android:layout_below="@+id/forgotPasswordTextView"
-        android:layout_alignStart="@+id/forgotPasswordTextView"
-        android:layout_marginTop="28dp" />
+        android:layout_alignStart="@+id/forgotPasswordTextView" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -72,11 +81,19 @@
         android:layout_marginTop="27dp"
         android:layout_alignEnd="@+id/logInButton" />
 
+
+        </RelativeLayout>
+
+    </ScrollView>
+
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="maps"
         android:id="@+id/maps"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true" />
+
+
 </RelativeLayout>
