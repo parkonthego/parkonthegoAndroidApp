@@ -67,5 +67,9 @@
     <string name="pref_title_vibrate">Vibrate</string>
     <string name="pref_titl44e_vibrate">Vibrate</string>
     <string name="title_activity_locations_on_map">Map</string>
+    <string name="no_network"> Plese note network not available, Please check network</string>
+    <string name="reg_first_name">First Name</string>
+    <string name="reg_last_name">Last Name</string>
+    <string name="reg_email">Email</string>
 
 </resources>

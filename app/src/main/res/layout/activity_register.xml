@@ -7,15 +7,15 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".Register">
+    tools:context=".RegisterActivity">
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
-        android:text="First Name"
+        android:text="@string/reg_first_name"
         android:ems="10"
-        android:id="@+id/editText"
+        android:id="@+id/regFirstName"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true" />
@@ -24,32 +24,32 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
-        android:text="Last Name"
+        android:text="@string/reg_last_name"
         android:ems="10"
-        android:id="@+id/editText4"
-        android:layout_below="@+id/editText"
+        android:id="@+id/regLastName"
+        android:layout_below="@+id/regFirstName"
         android:layout_alignParentStart="true"
         android:layout_marginTop="32dp"
-        android:layout_alignEnd="@+id/editText" />
+        android:layout_alignEnd="@+id/regFirstName" />
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textEmailAddress"
         android:ems="10"
-        android:id="@+id/editText5"
-        android:layout_below="@+id/editText4"
+        android:id="@+id/regEmail"
+        android:layout_below="@+id/regLastName"
         android:layout_alignParentStart="true"
         android:layout_marginTop="37dp"
-        android:layout_alignEnd="@+id/editText4"
-        android:text="Email" />
+        android:layout_alignEnd="@+id/regLastName"
+        android:text="@string/reg_email" />
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textPassword"
         android:ems="10"
-        android:id="@+id/editText6"
+        android:id="@+id/regPassword"
         android:layout_centerVertical="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true" />
@@ -69,10 +69,10 @@
         android:inputType="textPassword"
         android:ems="10"
         android:id="@+id/editText7"
-        android:layout_below="@+id/editText6"
+        android:layout_below="@+id/regPassword"
         android:layout_alignParentStart="true"
         android:layout_marginTop="34dp"
-        android:layout_alignEnd="@+id/editText6" />
+        android:layout_alignEnd="@+id/regPassword" />
 
     <TextView
         android:layout_width="wrap_content"
