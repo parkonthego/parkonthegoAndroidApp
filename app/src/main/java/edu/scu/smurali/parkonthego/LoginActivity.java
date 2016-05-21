@@ -61,7 +61,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(LoginActivity.this, locations_on_map.class);
+                Intent intent = new Intent(LoginActivity.this, Locations_on_map.class);
                 startActivity(intent);
             }
         });
