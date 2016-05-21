@@ -1,6 +1,10 @@
 package edu.scu.smurali.parkonthego;
 
+import android.*;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,6 +21,8 @@ public class LoginActivity extends AppCompatActivity {
     private TextView forgotPassword;
     private CheckBox stayLoggedIn;
     private EditText email, pwd;
+    public final int permissions = 100;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +66,7 @@ public class LoginActivity extends AppCompatActivity {
         maps.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
 
                 Intent intent = new Intent(LoginActivity.this, Locations_on_map.class);
                 startActivity(intent);
