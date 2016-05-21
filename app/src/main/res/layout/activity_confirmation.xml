@@ -18,18 +18,23 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Reservation Details"
-        android:id="@+id/textView16"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#BBBBBB"
+                android:id="@+id/linearLayout3">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Reservation Details"
+                android:id="@+id/textView16"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentStart="true" />
+            </LinearLayout>
 
 
-        </RelativeLayout>
-    </ScrollView>
 
     <TextView
         android:layout_width="wrap_content"
@@ -37,9 +42,10 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Start Date:"
         android:id="@+id/textView20"
-        android:layout_below="@+id/scrollView2"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="15dp" />
+        android:layout_marginTop="15dp"
+        android:textColor="#000000"
+        android:layout_below="@+id/linearLayout3"
+        android:layout_alignParentStart="true" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -49,7 +55,8 @@
         android:id="@+id/textView21"
         android:layout_marginLeft="15dp"
         android:layout_alignBottom="@+id/textView20"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:textColor="#000000" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -57,8 +64,9 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="End Date:"
         android:id="@+id/textView22"
+        android:textColor="#000000"
         android:layout_alignBottom="@+id/textView21"
-        android:layout_toEndOf="@+id/scrollView2" />
+        android:layout_toStartOf="@+id/textView21" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -66,9 +74,9 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="05/19/2016"
         android:id="@+id/textView23"
-        android:layout_marginLeft="10dp"
         android:layout_above="@+id/textView24"
-        android:layout_alignStart="@+id/textView25" />
+        android:layout_alignStart="@+id/textView25"
+        android:textColor="#000000" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -78,7 +86,8 @@
         android:id="@+id/textView24"
         android:layout_below="@+id/textView22"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="15dp" />
+        android:layout_marginTop="15dp"
+        android:textColor="#000000" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -87,7 +96,9 @@
         android:text="05:00 PM"
         android:id="@+id/textView25"
         android:layout_alignBottom="@+id/textView24"
-        android:layout_toEndOf="@+id/textView24" />
+        android:layout_toEndOf="@+id/textView24"
+        android:layout_marginLeft="15dp"
+        android:textColor="#000000" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -96,7 +107,8 @@
         android:text="End Time:"
         android:id="@+id/textView26"
         android:layout_alignTop="@+id/textView25"
-        android:layout_alignStart="@+id/textView22" />
+        android:layout_alignStart="@+id/textView22"
+        android:textColor="#000000" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -104,7 +116,122 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="09:00 PM"
         android:id="@+id/textView27"
-        android:layout_alignTop="@+id/textView26"
-        android:layout_alignStart="@+id/textView25"
+        android:layout_alignBottom="@+id/textView26"
+        android:layout_alignStart="@+id/textView21"
+        android:textColor="#000000" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Location:"
+        android:id="@+id/textView28"
+        android:layout_marginTop="15dp"
+        android:textColor="#000000"
+        android:layout_below="@+id/textView26"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="431, Lafayette Street, Santa Clara, CA 95051"
+        android:id="@+id/textView29"
+        android:textColor="#000000"
+        android:layout_alignTop="@+id/textView28"
+        android:layout_alignStart="@+id/textView31" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Total Hrs:"
+        android:id="@+id/textView30"
+        android:textColor="#000000"
+        android:layout_below="@+id/textView29"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="15dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="4 hours"
+        android:id="@+id/textView31"
+        android:textColor="#000000"
+        android:layout_above="@+id/textView32"
+        android:layout_alignStart="@+id/textView25" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Price/hr:"
+        android:id="@+id/textView32"
+        android:layout_below="@+id/textView30"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="15dp"
+        android:textColor="#000000" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="$4"
+        android:id="@+id/textView33"
+        android:layout_alignTop="@+id/textView32"
+        android:layout_alignStart="@+id/textView31"
+        android:textColor="#000000" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Total Price:"
+        android:id="@+id/textView34"
+        android:layout_below="@+id/textView32"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="15dp"
+        android:textColor="#000000" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="$16"
+        android:id="@+id/textView35"
+        android:editable="false"
+        android:textColor="#000000"
+        android:layout_alignBottom="@+id/textView34"
+        android:layout_alignStart="@+id/textView33"
+        android:layout_marginTop="15dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background=""></LinearLayout>
+
+        </RelativeLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#BBBBBB"
+        android:layout_below="@+id/scrollView2"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="15dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Payment Method"
+        android:id="@+id/textView36"
+        android:layout_below="@+id/scrollView2"
+        android:layout_alignParentStart="true"
         android:layout_marginTop="5dp" />
+
+    </LinearLayout>
+
 </RelativeLayout>
