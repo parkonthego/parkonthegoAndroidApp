@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private Button login, register;
+    private Button login, register,maps;
     private TextView forgotPassword;
     private CheckBox stayLoggedIn;
     private EditText email, pwd;
@@ -35,6 +35,7 @@ public class LoginActivity extends AppCompatActivity {
         }
         login = (Button) findViewById(R.id.logInButton);
         register = (Button) findViewById(R.id.registerButton);
+        maps = (Button)findViewById(R.id.maps);
         forgotPassword = (TextView) findViewById(R.id.forgotPasswordTextView);
         stayLoggedIn = (CheckBox) findViewById(R.id.stayLoggedInCheckBox);
         email = (EditText) findViewById(R.id.eMailEditText);
@@ -56,6 +57,15 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        maps.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(LoginActivity.this, locations_on_map.class);
+                startActivity(intent);
+            }
+        });
+
 
 
         Log.d("**************", "onCreate: "+login);
