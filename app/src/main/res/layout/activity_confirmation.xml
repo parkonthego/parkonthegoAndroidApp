@@ -52,7 +52,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="05/19/2016"
-        android:id="@+id/textView21"
+        android:id="@+id/confirmationEndDateTextView"
         android:layout_marginLeft="15dp"
         android:layout_alignBottom="@+id/textView20"
         android:layout_alignParentEnd="true"
@@ -65,17 +65,17 @@
         android:text="End Date:"
         android:id="@+id/textView22"
         android:textColor="#000000"
-        android:layout_alignBottom="@+id/textView21"
-        android:layout_toStartOf="@+id/textView21" />
+        android:layout_alignBottom="@+id/confirmationEndDateTextView"
+        android:layout_toStartOf="@+id/confirmationEndDateTextView" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="05/19/2016"
-        android:id="@+id/textView23"
+        android:id="@+id/confirmationStartDateTextView"
         android:layout_above="@+id/textView24"
-        android:layout_alignStart="@+id/textView25"
+        android:layout_alignStart="@+id/confirmationStartTimeTextView"
         android:textColor="#000000" />
 
     <TextView
@@ -94,7 +94,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="05:00 PM"
-        android:id="@+id/textView25"
+        android:id="@+id/confirmationStartTimeTextView"
         android:layout_alignBottom="@+id/textView24"
         android:layout_toEndOf="@+id/textView24"
         android:layout_marginLeft="15dp"
@@ -106,7 +106,7 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="End Time:"
         android:id="@+id/textView26"
-        android:layout_alignTop="@+id/textView25"
+        android:layout_alignTop="@+id/confirmationStartTimeTextView"
         android:layout_alignStart="@+id/textView22"
         android:textColor="#000000" />
 
@@ -115,9 +115,9 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="09:00 PM"
-        android:id="@+id/textView27"
+        android:id="@+id/confirmationEndTimeTextView"
         android:layout_alignBottom="@+id/textView26"
-        android:layout_alignStart="@+id/textView21"
+        android:layout_alignStart="@+id/confirmationEndDateTextView"
         android:textColor="#000000" />
 
     <TextView
@@ -136,10 +136,10 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="431, Lafayette Street, Santa Clara, CA 95051"
-        android:id="@+id/textView29"
+        android:id="@+id/confirmationLocationTextView"
         android:textColor="#000000"
         android:layout_alignTop="@+id/textView28"
-        android:layout_alignStart="@+id/textView31" />
+        android:layout_alignStart="@+id/confirmationTotalTimeTextView" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -148,7 +148,7 @@
         android:text="Total Hrs:"
         android:id="@+id/textView30"
         android:textColor="#000000"
-        android:layout_below="@+id/textView29"
+        android:layout_below="@+id/confirmationLocationTextView"
         android:layout_alignParentStart="true"
         android:layout_marginTop="15dp" />
 
@@ -157,10 +157,10 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="4 hours"
-        android:id="@+id/textView31"
+        android:id="@+id/confirmationTotalTimeTextView"
         android:textColor="#000000"
         android:layout_above="@+id/textView32"
-        android:layout_alignStart="@+id/textView25" />
+        android:layout_alignStart="@+id/confirmationStartTimeTextView" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -178,9 +178,9 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="$4"
-        android:id="@+id/textView33"
+        android:id="@+id/confirmationPricePerHrTextView"
         android:layout_alignTop="@+id/textView32"
-        android:layout_alignStart="@+id/textView31"
+        android:layout_alignStart="@+id/confirmationTotalTimeTextView"
         android:textColor="#000000" />
 
     <TextView
@@ -203,13 +203,13 @@
         android:editable="false"
         android:textColor="#000000"
         android:layout_alignBottom="@+id/textView34"
-        android:layout_alignStart="@+id/textView33"
+        android:layout_alignStart="@+id/confirmationPricePerHrTextView"
         android:layout_marginTop="15dp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background=""></LinearLayout>
+                android:background="#BBBBBB"></LinearLayout>
 
         </RelativeLayout>
     </ScrollView>
@@ -220,7 +220,8 @@
         android:background="#BBBBBB"
         android:layout_below="@+id/scrollView2"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="15dp">
+        android:layout_marginTop="15dp"
+        android:id="@+id/linearLayout4">
 
     <TextView
         android:layout_width="wrap_content"
@@ -233,5 +234,25 @@
         android:layout_marginTop="5dp" />
 
     </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Payment Gateway UI will appear here"
+        android:id="@+id/textView37"
+        android:layout_below="@+id/linearLayout4"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="51dp"
+        android:layout_marginTop="39dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Reserve"
+        android:id="@+id/confirmationReserveButton"
+        android:layout_below="@+id/textView37"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="36dp" />
 
 </RelativeLayout>
