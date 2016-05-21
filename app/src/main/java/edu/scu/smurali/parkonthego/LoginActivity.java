@@ -13,35 +13,52 @@ import android.widget.TextView;
 
 public class LoginActivity extends AppCompatActivity {
 
-   //  Button login =(Button) findViewById(R.id.logInButton);
-//     Button register = (Button) findViewById(R.id.registerButton);
-//     TextView forgotPassword = (TextView) findViewById(R.id.forgotPasswordTextView);
-//     CheckBox stayLoggedIn = (CheckBox) findViewById(R.id.stayLoggedInCheckBox);
-//     EditText email = (EditText) findViewById(R.id.eMailEditText);
-//     EditText pwd = (EditText) findViewById(R.id.passwordEditText);
+    private Button login, register;
+    private TextView forgotPassword;
+    private CheckBox stayLoggedIn;
+    private EditText email, pwd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle("ParkOnTheGo");
-        actionBar.setIcon(R.mipmap.ic_park);
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setDisplayShowHomeEnabled(true);
-        actionBar.setHomeButtonEnabled(true);
+        try {
+            ActionBar actionBar = getSupportActionBar();
+            actionBar.setTitle("ParkOnTheGo");
+            actionBar.setIcon(R.mipmap.ic_park);
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setDisplayShowHomeEnabled(true);
+            actionBar.setHomeButtonEnabled(true);
+        }
+        catch(NullPointerException ex){
+            Log.d("Login", "onCreate: Null pointer in action bar "+ex.getMessage());
+        }
+        login = (Button) findViewById(R.id.logInButton);
+        register = (Button) findViewById(R.id.registerButton);
+        forgotPassword = (TextView) findViewById(R.id.forgotPasswordTextView);
+        stayLoggedIn = (CheckBox) findViewById(R.id.stayLoggedInCheckBox);
+        email = (EditText) findViewById(R.id.eMailEditText);
+        pwd = (EditText) findViewById(R.id.passwordEditText);
 
-//        login.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(LoginActivity.this, HomeScreenActivity.class);
-//                startActivity(intent);
-//            }
-//        });
 
-       // Log.d("**************", "onCreate: "+login);
+        login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LoginActivity.this, HomeScreenActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        register.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LoginActivity.this, Register.class);
+                startActivity(intent);
+            }
+        });
 
 
+        Log.d("**************", "onCreate: "+login);
 
 
     }
