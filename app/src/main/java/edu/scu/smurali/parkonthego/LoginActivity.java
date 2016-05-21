@@ -26,9 +26,9 @@ public class LoginActivity extends AppCompatActivity {
             ActionBar actionBar = getSupportActionBar();
             actionBar.setTitle("ParkOnTheGo");
             actionBar.setIcon(R.mipmap.ic_park);
-            actionBar.setDisplayHomeAsUpEnabled(true);
+          //  actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setDisplayShowHomeEnabled(true);
-            actionBar.setHomeButtonEnabled(true);
+           // actionBar.setHomeButtonEnabled(true);
         }
         catch(NullPointerException ex){
             Log.d("Login", "onCreate: Null pointer in action bar "+ex.getMessage());
@@ -65,6 +65,16 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        forgotPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(LoginActivity.this, ForgotPasswordActivity.class);
+                startActivity(intent);
+            }
+        });
+
 
 
 
