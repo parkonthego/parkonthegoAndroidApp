@@ -64,14 +64,14 @@ public class RegisterActivity extends AppCompatActivity {
                         regFirstName.requestFocus();
                     }
 
-                  else  if(!validateLastName(regLastName.getText().toString()))
+                  else if(!validateLastName(regLastName.getText().toString()))
                     {
                         regLastName.setError("Please Enter your Last Name");
                         regLastName.requestFocus();
                     }
 
 
-                    else  if(!validateEmail(regEmail.getText().toString()))
+                    else if(!validateEmail(regEmail.getText().toString()))
                         {
                             regEmail.setError("Invalid Email");
                             regEmail.requestFocus();
@@ -102,6 +102,27 @@ public class RegisterActivity extends AppCompatActivity {
         this.mContext = this;
     }
 
+
+    protected boolean validateFirstName(String firstName) {
+        if(firstName != null) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    protected boolean validateLastName(String lastName)
+    {
+        if(lastName != null)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
     //Return true if password is valid and false if password is invalid
     protected boolean validatePasswords(String password, String cfnPassword) {
         if(password!=null && password.length()>=8 && password.equals(cfnPassword)) {
@@ -111,24 +132,6 @@ public class RegisterActivity extends AppCompatActivity {
         }
     }
 
-    protected boolean validateFirstName(String password) {
-        if(password!=null) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    protected boolean validateLastName(String password) {
-        if(password!=null) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-
-
     protected boolean validatePassword(String password) {
         if(password!=null && password.length()>=8) {
             return true;
@@ -136,7 +139,6 @@ public class RegisterActivity extends AppCompatActivity {
             return false;
         }
     }
-
 
     //Return true if email is valid and false if email is invalid
     protected boolean validateEmail(String email) {
