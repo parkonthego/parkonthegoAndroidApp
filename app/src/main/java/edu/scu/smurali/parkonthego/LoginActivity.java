@@ -49,7 +49,7 @@ public class LoginActivity extends AppCompatActivity {
 
        // maps = (Button)findViewById(R.id.maps);
         forgotPassword = (TextView) findViewById(R.id.forgotPasswordEmail);
-        maps = (Button)findViewById(R.id.maps);
+      //  maps = (Button)findViewById(R.id.maps);
         stayLoggedIn = (CheckBox) findViewById(R.id.stayLoggedInCheckBox);
         email = (EditText) findViewById(R.id.eMailEditText);
         pwd = (EditText) findViewById(R.id.passwordEditText);
