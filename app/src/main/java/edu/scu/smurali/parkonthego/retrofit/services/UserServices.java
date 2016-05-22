@@ -11,15 +11,12 @@ import retrofit2.http.POST;
  */
 public interface UserServices {
     @FormUrlEncoded
-    @POST("users/new-user")
+    @POST("register")
     Call<SignUpResponse> createNewUser(
             @Field("firstname") String firstname,
             @Field("lastname") String lastname,
             @Field("email") String email,
-            @Field("zip") String zip,
-            @Field("username") String username,
-            @Field("password") String password,
-            @Field("language") String language);
+            @Field("password") String password);
 
 //    @FormUrlEncoded
 //    @POST("login/login")
