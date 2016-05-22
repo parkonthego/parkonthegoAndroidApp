@@ -75,10 +75,8 @@
         android:layout_height="wrap_content"
         android:text="Search"
         android:id="@+id/searchParkingLocation"
-        android:layout_marginTop="42dp"
-        android:layout_below="@+id/place_autocomplete_fragment"
-        android:layout_alignParentStart="true"
-        android:layout_alignEnd="@+id/place_autocomplete_fragment" />
+        android:layout_centerVertical="true"
+        android:layout_alignEnd="@+id/homeScreenEndDate" />
 
     <fragment
         android:id="@+id/place_autocomplete_fragment"
@@ -86,6 +84,5 @@
         android:layout_height="wrap_content"
         android:name="com.google.android.gms.location.places.ui.PlaceAutocompleteFragment"
         tools:layout="@android:layout/simple_dropdown_item_1line"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="54dp" />
+        android:layout_alignParentStart="true" />
 </RelativeLayout>
