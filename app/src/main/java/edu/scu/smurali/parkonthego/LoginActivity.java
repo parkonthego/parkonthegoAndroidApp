@@ -17,6 +17,8 @@ public class LoginActivity extends AppCompatActivity {
     private TextView forgotPassword;
     private CheckBox stayLoggedIn;
     private EditText email, pwd;
+    public final int permissions = 100;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,9 +28,9 @@ public class LoginActivity extends AppCompatActivity {
             ActionBar actionBar = getSupportActionBar();
             actionBar.setTitle("ParkOnTheGo");
             actionBar.setIcon(R.mipmap.ic_park);
-            actionBar.setDisplayHomeAsUpEnabled(true);
+          //  actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setDisplayShowHomeEnabled(true);
-            actionBar.setHomeButtonEnabled(true);
+           // actionBar.setHomeButtonEnabled(true);
         }
         catch(NullPointerException ex){
             Log.d("Login", "onCreate: Null pointer in action bar "+ex.getMessage());
@@ -61,10 +63,23 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(LoginActivity.this, Locations_on_map.class);
+
+
+
+                Intent intent = new Intent(LoginActivity.this, LocationsOnMap.class);
                 startActivity(intent);
             }
         });
+
+        forgotPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(LoginActivity.this, ForgotPasswordActivity.class);
+                startActivity(intent);
+            }
+        });
+
 
 
 

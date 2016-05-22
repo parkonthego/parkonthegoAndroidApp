@@ -5,12 +5,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 
-public class SettingsActivity extends AppCompatActivity {
+public class StartReservationActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_settings);
+        setContentView(R.layout.activity_start_reservation);
+
         try {
             ActionBar actionBar = getSupportActionBar();
             actionBar.setTitle("ParkOnTheGo");
@@ -20,7 +21,7 @@ public class SettingsActivity extends AppCompatActivity {
             // actionBar.setHomeButtonEnabled(true);
         }
         catch(NullPointerException ex){
-            Log.d("Settings", "onCreate: Null pointer in action bar "+ex.getMessage());
+            Log.d("Start Reservation", "onCreate: Null pointer in action bar "+ex.getMessage());
         }
     }
 }
