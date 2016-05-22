@@ -99,5 +99,7 @@
     <string name="home_start_time">22:40</string>
     <string name="home_end_date">05/20/2016</string>
     <string name="home_end_time">3:40</string>
+    <string name="stop_reservation_start_time">5:00 PM</string>
+    <string name="stop_reservation_end_time">9:00 PM</string>
 
 </resources>
