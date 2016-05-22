@@ -46,8 +46,10 @@ public class LoginActivity extends AppCompatActivity {
         }
         login = (Button) findViewById(R.id.logInButton);
         register = (Button) findViewById(R.id.registerButton);
+
        // maps = (Button)findViewById(R.id.maps);
-        forgotPassword = (TextView) findViewById(R.id.forgotPasswordTextView);
+        forgotPassword = (TextView) findViewById(R.id.forgotPasswordEmail);
+        maps = (Button)findViewById(R.id.maps);
         stayLoggedIn = (CheckBox) findViewById(R.id.stayLoggedInCheckBox);
         email = (EditText) findViewById(R.id.eMailEditText);
         pwd = (EditText) findViewById(R.id.passwordEditText);
@@ -64,7 +66,7 @@ public class LoginActivity extends AppCompatActivity {
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(LoginActivity.this, Register.class);
+                Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
                 startActivity(intent);
             }
         });

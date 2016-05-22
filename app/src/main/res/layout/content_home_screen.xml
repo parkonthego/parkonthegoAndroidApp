@@ -27,7 +27,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="05/19/2016"
-        android:id="@+id/textView5"
+        android:id="@+id/homeScreenStartDate"
         android:layout_alignTop="@+id/textView4"
         android:layout_toEndOf="@+id/textView4"
         android:layout_marginStart="27dp" />
@@ -37,9 +37,9 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="22:40"
-        android:id="@+id/textView6"
+        android:id="@+id/homeScreenStartTime"
         android:layout_below="@+id/textView4"
-        android:layout_alignStart="@+id/textView5" />
+        android:layout_alignStart="@+id/homeScreenStartDate" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -47,7 +47,7 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="END:"
         android:id="@+id/textView7"
-        android:layout_below="@+id/textView6"
+        android:layout_below="@+id/homeScreenStartTime"
         android:layout_alignParentStart="true"
         android:layout_marginTop="35dp"
         android:layout_alignEnd="@+id/textView4" />
@@ -57,18 +57,18 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="05/20/2016"
-        android:id="@+id/textView8"
+        android:id="@+id/homeScreenEndDate"
         android:layout_alignTop="@+id/textView7"
-        android:layout_alignStart="@+id/textView6" />
+        android:layout_alignStart="@+id/homeScreenStartTime" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="3:40"
-        android:id="@+id/textView9"
+        android:id="@+id/homeScreenEndTime"
         android:layout_below="@+id/textView7"
-        android:layout_alignStart="@+id/textView8" />
+        android:layout_alignStart="@+id/homeScreenEndDate" />
 
     <Button
         android:layout_width="wrap_content"
@@ -86,7 +86,6 @@
         android:layout_height="wrap_content"
         android:name="com.google.android.gms.location.places.ui.PlaceAutocompleteFragment"
         tools:layout="@android:layout/simple_dropdown_item_1line"
-        android:layout_below="@+id/textView9"
         android:layout_alignParentStart="true"
         android:layout_marginTop="54dp" />
 </RelativeLayout>
