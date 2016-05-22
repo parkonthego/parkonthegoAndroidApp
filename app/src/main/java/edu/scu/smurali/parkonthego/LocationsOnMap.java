@@ -3,6 +3,7 @@ package edu.scu.smurali.parkonthego;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.drawable.Icon;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
@@ -12,9 +13,12 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+import java.util.ArrayList;
 
 public class LocationsOnMap extends FragmentActivity implements OnMapReadyCallback {
 
@@ -63,21 +67,40 @@ public class LocationsOnMap extends FragmentActivity implements OnMapReadyCallba
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
+       Intent intent = getIntent();
+       ArrayList<Location> locationList= (ArrayList<Location>) intent.getSerializableExtra("locationList");
+        double searchedLocationLat = (Double) intent.getSerializableExtra("searchedLocationLat");
+        double searchedLocationLong = (Double) intent.getSerializableExtra("searchedLocationLong");
+        String searchedLocationAddress = intent.getStringExtra("searchedLocationAddress");
+
+
+        //locationList.
+
 
         // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
-        LatLng santaclarauniversity = new LatLng(37.3496, -121.9390);
-        LatLng lafayette = new LatLng(37.347562, -121.932221);
-
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(santaclarauniversity));
-        mMap.addMarker(new MarkerOptions().position(santaclarauniversity).title("Marker in scu"));
-        mMap.addMarker(new MarkerOptions().position(lafayette).title("Marker in domicilio"));
 
 
-        mapAnimationToLocation(santaclarauniversity);
+        MarkerOptions custom = new MarkerOptions().position(new LatLng(searchedLocationLat,searchedLocationLong)).title("Marker in location      "+searchedLocationAddress)
+                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
 
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(santaclarauniversity));
+        mMap.addMarker(custom);
+       for(int i=0;i<locationList.size();i++)
+       {
+           mMap.addMarker(new MarkerOptions().position(new LatLng(locationList.get(i).getLatitude(),locationList.get(i).getLongitude()))
+                                                            .title("location :"+locationList.get(i).getAddress()+
+                                                                    "Rate per Hour: "+locationList.get(i).getPrice()));
+       }
+
+
+     //   mMap.addMarker(new MarkerOptions().position(locationList.get(4)).rotation(15));
+
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(searchedLocationLat,searchedLocationLong)));
+
+
+
+        mapAnimationToLocation(new LatLng(searchedLocationLat,searchedLocationLong));
+
+       // mMap.moveCamera(CameraUpdateFactory.newLatLng(santaclarauniversity));
         try {
             mMap.setMyLocationEnabled(true);
         }
@@ -126,6 +149,13 @@ public class LocationsOnMap extends FragmentActivity implements OnMapReadyCallba
 
 
     }
+//    public void highlightMarker(Marker marker, Boolean highlight ) {
+//        int color = "#FE7569";
+//        if (highlight) {
+//            color = "#0000FF";
+//        }
+//        marker.setImage(getIcon(color).image);
+//    }
 
     }
 
