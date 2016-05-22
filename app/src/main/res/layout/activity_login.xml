@@ -46,15 +46,15 @@
         android:id="@+id/stayLoggedInCheckBox"
         android:checked="true"
         android:layout_marginTop="29dp"
-        android:layout_below="@+id/forgotPasswordTextView"
-        android:layout_alignStart="@+id/forgotPasswordTextView" />
+        android:layout_below="@+id/homeScreenEmail"
+        android:layout_alignStart="@+id/homeScreenEmail" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Forgot Password?"
-        android:id="@+id/forgotPasswordTextView"
+        android:id="@+id/homeScreenEmail"
         android:clickable="true"
         android:textColor="#008888"
         android:layout_below="@+id/logInButton"
