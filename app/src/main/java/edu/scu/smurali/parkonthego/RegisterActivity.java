@@ -5,6 +5,10 @@ import android.content.Intent;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import java.lang.reflect.Array;
 import java.util.HashMap;
@@ -18,23 +22,41 @@ import retrofit2.Response;
 public class RegisterActivity extends AppCompatActivity {
 
     private Context mContext;
+    private EditText regFirstName, regLastName, regEmail, regPassword, regCfnPassword;
+    private Button regButton;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle("ParkOnTheGo");
-        actionBar.setIcon(R.mipmap.ic_park);
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setDisplayShowHomeEnabled(true);
-        actionBar.setHomeButtonEnabled(true);
+        try {
+            ActionBar actionBar = getSupportActionBar();
+            actionBar.setTitle("ParkOnTheGo");
+            actionBar.setIcon(R.mipmap.ic_park);
+            //  actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setDisplayShowHomeEnabled(true);
+            // actionBar.setHomeButtonEnabled(true);
+            this.regFirstName = (EditText) findViewById(R.id.regFirstName);
+            this.regLastName = (EditText) findViewById(R.id.regLastName);
+            this.regEmail = (EditText) findViewById(R.id.regEmail);
+            this.regPassword = (EditText) findViewById(R.id.regPassword);
+
+
+
+
+
+
+        }
+        catch(NullPointerException ex){
+            Log.d("RegisterActivity", "onCreate: Null pointer in action bar "+ex.getMessage());
+        }
         this.mContext = this;
     }
 
 
     public void register(HashMap data) {
+
         if (ParkOnTheGo.getInstance().isConnectedToInterNet()) {
             UserServices userServices = ParkOnTheGo.getInstance().getUserServices();
 //            ParkOnTheGo.getInstance().showProgressDialog(mContext.getString(R.string
