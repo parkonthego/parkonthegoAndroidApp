@@ -73,11 +73,31 @@
     <string name="pref_title_vibrate">Vibrate</string>
     <string name="pref_titl44e_vibrate">Vibrate</string>
     <string name="title_activity_locations_on_map">Map</string>
+
     <string name="no_network"> Plese note network not available, Please check network</string>
+
     <string name="reg_first_name">First Name</string>
     <string name="reg_last_name">Last Name</string>
     <string name="reg_email">Email</string>
     <string name="reg_password">Password</string>
     <string name="reg_confirm_password">Confirm password</string>
+    <string name="confirmation_end_date">05/19/2016</string>
+    <string name="confirmation_start_time">05:00 PM</string>
+    <string name="confirmation_start_date">05/19/2016</string>
+    <string name="confirmation_end_time">09:00 PM</string>
+    <string name="confirmation_location">431, Lafayette Street, Santa Clara, CA 95051</string>
+    <string name="confirmation_total_time">4 hours</string>
+    <string name="confirmation_price_per_hr">$4</string>
+    <string name="confirmation_total_price">$16</string>
+    <string name="forgot_password_email">Email</string>
+    <string name="settings_first_name">Shruthi</string>
+    <string name="settings_last_name">Murali</string>
+    <string name="settings_email">smurali@scu.edu</string>
+    <string name="start_reservation_start_time">5:00 PM</string>
+    <string name="start_reservation_end_time">9:00 PM</string>
+    <string name="home_start_date">05/19/2016</string>
+    <string name="home_start_time">22:40</string>
+    <string name="home_end_date">05/20/2016</string>
+    <string name="home_end_time">3:40</string>
 
 </resources>

@@ -77,17 +77,19 @@ public class RegisterActivity extends AppCompatActivity {
                             regEmail.requestFocus();
                         }
 
-                        else if (!validatePassword(regPassword.getText().toString())){
+                        else if (!validatePassword(regPassword.getText().toString()))
+                        {
                             regPassword.setError("Invalid Password ");
                             regPassword.requestFocus();
 
-                    }
+                         }
 
                         else if (!validatePasswords(regPassword.getText().toString(), regCfnPassword.getText().toString())) {
                             regPassword.setError("Passwords do not match ");
                             regCfnPassword.requestFocus();
                         }
                          else {
+
                           //  Toast.makeText(RegisterActivity.this, "Input Validation Success", Toast.LENGTH_LONG).show();
                             register(data);
                         }
