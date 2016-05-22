@@ -38,7 +38,7 @@ public class LoginActivity extends AppCompatActivity {
         login = (Button) findViewById(R.id.logInButton);
         register = (Button) findViewById(R.id.registerButton);
         maps = (Button)findViewById(R.id.maps);
-        forgotPassword = (TextView) findViewById(R.id.forgotPasswordTextView);
+        forgotPassword = (TextView) findViewById(R.id.homeScreenEmail);
         stayLoggedIn = (CheckBox) findViewById(R.id.stayLoggedInCheckBox);
         email = (EditText) findViewById(R.id.eMailEditText);
         pwd = (EditText) findViewById(R.id.passwordEditText);
