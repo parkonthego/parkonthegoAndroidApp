@@ -17,8 +17,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.GridView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.places.Place;
@@ -36,6 +39,21 @@ public class HomeScreenActivity extends AppCompatActivity
     PlaceAutocompleteFragment autocompleteFragment;
 
     TextView startDate, startTime, endDate, endTime;
+
+//    GridView grid;
+//    String[] web = {
+//            "START DATE",
+//            "START TIME",
+//            "END DATE",
+//            "END TIME",
+//
+//    } ;
+//    int[] imageId = {
+//            R.drawable.calender,
+//            R.drawable.clock,
+//
+//    };
+
     ///////////////////////////////////////////////////////test code//////////////////////////////////////////////
 
     ArrayList<Location> locationList = new ArrayList<Location>();
@@ -113,6 +131,21 @@ public class HomeScreenActivity extends AppCompatActivity
                 startActivity(intent);
             }
         });
+
+//        GridAdapter adapter = new GridAdapter(HomeScreenActivity.this, web, imageId);
+//        grid=(GridView)findViewById(R.id.grid);
+//        grid.setAdapter(adapter);
+//
+//        grid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view,
+//                                    int position, long id) {
+//                Toast.makeText(HomeScreenActivity.this, "You Clicked at " +web[+ position], Toast.LENGTH_SHORT).show();
+//
+//            }
+//        });
+
 
 
     }
@@ -228,7 +261,10 @@ public class HomeScreenActivity extends AppCompatActivity
             }
         });
 
-    }
+
+}
+
+
 
 
 

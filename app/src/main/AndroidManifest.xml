@@ -32,7 +32,7 @@
         <activity
             android:name=".HomeScreenActivity"
             android:label="@string/title_activity_home_screen"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".SettingsActivity" />
         <activity android:name=".ConfirmationActivity"></activity>
 
@@ -53,7 +53,9 @@
             android:label="@string/title_activity_locations_on_map" />
         <activity android:name=".StartReservationActivity" />
         <activity android:name=".StopReservationActivity"></activity>
-        <activity android:name=".SelectLocationToReserve"></activity><!-- ATTENTION: This was auto-generated to add Google Play services to your project for
+        <activity android:name=".SelectLocationToReserve">
+
+        </activity><!-- ATTENTION: This was auto-generated to add Google Play services to your project for
      App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information. -->
         <meta-data
             android:name="com.google.android.gms.version"

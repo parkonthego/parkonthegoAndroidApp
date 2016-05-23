@@ -9,11 +9,37 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="edu.scu.smurali.parkonthego.SelectLocationToReserve">
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:id="@+id/mapFrameLayout"></FrameLayout>
-        android:name="com.google.android.gms.maps.SupportMapFragment
+        android:id="@+id/mapFrameLayout">
+
+    </FrameLayout>
+
+            <GridView
+                android:numColumns="auto_fit"
+                android:gravity="center"
+                android:columnWidth="100dp"
+                android:stretchMode="columnWidth"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:id="@+id/grid"
+                />
+
+    android:name="com.google.android.gms.maps.SupportMapFragment
+
+
+        </RelativeLayout>
+    </ScrollView>
 </RelativeLayout>
