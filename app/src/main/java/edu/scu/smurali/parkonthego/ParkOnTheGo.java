@@ -10,6 +10,7 @@ import android.provider.Settings;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 
+import edu.scu.smurali.parkonthego.retrofit.services.LocationServices;
 import edu.scu.smurali.parkonthego.retrofit.services.UserServices;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
@@ -65,6 +66,10 @@ public class ParkOnTheGo extends Application {
 
     public UserServices getUserServices() {
         return mRetrofit.create(UserServices.class);
+    }
+
+    public LocationServices getLocationServices() {
+        return mRetrofit.create(LocationServices.class);
     }
 
     private void buildRetrofitClient() {
@@ -178,7 +183,6 @@ public class ParkOnTheGo extends Application {
         }
         return false;
     }
-
 
 
 }
