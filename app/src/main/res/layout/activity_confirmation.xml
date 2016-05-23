@@ -149,7 +149,8 @@
         android:textColor="#000000"
         android:layout_alignTop="@+id/textView28"
         android:layout_alignStart="@+id/confirmationTotalTimeTextView"
-        android:layout_alignLeft="@+id/confirmationTotalTimeTextView" />
+        android:layout_alignLeft="@+id/confirmationTotalTimeTextView"
+        android:editable="false" />
 
     <TextView
         android:layout_width="wrap_content"
