@@ -1,5 +1,7 @@
 package edu.scu.smurali.parkonthego;
 
+import android.app.DialogFragment;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -16,6 +18,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.places.Place;
@@ -31,6 +34,8 @@ public class HomeScreenActivity extends AppCompatActivity
     private LatLng searchedLatLng;
     private  String searchedAddress;
     PlaceAutocompleteFragment autocompleteFragment;
+
+    TextView startDate, startTime, endDate, endTime;
     ///////////////////////////////////////////////////////test code//////////////////////////////////////////////
 
     ArrayList<Location> locationList = new ArrayList<Location>();
@@ -47,6 +52,8 @@ public class HomeScreenActivity extends AppCompatActivity
             //  actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setDisplayShowHomeEnabled(true);
             // actionBar.setHomeButtonEnabled(true);
+
+
         }
         catch(NullPointerException ex){
             Log.d("Home Screen", "onCreate: Null pointer in action bar "+ex.getMessage());
@@ -110,6 +117,7 @@ public class HomeScreenActivity extends AppCompatActivity
 
     }
 
+
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -162,4 +170,66 @@ public class HomeScreenActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+
+    /*DatePicker and TimePicker code starts here*/
+
+
+    public void showTimePickerDialog(View v) {
+
+        startTime = (TextView) findViewById(R.id.homeScreenStartTime);
+        endTime = (TextView) findViewById(R.id.homeScreenEndTime);
+
+        startTime.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+
+                DialogFragment newFragment = new TimePickerFragment();
+                FragmentTransaction ft =getFragmentManager().beginTransaction();
+                newFragment.show(ft, "timePicker");
+            }
+        });
+
+        endTime.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+
+                DialogFragment newFragment = new TimePickerFragment();
+                FragmentTransaction ft =getFragmentManager().beginTransaction();
+                newFragment.show(ft, "timePicker");
+            }
+        });
+
+
+    }
+
+    public void showDatePickerDialog(View v) {
+
+        startDate = (TextView) findViewById(R.id.homeScreenStartDate);
+        endDate = (TextView) findViewById(R.id.homeScreenEndDate);
+
+        startDate.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+
+                DialogFragment newFragment = new DatePickerFragment();
+                FragmentTransaction ft =getFragmentManager().beginTransaction();
+                newFragment.show(ft, "datePicker");
+            }
+        });
+
+        endDate.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+
+                DialogFragment newFragment = new DatePickerFragment();
+                FragmentTransaction ft =getFragmentManager().beginTransaction();
+                newFragment.show(ft, "datePicker");
+            }
+        });
+
+    }
+
+
+
 }
