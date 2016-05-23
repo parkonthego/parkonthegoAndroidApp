@@ -31,7 +31,8 @@
                 android:text="Reservation Details"
                 android:id="@+id/textView16"
                 android:layout_alignParentTop="true"
-                android:layout_alignParentStart="true" />
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true" />
             </LinearLayout>
 
 
@@ -45,18 +46,20 @@
         android:layout_marginTop="15dp"
         android:textColor="#000000"
         android:layout_below="@+id/linearLayout3"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="05/19/2016"
+        android:text="@string/confirmation_end_date"
         android:id="@+id/confirmationEndDateTextView"
         android:layout_marginLeft="15dp"
         android:layout_alignBottom="@+id/textView20"
         android:layout_alignParentEnd="true"
-        android:textColor="#000000" />
+        android:textColor="#000000"
+        android:layout_alignParentRight="true" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -65,18 +68,20 @@
         android:text="End Date:"
         android:id="@+id/textView22"
         android:textColor="#000000"
-        android:layout_alignBottom="@+id/confirmationEndDateTextView"
+        android:layout_alignTop="@+id/confirmationEndDateTextView"
+        android:layout_toLeftOf="@+id/confirmationEndDateTextView"
         android:layout_toStartOf="@+id/confirmationEndDateTextView" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="05/19/2016"
+        android:text="@string/confirmation_start_date"
         android:id="@+id/confirmationStartDateTextView"
         android:textColor="#000000"
         android:layout_above="@+id/textView24"
-        android:layout_toEndOf="@+id/textView34" />
+        android:layout_toEndOf="@+id/textView34"
+        android:layout_toRightOf="@+id/textView34" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -87,17 +92,18 @@
         android:layout_below="@+id/textView22"
         android:layout_alignParentStart="true"
         android:layout_marginTop="15dp"
-        android:textColor="#000000" />
+        android:textColor="#000000"
+        android:layout_alignParentLeft="true" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="05:00 PM"
+        android:text="@string/confirmation_start_time"
         android:id="@+id/confirmationStartTimeTextView"
-        android:layout_marginLeft="5dp"
         android:textColor="#000000"
         android:layout_alignBottom="@+id/textView24"
+        android:layout_alignLeft="@+id/confirmationStartDateTextView"
         android:layout_alignStart="@+id/confirmationStartDateTextView" />
 
     <TextView
@@ -108,17 +114,19 @@
         android:id="@+id/textView26"
         android:layout_alignTop="@+id/confirmationStartTimeTextView"
         android:layout_alignStart="@+id/textView22"
-        android:textColor="#000000" />
+        android:textColor="#000000"
+        android:layout_alignLeft="@+id/textView22" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="09:00 PM"
+        android:text="@string/confirmation_end_time"
         android:id="@+id/confirmationEndTimeTextView"
+        android:textColor="#000000"
         android:layout_alignBottom="@+id/textView26"
-        android:layout_alignStart="@+id/confirmationEndDateTextView"
-        android:textColor="#000000" />
+        android:layout_alignLeft="@+id/confirmationEndDateTextView"
+        android:layout_alignStart="@+id/confirmationEndDateTextView" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -129,17 +137,19 @@
         android:layout_marginTop="15dp"
         android:textColor="#000000"
         android:layout_below="@+id/textView26"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="431, Lafayette Street, Santa Clara, CA 95051"
+        android:text="@string/confirmation_location"
         android:id="@+id/confirmationLocationTextView"
         android:textColor="#000000"
         android:layout_alignTop="@+id/textView28"
-        android:layout_alignStart="@+id/confirmationTotalTimeTextView" />
+        android:layout_alignStart="@+id/confirmationTotalTimeTextView"
+        android:layout_alignLeft="@+id/confirmationTotalTimeTextView" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -150,17 +160,19 @@
         android:textColor="#000000"
         android:layout_below="@+id/confirmationLocationTextView"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="15dp" />
+        android:layout_marginTop="15dp"
+        android:layout_alignParentLeft="true" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="4 hours"
+        android:text="@string/confirmation_total_time"
         android:id="@+id/confirmationTotalTimeTextView"
         android:textColor="#000000"
-        android:layout_above="@+id/textView32"
-        android:layout_alignStart="@+id/confirmationStartTimeTextView" />
+        android:layout_alignBottom="@+id/textView30"
+        android:layout_toRightOf="@+id/textView24"
+        android:layout_toEndOf="@+id/textView24" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -171,17 +183,19 @@
         android:layout_below="@+id/textView30"
         android:layout_alignParentStart="true"
         android:layout_marginTop="15dp"
-        android:textColor="#000000" />
+        android:textColor="#000000"
+        android:layout_alignParentLeft="true" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="$4"
+        android:text="@string/confirmation_price_per_hr"
         android:id="@+id/confirmationPricePerHrTextView"
         android:layout_alignTop="@+id/textView32"
         android:layout_alignStart="@+id/confirmationTotalTimeTextView"
-        android:textColor="#000000" />
+        android:textColor="#000000"
+        android:layout_alignLeft="@+id/confirmationTotalTimeTextView" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -192,19 +206,21 @@
         android:layout_below="@+id/textView32"
         android:layout_alignParentStart="true"
         android:layout_marginTop="15dp"
-        android:textColor="#000000" />
+        android:textColor="#000000"
+        android:layout_alignParentLeft="true" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="$16"
+        android:text="@string/confirmation_total_price"
         android:id="@+id/confirmationTotalPriceTextView"
         android:editable="false"
         android:textColor="#000000"
         android:layout_alignBottom="@+id/textView34"
         android:layout_alignStart="@+id/confirmationPricePerHrTextView"
-        android:layout_marginTop="15dp" />
+        android:layout_marginTop="15dp"
+        android:layout_alignLeft="@+id/confirmationPricePerHrTextView" />
 
 
 
@@ -215,7 +231,8 @@
         android:layout_below="@+id/textView34"
         android:layout_alignParentStart="true"
         android:layout_marginTop="15dp"
-        android:id="@+id/linearLayout4">
+        android:id="@+id/linearLayout4"
+        android:layout_alignParentLeft="true">
 
     <TextView
         android:layout_width="wrap_content"
@@ -225,7 +242,8 @@
         android:id="@+id/textView36"
         android:layout_below="@+id/textView34"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="5dp" />
+        android:layout_marginTop="5dp"
+        android:layout_alignParentLeft="true" />
 
     </LinearLayout>
 
@@ -238,7 +256,9 @@
         android:layout_below="@+id/linearLayout4"
         android:layout_alignParentStart="true"
         android:layout_marginStart="51dp"
-        android:layout_marginTop="39dp" />
+        android:layout_marginTop="39dp"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="51dp" />
 
     <Button
         android:layout_width="wrap_content"

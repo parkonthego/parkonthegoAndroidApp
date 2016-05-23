@@ -12,6 +12,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import java.util.HashMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import edu.scu.smurali.parkonthego.retrofit.reponses.SignUpResponse;
 import edu.scu.smurali.parkonthego.retrofit.services.UserServices;
@@ -51,10 +53,30 @@ public class RegisterActivity extends AppCompatActivity {
                     HashMap data;
                     data = new HashMap();
                     data.put("firstName", regFirstName.getText().toString());
-                    data.put("lastName", regFirstName.getText().toString());
+                    data.put("lastName", regLastName.getText().toString());
                     data.put("email", regEmail.getText().toString());
                     data.put("password", regPassword.getText().toString());
-                    register(data);
+
+                    if (!validateFirstName(regFirstName.getText().toString())) {
+                        regFirstName.setError("Please Enter your First Name");
+                        regFirstName.requestFocus();
+                    } else if (!validateLastName(regLastName.getText().toString())) {
+                        regLastName.setError("Please Enter your Last Name");
+                        regLastName.requestFocus();
+                    } else if (!validateEmail(regEmail.getText().toString())) {
+                        regEmail.setError("Invalid Email");
+                        regEmail.requestFocus();
+                    } else if (!validatePassword(regPassword.getText().toString())) {
+                        regPassword.setError("Invalid Password ");
+                        regPassword.requestFocus();
+
+                    } else if (!validatePasswords(regPassword.getText().toString(), regCfnPassword.getText().toString())) {
+                        regPassword.setError("Passwords do not match ");
+                        regCfnPassword.requestFocus();
+                    } else {
+
+                        register(data);
+                    }
 
                 }
             });
@@ -64,6 +86,35 @@ public class RegisterActivity extends AppCompatActivity {
             Log.d("RegisterActivity", "onCreate: Null pointer in action bar " + ex.getMessage());
         }
         this.mContext = this;
+    }
+
+
+    protected boolean validateFirstName(String firstName) {
+        return firstName != null;
+    }
+
+    protected boolean validateLastName(String lastName) {
+        return lastName != null;
+    }
+
+    //Return true if password is valid and false if password is invalid
+    protected boolean validatePasswords(String password, String cfnPassword) {
+        return password != null && password.length() >= 8 && password.equals(cfnPassword);
+    }
+
+    protected boolean validatePassword(String password) {
+        return password != null && password.length() >= 8;
+    }
+
+    //Return true if email is valid and false if email is invalid
+    protected boolean validateEmail(String email) {
+        String emailPattern = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+                + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+
+        Pattern pattern = Pattern.compile(emailPattern);
+        Matcher matcher = pattern.matcher(email);
+
+        return matcher.matches();
     }
 
 

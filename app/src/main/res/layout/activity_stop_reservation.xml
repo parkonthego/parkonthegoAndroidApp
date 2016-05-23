@@ -51,7 +51,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="5:00 PM"
+                android:text="@string/stop_reservation_start_time"
                 android:id="@+id/stopReservationStartTimeTextView"
                 android:layout_alignTop="@+id/startTime"
                 android:layout_centerHorizontal="true" />
@@ -60,7 +60,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="9:00 PM"
+                android:text="@string/stop_reservation_end_time"
                 android:id="@+id/stopReservationEndTimeTextView"
                 android:layout_alignTop="@+id/endTime"
                 android:layout_centerHorizontal="true" />
