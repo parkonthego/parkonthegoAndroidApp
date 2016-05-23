@@ -20,7 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-   <TextView
+  <!-- <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
@@ -84,16 +84,31 @@
         android:layout_below="@+id/textView7"
         android:layout_alignStart="@+id/homeScreenEndDate"
         android:clickable="true"
-        android:onClick="showTimePickerDialog"/>
+        android:onClick="showTimePickerDialog"/>-->
 
-          <!--  <GridView
+            <GridView
                 android:gravity="center"
                 android:columnWidth="100dp"
                 android:stretchMode="columnWidth"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:id="@+id/grid"
-                android:numColumns="auto_fit" />-->
+                android:numColumns="2"
+                />
+
+            <GridView
+                android:gravity="center"
+                android:columnWidth="100dp"
+                android:stretchMode="columnWidth"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:id="@+id/grid2"
+                android:numColumns="2"
+                android:layout_below="@+id/grid"
+                android:layout_marginTop="40dp"
+                />
+
+
 
 
             <Button
@@ -101,8 +116,8 @@
         android:layout_height="wrap_content"
         android:text="Search"
         android:id="@+id/searchParkingLocation"
-        android:layout_below="@+id/homeScreenEndTime"
-        android:layout_marginTop="126dp"
+        android:layout_below="@+id/place_autocomplete_fragment"
+        android:layout_marginTop="50dp"
         android:layout_alignParentStart="true"
         android:layout_alignEnd="@+id/place_autocomplete_fragment" />
 
@@ -112,9 +127,10 @@
         android:layout_height="50dp"
         android:name="com.google.android.gms.location.places.ui.PlaceAutocompleteFragment"
         tools:layout="@android:layout/simple_dropdown_item_1line"
-        android:layout_below="@+id/homeScreenEndTime"
+        android:layout_below="@+id/grid2"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="40dp" />
+        android:layout_marginTop="50dp"
+        />
 
         </RelativeLayout>
 
