@@ -73,6 +73,8 @@ public class LocationsOnMap extends FragmentActivity implements OnMapReadyCallba
         double searchedLocationLong = (Double) intent.getSerializableExtra("searchedLocationLong");
         String searchedLocationAddress = intent.getStringExtra("searchedLocationAddress");
 
+        final LatLng searchedLocation = new LatLng(searchedLocationLat,searchedLocationLong);
+
 
         //locationList.
 
@@ -128,9 +130,10 @@ public class LocationsOnMap extends FragmentActivity implements OnMapReadyCallba
 
                 LatLng clickedLocation= marker.getPosition();
                 String title = marker.getTitle();
-                Intent intent = new Intent(LocationsOnMap.this ,ConfirmationActivity.class);
+                Intent intent = new Intent(LocationsOnMap.this ,SelectLocationToReserve.class);
                 intent.putExtra("ltdLng",clickedLocation);
                 intent.putExtra("title", title);
+                intent.putExtra("searchedLocation",searchedLocation);
 
                 startActivity(intent);
 

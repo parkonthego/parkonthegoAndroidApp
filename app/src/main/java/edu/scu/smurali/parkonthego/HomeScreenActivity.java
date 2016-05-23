@@ -1,5 +1,7 @@
 package edu.scu.smurali.parkonthego;
 
+import android.app.DialogFragment;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -15,7 +17,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.GridView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.places.Place;
@@ -31,6 +37,34 @@ public class HomeScreenActivity extends AppCompatActivity
     private LatLng searchedLatLng;
     private  String searchedAddress;
     PlaceAutocompleteFragment autocompleteFragment;
+
+   // TextView startDate, startTime, endDate, endTime;
+
+    GridView grid, grid2;
+    String[] web = {
+            "START DATE",
+            "START TIME",
+
+
+    } ;
+
+    String[] web2 = {
+            "END DATE",
+            "END TIME",
+    } ;
+
+    int[] imageId = {
+            R.drawable.calender,
+            R.drawable.clock,
+
+    };
+
+    int[] imageId2 = {
+            R.drawable.calender,
+            R.drawable.clock
+    };
+
+
     ///////////////////////////////////////////////////////test code//////////////////////////////////////////////
 
     ArrayList<Location> locationList = new ArrayList<Location>();
@@ -47,6 +81,8 @@ public class HomeScreenActivity extends AppCompatActivity
             //  actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setDisplayShowHomeEnabled(true);
             // actionBar.setHomeButtonEnabled(true);
+
+
         }
         catch(NullPointerException ex){
             Log.d("Home Screen", "onCreate: Null pointer in action bar "+ex.getMessage());
@@ -107,8 +143,43 @@ public class HomeScreenActivity extends AppCompatActivity
             }
         });
 
+        GridAdapter adapter = new GridAdapter(HomeScreenActivity.this, web, imageId);
+        grid=(GridView)findViewById(R.id.grid);
+        grid.setAdapter(adapter);
+
+        grid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+                Toast.makeText(HomeScreenActivity.this, "You Clicked at " +web[+ position], Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
+        GridAdapter adapter2 = new GridAdapter(HomeScreenActivity.this, web2, imageId2);
+        grid2=(GridView)findViewById(R.id.grid2);
+        grid2.setAdapter(adapter2);
+
+        grid2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+                 Toast.makeText(HomeScreenActivity.this, "You Clicked at " +web[+ position], Toast.LENGTH_SHORT).show();
+
+            }
+
+
+
+        });
+
+
+
+
 
     }
+
 
     @Override
     public void onBackPressed() {
@@ -149,7 +220,12 @@ public class HomeScreenActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_reservation) {
-            // Handle the camera action
+
+
+            Intent intent = new Intent(HomeScreenActivity.this,MyReservationActivity.class);
+            startActivity(intent);
+
+
         } else if (id == R.id.nav_settings) {
 
         } else if (id == R.id.nav_call) {
@@ -162,4 +238,69 @@ public class HomeScreenActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+
+    /*DatePicker and TimePicker code starts here*/
+
+
+//    public void showTimePickerDialog(View v) {
+//
+//        startTime = (TextView) findViewById(R.id.homeScreenStartTime);
+//        endTime = (TextView) findViewById(R.id.homeScreenEndTime);
+//
+//        startTime.setOnClickListener(new View.OnClickListener(){
+//            @Override
+//            public void onClick(View v) {
+//
+//                DialogFragment newFragment = new TimePickerFragment();
+//                FragmentTransaction ft =getFragmentManager().beginTransaction();
+//                newFragment.show(ft, "timePicker");
+//            }
+//        });
+//
+//        endTime.setOnClickListener(new View.OnClickListener(){
+//            @Override
+//            public void onClick(View v) {
+//
+//                DialogFragment newFragment = new TimePickerFragment();
+//                FragmentTransaction ft =getFragmentManager().beginTransaction();
+//                newFragment.show(ft, "timePicker");
+//            }
+//        });
+//
+//
+//    }
+//
+//    public void showDatePickerDialog(View v) {
+//
+//        startDate = (TextView) findViewById(R.id.homeScreenStartDate);
+//        endDate = (TextView) findViewById(R.id.homeScreenEndDate);
+//
+//        startDate.setOnClickListener(new View.OnClickListener(){
+//            @Override
+//            public void onClick(View v) {
+//
+//                DialogFragment newFragment = new DatePickerFragment();
+//                FragmentTransaction ft =getFragmentManager().beginTransaction();
+//                newFragment.show(ft, "datePicker");
+//            }
+//        });
+//
+//        endDate.setOnClickListener(new View.OnClickListener(){
+//            @Override
+//            public void onClick(View v) {
+//
+//                DialogFragment newFragment = new DatePickerFragment();
+//                FragmentTransaction ft =getFragmentManager().beginTransaction();
+//                newFragment.show(ft, "datePicker");
+//            }
+//        });
+//
+
+//}
+
+
+
+
+
 }
