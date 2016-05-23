@@ -10,76 +10,77 @@
     tools:context="edu.scu.smurali.parkonthego.LoginActivity">
 
     <ScrollView
+        android:id="@+id/scrollView3"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/scrollView3">
+        android:layout_height="match_parent">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
     <EditText
+        android:id="@+id/loignEmailEditText"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:hint="Email"
-        android:id="@+id/eMailEditText"
-        android:layout_marginTop="29dp"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_marginTop="29dp"
+        android:hint="@string/login_email"
+        android:inputType="textEmailAddress" />
 
     <EditText
+        android:id="@+id/loginPasswordEditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="textPassword"
-        android:ems="10"
-        android:id="@+id/passwordEditText"
+        android:layout_alignEnd="@+id/loignEmailEditText"
+        android:layout_alignStart="@+id/loignEmailEditText"
+        android:layout_below="@+id/loignEmailEditText"
         android:layout_marginTop="41dp"
-        android:layout_below="@+id/eMailEditText"
-        android:layout_alignStart="@+id/eMailEditText"
-        android:layout_alignEnd="@+id/eMailEditText"
-        android:hint="Password" />
+        android:ems="10"
+        android:hint="@string/login_password"
+        android:inputType="textPassword" />
 
     <CheckBox
+        android:id="@+id/stayLoggedInCheckBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Stay Logged In"
-        android:id="@+id/stayLoggedInCheckBox"
-        android:checked="true"
-        android:layout_marginTop="29dp"
+        android:layout_alignStart="@+id/forgotPasswordEmail"
         android:layout_below="@+id/forgotPasswordEmail"
-        android:layout_alignStart="@+id/forgotPasswordEmail" />
+        android:layout_marginTop="29dp"
+        android:checked="true"
+        android:text="@string/login_stay_logged_in" />
 
     <TextView
+        android:id="@+id/forgotPasswordEmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Forgot Password?"
-        android:id="@+id/forgotPasswordEmail"
-        android:clickable="true"
-        android:textColor="#008888"
         android:layout_below="@+id/logInButton"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="27dp" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Log In"
-        android:id="@+id/logInButton"
-        android:layout_below="@+id/passwordEditText"
-        android:layout_marginTop="30dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignEnd="@+id/passwordEditText" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Register"
-        android:id="@+id/registerButton"
-        android:layout_below="@+id/stayLoggedInCheckBox"
-        android:layout_alignParentStart="true"
         android:layout_marginTop="27dp"
-        android:layout_alignEnd="@+id/logInButton" />
+        android:clickable="true"
+        android:text="@string/login_forgot_password"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="#008888" />
+
+    <Button
+        android:id="@+id/logInButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/loginPasswordEditText"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/loginPasswordEditText"
+        android:layout_marginTop="30dp"
+        android:text="@string/login_button" />
+
+    <Button
+        android:id="@+id/registerButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/logInButton"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/stayLoggedInCheckBox"
+        android:layout_marginTop="27dp"
+        android:text="@string/login_register" />
 
 
         </RelativeLayout>

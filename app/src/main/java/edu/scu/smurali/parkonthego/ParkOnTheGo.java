@@ -10,11 +10,6 @@ import android.provider.Settings;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-
 import edu.scu.smurali.parkonthego.retrofit.services.UserServices;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
@@ -29,6 +24,36 @@ public class ParkOnTheGo extends Application {
     private static Context mContext;
     private static Context mApplicationContext;
     private Retrofit mRetrofit;
+
+    /**
+     * Returns the Application class instance
+     */
+    public static synchronized ParkOnTheGo getInstance() {
+        if (mInstance == null) {
+            mInstance = new ParkOnTheGo();
+        }
+        return mInstance;
+    }
+
+    public static float getDistance(double lat1, double lng1, double lat2, double lng2) {
+        double earthRadius = 3958.75;
+        double dLat = Math.toRadians(lat2 - lat1);
+        double dLng = Math.toRadians(lng2 - lng1);
+        double a = Math.sin(dLat / 2) * Math.sin(dLat / 2)
+                + Math.cos(Math.toRadians(lat1))
+                * Math.cos(Math.toRadians(lat2)) * Math.sin(dLng / 2)
+                * Math.sin(dLng / 2);
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        double dist = earthRadius * c;
+        int meterConversion = 1609;
+        return new Float(dist * meterConversion).floatValue();
+    }
+
+    public static boolean checkPlayServices(Context context) {
+        GoogleApiAvailability googleAPI = GoogleApiAvailability.getInstance();
+        int result = googleAPI.isGooglePlayServicesAvailable(context);
+        return result == ConnectionResult.SUCCESS;
+    }
 
     @Override
     public void onCreate() {
@@ -57,25 +82,6 @@ public class ParkOnTheGo extends Application {
     }
 
     /**
-     * Returns the Application class instance
-     */
-    public static synchronized ParkOnTheGo getInstance() {
-        if (mInstance == null) {
-            mInstance = new ParkOnTheGo();
-        }
-        return mInstance;
-    }
-
-    /**
-     * Sets the current activity contest.
-     * <p>
-     * Make sure that you call this in onCreate and onResume of an activity
-     */
-    public void setCurrentActivityContext(Context context) {
-        mContext = context;
-    }
-
-    /**
      * Returns the current activity context
      */
 
@@ -85,13 +91,6 @@ public class ParkOnTheGo extends Application {
         } else {
             return mContext;
         }
-    }
-
-
-    public String getDeviceId() {
-         return Settings.Secure.getString(getApplicationContext().getContentResolver(),
-                Settings.Secure.ANDROID_ID);
-
     }
 
 //    public void appendLog(String text) {
@@ -125,6 +124,21 @@ public class ParkOnTheGo extends Application {
 //
 //    }
 
+    /**
+     * Sets the current activity contest.
+     * <p/>
+     * Make sure that you call this in onCreate and onResume of an activity
+     */
+    public void setCurrentActivityContext(Context context) {
+        mContext = context;
+    }
+
+    public String getDeviceId() {
+        return Settings.Secure.getString(getApplicationContext().getContentResolver(),
+                Settings.Secure.ANDROID_ID);
+
+    }
+
     public void showProgressDialog() {
 
     }
@@ -145,8 +159,6 @@ public class ParkOnTheGo extends Application {
 
     }
 
-
-
     /**
      * Checks Internet connection's availability
      *
@@ -165,30 +177,6 @@ public class ParkOnTheGo extends Application {
                 }
         }
         return false;
-    }
-
-    public static float getDistance(double lat1, double lng1, double lat2, double lng2) {
-        double earthRadius = 3958.75;
-        double dLat = Math.toRadians(lat2 - lat1);
-        double dLng = Math.toRadians(lng2 - lng1);
-        double a = Math.sin(dLat / 2) * Math.sin(dLat / 2)
-                + Math.cos(Math.toRadians(lat1))
-                * Math.cos(Math.toRadians(lat2)) * Math.sin(dLng / 2)
-                * Math.sin(dLng / 2);
-        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-        double dist = earthRadius * c;
-        int meterConversion = 1609;
-        return new Float(dist * meterConversion).floatValue();
-    }
-
-    public static boolean checkPlayServices(Context context) {
-        GoogleApiAvailability googleAPI = GoogleApiAvailability.getInstance();
-        int result = googleAPI.isGooglePlayServicesAvailable(context);
-        if (result == ConnectionResult.SUCCESS) {
-            return true;
-        } else {
-            return false;
-        }
     }
 
 
