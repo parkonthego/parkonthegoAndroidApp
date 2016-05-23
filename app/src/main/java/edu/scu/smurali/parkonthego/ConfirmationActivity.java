@@ -28,12 +28,12 @@ public class ConfirmationActivity extends AppCompatActivity {
         catch(NullPointerException ex){
             Log.d("Confirmation:", "onCreate: Null pointer in action bar "+ex.getMessage());
         }
-        ////////////////////////////////////////////////testing varun raparla/////////////////////////////////////////////////////////////////////////////
-        Intent intent  = getIntent();
-        confirmationLocation=(TextView)findViewById(R.id.confirmationLocationTextView);
-       // LatLng location = (LatLng) intent.getExtras().get("ltdLng");
-        String title = intent.getExtras().getString("title");
-        confirmationLocation.setText(title);
+//        ////////////////////////////////////////////////testing varun raparla/////////////////////////////////////////////////////////////////////////////
+//        Intent intent  = getIntent();
+//        confirmationLocation=(TextView)findViewById(R.id.confirmationLocationTextView);
+//       // LatLng location = (LatLng) intent.getExtras().get("ltdLng");
+//        String title = intent.getExtras().getString("title");
+//        confirmationLocation.setText(title);
 
 
 

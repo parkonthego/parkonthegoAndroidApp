@@ -56,43 +56,27 @@ public class RegisterActivity extends AppCompatActivity {
                     data.put("lastName", regLastName.getText().toString());
                     data.put("email", regEmail.getText().toString());
                     data.put("password", regPassword.getText().toString());
-                   // register(data);
 
-                    if(!validateFirstName(regFirstName.getText().toString()))
-                    {
+                    if (!validateFirstName(regFirstName.getText().toString())) {
                         regFirstName.setError("Please Enter your First Name");
                         regFirstName.requestFocus();
-                    }
-
-                  else if(!validateLastName(regLastName.getText().toString()))
-                    {
+                    } else if (!validateLastName(regLastName.getText().toString())) {
                         regLastName.setError("Please Enter your Last Name");
                         regLastName.requestFocus();
+                    } else if (!validateEmail(regEmail.getText().toString())) {
+                        regEmail.setError("Invalid Email");
+                        regEmail.requestFocus();
+                    } else if (!validatePassword(regPassword.getText().toString())) {
+                        regPassword.setError("Invalid Password ");
+                        regPassword.requestFocus();
+
+                    } else if (!validatePasswords(regPassword.getText().toString(), regCfnPassword.getText().toString())) {
+                        regPassword.setError("Passwords do not match ");
+                        regCfnPassword.requestFocus();
+                    } else {
+
+                        register(data);
                     }
-
-
-                    else if(!validateEmail(regEmail.getText().toString()))
-                        {
-                            regEmail.setError("Invalid Email");
-                            regEmail.requestFocus();
-                        }
-
-                        else if (!validatePassword(regPassword.getText().toString()))
-                        {
-                            regPassword.setError("Invalid Password ");
-                            regPassword.requestFocus();
-
-                         }
-
-                        else if (!validatePasswords(regPassword.getText().toString(), regCfnPassword.getText().toString())) {
-                            regPassword.setError("Passwords do not match ");
-                            regCfnPassword.requestFocus();
-                        }
-                         else {
-
-                          //  Toast.makeText(RegisterActivity.this, "Input Validation Success", Toast.LENGTH_LONG).show();
-                            register(data);
-                        }
 
                 }
             });
@@ -106,40 +90,20 @@ public class RegisterActivity extends AppCompatActivity {
 
 
     protected boolean validateFirstName(String firstName) {
-        if(firstName != null) {
-            return true;
-        } else {
-            return false;
-        }
+        return firstName != null;
     }
 
-    protected boolean validateLastName(String lastName)
-    {
-        if(lastName != null)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+    protected boolean validateLastName(String lastName) {
+        return lastName != null;
     }
 
     //Return true if password is valid and false if password is invalid
     protected boolean validatePasswords(String password, String cfnPassword) {
-        if(password!=null && password.length()>=8 && password.equals(cfnPassword)) {
-            return true;
-        } else {
-            return false;
-        }
+        return password != null && password.length() >= 8 && password.equals(cfnPassword);
     }
 
     protected boolean validatePassword(String password) {
-        if(password!=null && password.length()>=8) {
-            return true;
-        } else {
-            return false;
-        }
+        return password != null && password.length() >= 8;
     }
 
     //Return true if email is valid and false if email is invalid
@@ -152,9 +116,6 @@ public class RegisterActivity extends AppCompatActivity {
 
         return matcher.matches();
     }
-
-
-
 
 
     public void register(HashMap data) {

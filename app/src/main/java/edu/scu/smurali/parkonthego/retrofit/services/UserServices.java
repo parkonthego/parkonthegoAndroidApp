@@ -1,5 +1,6 @@
 package edu.scu.smurali.parkonthego.retrofit.services;
 
+import edu.scu.smurali.parkonthego.retrofit.reponses.LoginResponse;
 import edu.scu.smurali.parkonthego.retrofit.reponses.SignUpResponse;
 import retrofit2.Call;
 import retrofit2.http.Field;
@@ -18,14 +19,11 @@ public interface UserServices {
             @Field("email") String email,
             @Field("password") String password);
 
-//    @FormUrlEncoded
-//    @POST("login/login")
-//    Call<LoginResponse> login(
-//            @Field("username") String username,
-//            @Field("password") String password,
-//            @Field("device_id") String deviceId,
-//            @Field("device_token") String deviceToken,
-//            @Field("device_type") String deviceType,
-//            @Field("language") String language);
+    @FormUrlEncoded
+    @POST("auth/login")
+    Call<LoginResponse> login(
+            @Field("email") String email,
+            @Field("password") String password);
+
 
 }

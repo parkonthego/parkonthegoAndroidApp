@@ -14,7 +14,7 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
-        android:name="edu.scu.smurali.parkonthego.ParkOnTheGo"
+        android:name=".ParkOnTheGo"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -26,8 +26,6 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
-
         </activity>
         <activity android:name=".RegisterActivity" />
         <activity android:name=".ForgotPasswordActivity" />
@@ -36,9 +34,7 @@
             android:label="@string/title_activity_home_screen"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".SettingsActivity" />
-        <activity android:name=".ConfirmationActivity">
-
-        </activity>
+        <activity android:name=".ConfirmationActivity"></activity>
 
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
@@ -56,10 +52,12 @@
             android:name=".LocationsOnMap"
             android:label="@string/title_activity_locations_on_map" />
         <activity android:name=".StartReservationActivity" />
-        <activity android:name=".StopReservationActivity">
-
-
-        </activity>
+        <activity android:name=".StopReservationActivity"></activity>
+        <activity android:name=".SelectLocationToReserve"></activity><!-- ATTENTION: This was auto-generated to add Google Play services to your project for
+     App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information. -->
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
     </application>
 
 </manifest>

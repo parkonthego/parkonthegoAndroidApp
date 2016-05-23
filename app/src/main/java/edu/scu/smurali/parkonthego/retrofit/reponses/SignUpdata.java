@@ -15,7 +15,7 @@ public class SignUpdata {
     private String displayName;
     @SerializedName("id")
     @Expose
-    private String id;
+    private int id;
 
     /**
      * @return The displayName
@@ -34,14 +34,14 @@ public class SignUpdata {
     /**
      * @return The id
      */
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
     /**
      * @param id The id
      */
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
