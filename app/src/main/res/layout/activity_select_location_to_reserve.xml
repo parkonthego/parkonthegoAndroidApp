@@ -35,7 +35,7 @@
                 android:layout_height="fill_parent"
                 android:id="@+id/selectLocationGrid"
                 android:layout_below="@+id/mapFrameLayout"
-                />
+               android:layout_marginTop="20dp" />
 
             <GridView
                 android:numColumns="2"
@@ -47,14 +47,16 @@
                 android:id="@+id/selectLocationGrid2"
                 android:layout_below="@+id/selectLocationGrid"
 
-                />
+                android:layout_marginTop="20dp" />
 
-            <EditText
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/selectLocation"
-                android:hint="Location"
-                android:layout_below="@+id/selectLocationGrid2"/>
+                android:hint="@string/select_location"
+                android:layout_below="@+id/selectLocationGrid2"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="10dp" />
 
             <Button
                 android:layout_width="wrap_content"
