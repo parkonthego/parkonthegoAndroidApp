@@ -1,6 +1,7 @@
 package edu.scu.smurali.parkonthego.retrofit.services;
 
 import edu.scu.smurali.parkonthego.retrofit.reponses.LocationResponse;
+import edu.scu.smurali.parkonthego.retrofit.reponses.SearchResponse;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
@@ -13,4 +14,11 @@ public interface LocationServices {
     @GET("search")
     Call<LocationResponse> getLocationDetails(
             @Query("id") String id);
+
+    @GET("search/getLocationsNearMe")
+    Call<SearchResponse> getLocationsNearMe(
+            @Query("userId") String id,
+            @Query("lat") Double lat,
+            @Query("long") Double lng,
+            @Query("dis") Integer distance);
 }
