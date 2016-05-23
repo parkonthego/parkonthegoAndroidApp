@@ -134,6 +134,7 @@ public class LocationsOnMap extends FragmentActivity implements OnMapReadyCallba
                 intent.putExtra("ltdLng",clickedLocation);
                 intent.putExtra("title", title);
                 intent.putExtra("searchedLocation",searchedLocation);
+                intent.putExtra("activityName","LocationsOnMap");
 
                 startActivity(intent);
 
