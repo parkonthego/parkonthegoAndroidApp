@@ -128,6 +128,7 @@ public class SelectLocationToReserve extends FragmentActivity {
 
 
         //  FragmentManager fragmentManager = getChildFragmentManager();
+        if(intentSource!=null)
         if(intentSource.equalsIgnoreCase("LocationsOnMap")) {
 
             mSupportMapFragment = (MapFragment) getFragmentManager().findFragmentById(id.mapFrameLayout);
