@@ -45,19 +45,29 @@ public class SelectLocationToReserve extends FragmentActivity {
 
     // GRID VIEW
 
-//    GridView grid;
-//    String[] web = {
-//            "START DATE",
-//            "START TIME",
-//            "END DATE",
-//            "END TIME",
-//
-//    } ;
-//    int[] imageId = {
-//            drawable.calender,
-//            drawable.clock,
-//
-//    };
+    GridView grid, grid2;
+    String[] web = {
+            "START DATE",
+            "START TIME",
+
+
+    } ;
+
+    String[] web2 = {
+            "END DATE",
+            "END TIME",
+    } ;
+
+    int[] imageId = {
+            R.drawable.calender,
+            R.drawable.clock,
+
+    };
+
+    int[] imageId2 = {
+            R.drawable.calender,
+            R.drawable.clock
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -128,18 +138,40 @@ public class SelectLocationToReserve extends FragmentActivity {
 
         // GRID VIEW
 
-//        GridAdapter adapter = new GridAdapter(SelectLocationToReserve.this, web, imageId);
-//        grid=(GridView)findViewById(R.id.grid);
-//        grid.setAdapter(adapter);
-//        grid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view,
-//                                    int position, long id) {
-//                Toast.makeText(SelectLocationToReserve.this, "You Clicked at " +web[+ position], Toast.LENGTH_SHORT).show();
-//
-//            }
-//        });
+        GridAdapter adapter = new GridAdapter(SelectLocationToReserve.this, web, imageId);
+        grid=(GridView)findViewById(id.selectLocationGrid);
+        grid.setAdapter(adapter);
+
+        grid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+                Toast.makeText(SelectLocationToReserve.this, "You Clicked at " +web[+ position], Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
+        GridAdapter adapter2 = new GridAdapter(SelectLocationToReserve.this, web2, imageId2);
+        grid2=(GridView)findViewById(id.selectLocationGrid2);
+        grid2.setAdapter(adapter2);
+
+        grid2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+                Toast.makeText(SelectLocationToReserve.this, "You Clicked at " +web[+ position], Toast.LENGTH_SHORT).show();
+
+            }
+
+
+
+        });
+
+
+
+
 
 
 
