@@ -49,7 +49,6 @@
             </intent-filter>
         </activity>
 
-
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -66,12 +65,17 @@
             android:name=".LocationsOnMap"
             android:label="@string/title_activity_locations_on_map" />
         <activity android:name=".StartReservationActivity" />
-        <activity android:name=".StopReservationActivity"></activity>
-        <activity android:name=".SelectLocationToReserve"></activity><!-- ATTENTION: This was auto-generated to add Google Play services to your project for
-     App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information. -->
+        <activity android:name=".StopReservationActivity" />
+        <activity android:name=".SelectLocationToReserve"></activity>
+        <!--
+ ATTENTION: This was auto-generated to add Google Play services to your project for
+     App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information.
+        -->
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
+
+        <activity android:name=".MyReservationActivity"></activity>
     </application>
 
 </manifest>
