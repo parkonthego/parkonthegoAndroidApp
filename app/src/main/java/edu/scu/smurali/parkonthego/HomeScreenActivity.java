@@ -190,7 +190,12 @@ public class HomeScreenActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_reservation) {
-            // Handle the camera action
+
+
+            Intent intent = new Intent(HomeScreenActivity.this,MyReservationActivity.class);
+            startActivity(intent);
+
+
         } else if (id == R.id.nav_settings) {
 
         } else if (id == R.id.nav_call) {
