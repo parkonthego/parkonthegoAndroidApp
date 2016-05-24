@@ -17,7 +17,7 @@ public interface LocationServices {
 
     @GET("search/getLocationsNearMe")
     Call<SearchResponse> getLocationsNearMe(
-            @Query("userId") String id,
+            @Query("userId") int id,
             @Query("lat") Double lat,
             @Query("long") Double lng,
             @Query("dis") Integer distance);

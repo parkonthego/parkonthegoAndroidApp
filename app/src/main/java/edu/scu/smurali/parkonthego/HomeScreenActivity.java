@@ -2,6 +2,7 @@ package edu.scu.smurali.parkonthego;
 
 import android.app.DialogFragment;
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -30,15 +31,29 @@ import com.google.android.gms.location.places.ui.PlaceSelectionListener;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import edu.scu.smurali.parkonthego.retrofit.reponses.LoginResponse;
+import edu.scu.smurali.parkonthego.retrofit.reponses.SearchData;
+import edu.scu.smurali.parkonthego.retrofit.reponses.SearchResponse;
+import edu.scu.smurali.parkonthego.retrofit.services.LocationServices;
+import edu.scu.smurali.parkonthego.retrofit.services.UserServices;
+import edu.scu.smurali.parkonthego.util.PreferencesManager;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.http.Query;
 
 public class HomeScreenActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-   private Button searchParkingLocations;
+    private Button searchParkingLocations;
     private LatLng searchedLatLng;
     private  String searchedAddress;
     PlaceAutocompleteFragment autocompleteFragment;
+    private Context mContext;
+    ArrayList<SearchData> locationList;
 
-   // TextView startDate, startTime, endDate, endTime;
+    // TextView startDate, startTime, endDate, endTime;
 
     GridView grid, grid2;
     String[] web = {
@@ -67,7 +82,6 @@ public class HomeScreenActivity extends AppCompatActivity
 
     ///////////////////////////////////////////////////////test code//////////////////////////////////////////////
 
-    ArrayList<Location> locationList = new ArrayList<Location>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,6 +101,13 @@ public class HomeScreenActivity extends AppCompatActivity
         catch(NullPointerException ex){
             Log.d("Home Screen", "onCreate: Null pointer in action bar "+ex.getMessage());
         }
+        locationList = new ArrayList<SearchData>();
+        //Intent intent = getIntent();
+//        final String userId =(String) intent.getExtras().get("userId");
+        PreferencesManager pm = PreferencesManager.getInstance(mContext);
+        final  int userId= pm.getUserId();
+
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -98,15 +119,16 @@ public class HomeScreenActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         //////////////////////////////////////////////////////////////////////////////////////
-        //////////////////////////////////////////////////////////////////////////////tst data//////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////getting locations near me data from server/////////////////////////////////
 
-        locationList.add(new Location(1,37.346317, -121.938025, 10, "location1","help1"));
-        locationList.add(new Location(2,37.345325, -121.936551, 10, "location1","help1"));
-        locationList.add(new Location(3,37.345186, -121.936744, 10, "location1","help1"));
-        locationList.add(new Location(4,37.345135, -121.935977, 10, "location1","help1"));
-        locationList.add(new Location(5,37.348650, -121.939345, 10, "location1","help1"));
-        locationList.add(new Location(6,37.3496, -121.9390, 10, "location1","help1"));
-        locationList.add(new Location(7,37.347562, -121.932221, 10, "location1","help1"));
+//        locationList.add(new Location(1,37.346317, -121.938025, 10, "location1","help1"));
+//        locationList.add(new Location(2,37.345325, -121.936551, 10, "location1","help1"));
+//        locationList.add(new Location(3,37.345186, -121.936744, 10, "location1","help1"));
+//        locationList.add(new Location(4,37.345135, -121.935977, 10, "location1","help1"));
+//        locationList.add(new Location(5,37.348650, -121.939345, 10, "location1","help1"));
+//        locationList.add(new Location(6,37.3496, -121.9390, 10, "location1","help1"));
+//        locationList.add(new Location(7,37.347562, -121.932221, 10, "location1","help1"));
+
 
 
         autocompleteFragment = (PlaceAutocompleteFragment)
@@ -134,12 +156,15 @@ public class HomeScreenActivity extends AppCompatActivity
         searchParkingLocations.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(HomeScreenActivity.this, LocationsOnMap.class);
-                intent.putExtra("locationList",locationList);
-                intent.putExtra("searchedLocationLat",searchedLatLng.latitude);
-                intent.putExtra("searchedLocationLong",searchedLatLng.longitude);
-                intent.putExtra("searchedLocationAddress",searchedAddress);
-                startActivity(intent);
+                searchLocationsNearMe(userId,searchedLatLng.latitude,searchedLatLng.longitude,5);
+//                Intent intent = new Intent(HomeScreenActivity.this, LocationsOnMap.class);
+////
+////
+//                intent.putExtra("locationList",locationList);
+//                intent.putExtra("searchedLocationLat",searchedLatLng.latitude);
+//                intent.putExtra("searchedLocationLong",searchedLatLng.longitude);
+//                intent.putExtra("searchedLocationAddress",searchedAddress);
+//                startActivity(intent);
             }
         });
 
@@ -166,7 +191,7 @@ public class HomeScreenActivity extends AppCompatActivity
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
-                 Toast.makeText(HomeScreenActivity.this, "You Clicked at " +web[+ position], Toast.LENGTH_SHORT).show();
+                Toast.makeText(HomeScreenActivity.this, "You Clicked at " +web[+ position], Toast.LENGTH_SHORT).show();
 
             }
 
@@ -179,6 +204,76 @@ public class HomeScreenActivity extends AppCompatActivity
 
 
     }
+
+    public void searchLocationsNearMe( int id,
+                                       Double lat,
+                                       Double lng,
+                                       Integer distance) {
+
+        if (ParkOnTheGo.getInstance().isConnectedToInterNet()) {
+            LocationServices locationServices = ParkOnTheGo.getInstance().getLocationServices();
+//            ParkOnTheGo.getInstance().showProgressDialog(mContext.getString(R.string
+//                    .login_signin), mContext.getString(R.string.login_please_wait));
+            Call<SearchResponse> call = locationServices.getLocationsNearMe(id, lat,lng,distance);
+            Log.d("Calling", "register: " + call);
+            call.enqueue(new Callback<SearchResponse>() {
+                @Override
+                public void onResponse(Call<SearchResponse> call,
+                                       Response<SearchResponse> response) {
+                    //ParkOnTheGo.getInstance().hideProgressDialog();
+                    if (response.isSuccessful()) {
+                        parseResponse(response.body());
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<SearchResponse> call, Throwable throwable) {
+                    Toast.makeText(getApplicationContext(), "Request failed" + throwable, Toast.LENGTH_SHORT).show();
+
+                    // ParkOnTheGo.getInstance().hideProgressDialog();
+                    // ParkOnTheGo.getInstance().handleError(throwable);
+                }
+            });
+        } else {
+            ParkOnTheGo.getInstance().showAlert(mContext.getString(R.string.no_network));
+        }
+    }
+
+    private void parseResponse(SearchResponse response) {
+        Toast.makeText(getApplicationContext(), "Login Sucess" + response.getSuccess(), Toast.LENGTH_SHORT).show();
+        if (response.getSuccess() == true) {
+            PreferencesManager pm = PreferencesManager.getInstance(mContext);
+            Log.d("Data", "parseResponse: " + response.getData().size() );
+
+          //  locationList= (ArrayList<SearchData>) response.getData();
+            for(int i=0;i<response.getData().size();i++)
+            {
+
+                locationList.add(response.getData().get(i));
+                Log.d("Data", "parseResponse: " + locationList.get(i).toString());
+            }
+            Intent intent = new Intent(HomeScreenActivity.this, LocationsOnMap.class);
+//
+//
+            intent.putExtra("locationList",locationList);
+            intent.putExtra("searchedLocationLat",searchedLatLng.latitude);
+            intent.putExtra("searchedLocationLong",searchedLatLng.longitude);
+            intent.putExtra("searchedLocationAddress",searchedAddress);
+            startActivity(intent);
+
+
+////            pm.updateUserId(response.getData().getId());
+////            pm.updateUserName(response.getData().getDisplayName());
+////            response.getData().getId();
+//            Intent intent = new Intent(LoginActivity.this, HomeScreenActivity.class);
+//            startActivity(intent);
+
+
+        } else {
+
+        }
+    }
+
 
 
     @Override

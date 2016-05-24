@@ -149,6 +149,7 @@ public class LoginActivity extends AppCompatActivity {
             pm.updateUserName(response.getData().getDisplayName());
             response.getData().getId();
             Intent intent = new Intent(LoginActivity.this, HomeScreenActivity.class);
+            intent.putExtra("userId",response.getData().getId());
             startActivity(intent);
 
         } else {

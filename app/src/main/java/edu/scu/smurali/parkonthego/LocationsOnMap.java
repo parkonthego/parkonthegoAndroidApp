@@ -20,6 +20,8 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
 
+import edu.scu.smurali.parkonthego.retrofit.reponses.SearchData;
+
 public class LocationsOnMap extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
@@ -68,10 +70,10 @@ public class LocationsOnMap extends FragmentActivity implements OnMapReadyCallba
         mMap = googleMap;
 
        Intent intent = getIntent();
-       ArrayList<Location> locationList= (ArrayList<Location>) intent.getSerializableExtra("locationList");
-        double searchedLocationLat = (Double) intent.getSerializableExtra("searchedLocationLat");
+       ArrayList<SearchData> locationList= (ArrayList<SearchData>) intent.getSerializableExtra("locationList");
+       double searchedLocationLat = (Double) intent.getSerializableExtra("searchedLocationLat");
         double searchedLocationLong = (Double) intent.getSerializableExtra("searchedLocationLong");
-        String searchedLocationAddress = intent.getStringExtra("searchedLocationAddress");
+      String searchedLocationAddress = intent.getStringExtra("searchedLocationAddress");
 
         final LatLng searchedLocation = new LatLng(searchedLocationLat,searchedLocationLong);
 
@@ -81,15 +83,17 @@ public class LocationsOnMap extends FragmentActivity implements OnMapReadyCallba
 
         // Add a marker in Sydney and move the camera
 
+        if(locationList.size()>0) {
+            MarkerOptions custom = new MarkerOptions().position(new LatLng(searchedLocationLat, searchedLocationLong)).title("Marker in location      " + searchedLocationAddress)
+                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
+            mMap.addMarker(custom);
+        }
 
-        MarkerOptions custom = new MarkerOptions().position(new LatLng(searchedLocationLat,searchedLocationLong)).title("Marker in location      "+searchedLocationAddress)
-                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
-
-        mMap.addMarker(custom);
        for(int i=0;i<locationList.size();i++)
        {
+         //  Log.d("data", "onMapReady: "+locationList.get(i).getDescription());
            mMap.addMarker(new MarkerOptions().position(new LatLng(locationList.get(i).getLatitude(),locationList.get(i).getLongitude()))
-                                                            .title("location :"+locationList.get(i).getAddress()+
+                                                            .title("location :"+locationList.get(i).getDescription()+
                                                                     "Rate per Hour: "+locationList.get(i).getPrice()));
        }
 
