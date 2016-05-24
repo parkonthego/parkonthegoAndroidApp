@@ -6,7 +6,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ExpandableListView;
+import android.widget.GridView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -14,6 +16,8 @@ import java.util.HashMap;
 import java.util.List;
 
 public class MyReservationActivity extends AppCompatActivity {
+
+
 
 
     ExpandableListAdapter listAdapter;
@@ -39,6 +43,8 @@ public class MyReservationActivity extends AppCompatActivity {
         catch(NullPointerException ex){
             Log.d("MyReservation Screen", "onCreate: Null pointer in action bar "+ex.getMessage());
         }
+
+
 
 
         // LIST VIEW
@@ -109,12 +115,14 @@ public class MyReservationActivity extends AppCompatActivity {
         reservation1.add("Direction");
         reservation1.add("Start");
         reservation1.add("Cancel");
+        reservation1.add("Edit");
 
         List<String> reservation2 = new ArrayList<String>();
 
         reservation2.add("Direction");
         reservation2.add("Start");
         reservation2.add("Cancel");
+        reservation2.add("Edit");
 
         listDataChild.put(listDataHeader.get(0), reservation1); // Header, Child data
         listDataChild.put(listDataHeader.get(1), reservation2);
