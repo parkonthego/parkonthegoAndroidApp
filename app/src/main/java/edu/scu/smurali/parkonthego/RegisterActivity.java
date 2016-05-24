@@ -51,11 +51,7 @@ public class RegisterActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     HashMap data;
-                    data = new HashMap();
-                    data.put("firstName", regFirstName.getText().toString());
-                    data.put("lastName", regLastName.getText().toString());
-                    data.put("email", regEmail.getText().toString());
-                    data.put("password", regPassword.getText().toString());
+
 
                     if (!validateFirstName(regFirstName.getText().toString())) {
                         regFirstName.setError("Please Enter your First Name");
@@ -67,14 +63,20 @@ public class RegisterActivity extends AppCompatActivity {
                         regEmail.setError("Invalid Email");
                         regEmail.requestFocus();
                     } else if (!validatePassword(regPassword.getText().toString())) {
-                        regPassword.setError("Invalid Password ");
+                        regPassword.setError("Invalid Password, Password should more than 6 character ");
                         regPassword.requestFocus();
-
+                    } else if (!validatePassword(regCfnPassword.getText().toString())) {
+                        regCfnPassword.setError("Invalid Confirm Password, Password should more than 6 character ");
+                        regCfnPassword.requestFocus();
                     } else if (!validatePasswords(regPassword.getText().toString(), regCfnPassword.getText().toString())) {
                         regPassword.setError("Passwords do not match ");
                         regCfnPassword.requestFocus();
                     } else {
-
+                        data = new HashMap();
+                        data.put("firstName", regFirstName.getText().toString());
+                        data.put("lastName", regLastName.getText().toString());
+                        data.put("email", regEmail.getText().toString());
+                        data.put("password", regPassword.getText().toString());
                         register(data);
                     }
 
@@ -90,20 +92,20 @@ public class RegisterActivity extends AppCompatActivity {
 
 
     protected boolean validateFirstName(String firstName) {
-        return firstName != null;
+        return (firstName != null && !firstName.equals(""));
     }
 
     protected boolean validateLastName(String lastName) {
-        return lastName != null;
+        return (lastName != null && !lastName.equals(""));
     }
 
     //Return true if password is valid and false if password is invalid
     protected boolean validatePasswords(String password, String cfnPassword) {
-        return password != null && password.length() >= 8 && password.equals(cfnPassword);
+        return password != null && password.length() >= 6 && password.equals(cfnPassword);
     }
 
     protected boolean validatePassword(String password) {
-        return password != null && password.length() >= 8;
+        return password != null && password.length() >= 6;
     }
 
     //Return true if email is valid and false if email is invalid
