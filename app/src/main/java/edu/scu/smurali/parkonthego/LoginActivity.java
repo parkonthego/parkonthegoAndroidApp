@@ -31,7 +31,7 @@ public class LoginActivity extends AppCompatActivity {
     private Context mContext;
     private PreferencesManager pManager;
 
-
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -114,8 +114,7 @@ public class LoginActivity extends AppCompatActivity {
 
         if (ParkOnTheGo.getInstance().isConnectedToInterNet()) {
             UserServices userServices = ParkOnTheGo.getInstance().getUserServices();
-//            ParkOnTheGo.getInstance().showProgressDialog(mContext.getString(R.string
-//                    .login_signin), mContext.getString(R.string.login_please_wait));
+            ParkOnTheGo.getInstance().showProgressDialog("Login", "Please Wait");
             Call<LoginResponse> call = userServices.login(email, password);
             Log.d("Calling", "register: " + call);
             call.enqueue(new Callback<LoginResponse>() {
@@ -150,6 +149,7 @@ public class LoginActivity extends AppCompatActivity {
             response.getData().getId();
             Intent intent = new Intent(LoginActivity.this, HomeScreenActivity.class);
             startActivity(intent);
+            finish();
 
         } else {
 
