@@ -117,6 +117,7 @@ public class SelectLocationToReserve extends FragmentActivity {
             locationSelected= locationList.get(i);
             }
     }
+        ////////////////////////////////////////////// to set price and other variables in positions//////////////////////////
 
 
 
