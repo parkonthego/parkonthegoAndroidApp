@@ -1,6 +1,8 @@
 package edu.scu.smurali.parkonthego;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -222,6 +224,10 @@ public class HomeScreenActivity extends AppCompatActivity
         } else if (id == R.id.nav_call) {
 
         } else if (id == R.id.nav_help) {
+
+        } else if(id == R.id.nav_logout){
+
+
 
         }
 
