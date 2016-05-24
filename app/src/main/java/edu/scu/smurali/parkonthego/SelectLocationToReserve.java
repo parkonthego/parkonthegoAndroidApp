@@ -113,6 +113,7 @@ public class SelectLocationToReserve extends FragmentActivity {
         final LatLng location = (LatLng) intent.getExtras().get("ltdLng");
         final String title = intent.getExtras().getString("title");
         final LatLng searchedLocation = (LatLng) intent.getExtras().get("searchedLocation");
+        final String searchedLocationAddress = intent.getStringExtra("searchedLocationAddress");
         selectLocation = (TextView) findViewById(R.id.selectLocation);
         price = (TextView)findViewById(id.pricePerHour);
 
@@ -166,9 +167,13 @@ public class SelectLocationToReserve extends FragmentActivity {
                 }
             }
 
-            String priceString = new Double(locationSelected.getPrice()).toString();
-            selectLocation.setText(locationSelected.getDescription());
-            price.setText(priceString);
+                String priceString = new Double(locationSelected.getPrice()).toString();
+                selectLocation.setText(locationSelected.getDescription());
+                price.setText(priceString);
+                final String selectedLocationDescription = locationSelected.getDescription();
+
+
+
             mSupportMapFragment = (MapFragment) getFragmentManager().findFragmentById(id.mapFrameLayout);
             if (mSupportMapFragment == null) {
                 FragmentManager fragmentManager = getFragmentManager();
@@ -188,13 +193,13 @@ public class SelectLocationToReserve extends FragmentActivity {
 
                             // -> marker_latlng // MAKE THIS WHATEVER YOU WANT
 
-                            MarkerOptions custom = new MarkerOptions().position(searchedLocation).title("Marker in location      " + searchedLocation.latitude + "," + searchedLocation.longitude)
+                            MarkerOptions custom = new MarkerOptions().position(searchedLocation).title("" + searchedLocationAddress)
                                     .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
 
                             googleMap.addMarker(custom);
 
                             googleMap.addMarker(new MarkerOptions().position(location)
-                                    .title("location :" + location.latitude + "," + location.longitude));
+                                    .title(""+selectedLocationDescription ));
 
 
                             Polyline line = googleMap.addPolyline(new PolylineOptions()
@@ -496,7 +501,7 @@ public class SelectLocationToReserve extends FragmentActivity {
                                 // -> marker_latlng // MAKE THIS WHATEVER YOU WANT
 
                                 MarkerOptions custom = new MarkerOptions().position(new LatLng(recognisedLocation.getLatitude(),recognisedLocation.getLongitude()))
-                                        .title("Marker in location      " +recognisedLocation.getDescription())
+                                        .title("" +recognisedLocation.getDescription())
                                         .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
 
                                 googleMap.addMarker(custom);

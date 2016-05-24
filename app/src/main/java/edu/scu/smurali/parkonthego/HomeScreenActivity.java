@@ -3,6 +3,7 @@ package edu.scu.smurali.parkonthego;
 import android.app.DialogFragment;
 import android.app.FragmentTransaction;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -12,6 +13,7 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -156,7 +158,16 @@ public class HomeScreenActivity extends AppCompatActivity
         searchParkingLocations.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                searchLocationsNearMe(userId,searchedLatLng.latitude,searchedLatLng.longitude,5);
+                if(searchedLatLng==null)
+                {
+                    String message=" please select the destination adddress to find parking";
+                    String title = " Select Location";
+                    ParkOnTheGo.getInstance().showAlert(HomeScreenActivity.this,message,title);
+                }
+                else{
+                    searchLocationsNearMe(userId,searchedLatLng.latitude,searchedLatLng.longitude,5);
+                }
+
 //                Intent intent = new Intent(HomeScreenActivity.this, LocationsOnMap.class);
 ////
 ////
@@ -252,14 +263,17 @@ public class HomeScreenActivity extends AppCompatActivity
                 locationList.add(response.getData().get(i));
                 Log.d("Data", "parseResponse: " + locationList.get(i).toString());
             }
-            Intent intent = new Intent(HomeScreenActivity.this, LocationsOnMap.class);
+
+
+
+                Intent intent = new Intent(HomeScreenActivity.this, LocationsOnMap.class);
 //
 //
-            intent.putExtra("locationList",locationList);
-            intent.putExtra("searchedLocationLat",searchedLatLng.latitude);
-            intent.putExtra("searchedLocationLong",searchedLatLng.longitude);
-            intent.putExtra("searchedLocationAddress",searchedAddress);
-            startActivity(intent);
+                intent.putExtra("locationList", locationList);
+                intent.putExtra("searchedLocationLat", searchedLatLng.latitude);
+                intent.putExtra("searchedLocationLong", searchedLatLng.longitude);
+                intent.putExtra("searchedLocationAddress", searchedAddress);
+                startActivity(intent);
 
 
 ////            pm.updateUserId(response.getData().getId());
