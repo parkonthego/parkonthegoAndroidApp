@@ -9,10 +9,17 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="edu.scu.smurali.parkonthego.MyReservationActivity">
 
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/myReservationFrameLayout">
+
     <ExpandableListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/expandableListView"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true" />
+
+    </FrameLayout>
 </RelativeLayout>

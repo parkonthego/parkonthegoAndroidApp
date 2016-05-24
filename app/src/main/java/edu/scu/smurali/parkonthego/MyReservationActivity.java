@@ -17,9 +17,6 @@ import java.util.List;
 
 public class MyReservationActivity extends AppCompatActivity {
 
-
-
-
     ExpandableListAdapter listAdapter;
     ExpandableListView expListView;
     List<String> listDataHeader;

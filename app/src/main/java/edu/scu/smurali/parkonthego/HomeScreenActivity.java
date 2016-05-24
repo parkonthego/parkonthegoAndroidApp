@@ -1,5 +1,6 @@
 package edu.scu.smurali.parkonthego;
 
+import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -26,9 +27,15 @@ import com.google.android.gms.maps.model.LatLng;
 
 import java.util.ArrayList;
 
+import edu.scu.smurali.parkonthego.Fragments.HelpFragment;
+import edu.scu.smurali.parkonthego.Fragments.HomeFragment;
+import edu.scu.smurali.parkonthego.Fragments.MyReservationFragment;
+
 public class HomeScreenActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
     PlaceAutocompleteFragment autocompleteFragment;
+
     GridView grid, grid2;
     String[] web = {
             "START DATE",
@@ -87,6 +94,7 @@ public class HomeScreenActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
 
         //////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////tst data//////////////////////////////////
@@ -160,13 +168,10 @@ public class HomeScreenActivity extends AppCompatActivity
                  Toast.makeText(HomeScreenActivity.this, "You Clicked at " +web[+ position], Toast.LENGTH_SHORT).show();
 
             }
-
-
-
         });
 
-
-
+        FragmentManager fm = getFragmentManager();
+        fm.beginTransaction().replace(R.id.content_frame, new HomeFragment()).commit();
 
 
     }
@@ -197,9 +202,9 @@ public class HomeScreenActivity extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_uninstall) {
-            return true;
-        }
+//        if (id == R.id.action_uninstall) {
+//            return true;
+//        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -208,20 +213,35 @@ public class HomeScreenActivity extends AppCompatActivity
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
+
+        FragmentManager fm = getFragmentManager();
         int id = item.getItemId();
 
-        if (id == R.id.nav_reservation) {
+        if(id == R.id.nav_home){
 
+            fm.beginTransaction().replace(R.id.content_frame, new HomeFragment()).commit();
 
-            Intent intent = new Intent(HomeScreenActivity.this,MyReservationActivity.class);
-            startActivity(intent);
+        }
+       else if (id == R.id.nav_reservation) {
 
-
+            fm.beginTransaction().replace(R.id.content_frame, new MyReservationFragment()).commit();
+//            Intent intent = new Intent(HomeScreenActivity.this,MyReservationActivity.class);
+//            startActivity(intent);
         } else if (id == R.id.nav_settings) {
+
+            fm.beginTransaction().replace(R.id.content_frame, new MyReservationFragment()).commit();
 
         } else if (id == R.id.nav_call) {
 
+
+
         } else if (id == R.id.nav_help) {
+
+            fm.beginTransaction().replace(R.id.content_frame, new HelpFragment()).commit();
+
+        } else if (id == R.id.nav_logout) {
+
+
 
         }
 

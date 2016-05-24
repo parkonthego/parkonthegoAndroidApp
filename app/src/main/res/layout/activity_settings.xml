@@ -9,6 +9,11 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="edu.scu.smurali.parkonthego.SettingsActivity">
 
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/settingsFrameLayout">
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -175,6 +180,8 @@
         android:layout_marginBottom="29dp"
         android:layout_alignParentBottom="true"
         android:layout_alignEnd="@+id/scrollView" />
+
+    </FrameLayout>
 
 
 </RelativeLayout>
