@@ -13,6 +13,14 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.mobsandgeeks.saripaar.ValidationError;
+import com.mobsandgeeks.saripaar.Validator;
+import com.mobsandgeeks.saripaar.annotation.Email;
+import com.mobsandgeeks.saripaar.annotation.NotEmpty;
+import com.mobsandgeeks.saripaar.annotation.Password;
+
+import java.util.List;
+
 import edu.scu.smurali.parkonthego.retrofit.reponses.LoginResponse;
 import edu.scu.smurali.parkonthego.retrofit.services.UserServices;
 import edu.scu.smurali.parkonthego.util.PreferencesManager;
@@ -20,24 +28,34 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity implements Validator.ValidationListener {
 
     public final int permissions = 100;
     private Button login, register;
     private Button maps;
     private TextView forgotPassword;
     private CheckBox stayLoggedIn;
-    private EditText email, pwd;
     private Context mContext;
     private PreferencesManager pManager;
 
-    
+    @NotEmpty
+    @Email
+    private EditText email;
+    @Password(min = 6, message = "Password should be 6 characters in length")
+    private EditText pwd;
     @Override
+
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         this.mContext = this;
         pManager = PreferencesManager.getInstance(mContext);
+
+        //Register validator for this activity
+        final Validator validator = new Validator(this);
+        validator.setValidationListener(this);
+
         try {
             ActionBar actionBar = getSupportActionBar();
             actionBar.setTitle("ParkOnTheGo");
@@ -69,7 +87,7 @@ public class LoginActivity extends AppCompatActivity {
 
                 String emailText = email.getText().toString();
                 String passwordText = pwd.getText().toString();
-                login(emailText, passwordText);
+                validator.validate();
 
             }
         });
@@ -107,6 +125,30 @@ public class LoginActivity extends AppCompatActivity {
         Log.d("**************", "onCreate: " + login);
 
 
+    }
+
+    @Override
+    public void onValidationSucceeded() {
+        String emailValue = email.getText().toString();
+        String password = pwd.getText().toString();
+
+        //background login task
+        login(emailValue, password);
+    }
+
+    @Override
+    public void onValidationFailed(List<ValidationError> errors) {
+        for (ValidationError error : errors) {
+            View view = error.getView();
+            String message = error.getCollatedErrorMessage(this);
+
+            // Display error messages ;)
+            if (view instanceof EditText) {
+                ((EditText) view).setError(message);
+            } else {
+                Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+            }
+        }
     }
 
 
