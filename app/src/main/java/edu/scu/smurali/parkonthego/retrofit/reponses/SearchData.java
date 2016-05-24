@@ -7,7 +7,9 @@ package edu.scu.smurali.parkonthego.retrofit.reponses;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class SearchData {
+import java.io.Serializable;
+
+public class SearchData  implements Serializable {
 
     @SerializedName("id")
     @Expose

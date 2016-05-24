@@ -19,12 +19,16 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
+import java.util.Date;
+
+import edu.scu.smurali.parkonthego.retrofit.reponses.SearchData;
 
 public class LocationsOnMap extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
     public final int permissions = 100;
     int counter = 0;
+   // Date date = new Date(12/25/16);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,10 +72,10 @@ public class LocationsOnMap extends FragmentActivity implements OnMapReadyCallba
         mMap = googleMap;
 
        Intent intent = getIntent();
-       ArrayList<Location> locationList= (ArrayList<Location>) intent.getSerializableExtra("locationList");
-        double searchedLocationLat = (Double) intent.getSerializableExtra("searchedLocationLat");
+       ArrayList<SearchData> locationList= (ArrayList<SearchData>) intent.getSerializableExtra("locationList");
+       double searchedLocationLat = (Double) intent.getSerializableExtra("searchedLocationLat");
         double searchedLocationLong = (Double) intent.getSerializableExtra("searchedLocationLong");
-        String searchedLocationAddress = intent.getStringExtra("searchedLocationAddress");
+      String searchedLocationAddress = intent.getStringExtra("searchedLocationAddress");
 
         final LatLng searchedLocation = new LatLng(searchedLocationLat,searchedLocationLong);
 
@@ -81,16 +85,25 @@ public class LocationsOnMap extends FragmentActivity implements OnMapReadyCallba
 
         // Add a marker in Sydney and move the camera
 
+        if(locationList.size()>0) {
+            MarkerOptions custom = new MarkerOptions().position(new LatLng(searchedLocationLat, searchedLocationLong)).title("Destination:" + searchedLocationAddress)
+                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
+            mMap.addMarker(custom);
+        }
 
-        MarkerOptions custom = new MarkerOptions().position(new LatLng(searchedLocationLat,searchedLocationLong)).title("Marker in location      "+searchedLocationAddress)
-                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
-
-        mMap.addMarker(custom);
        for(int i=0;i<locationList.size();i++)
        {
-           mMap.addMarker(new MarkerOptions().position(new LatLng(locationList.get(i).getLatitude(),locationList.get(i).getLongitude()))
-                                                            .title("location :"+locationList.get(i).getAddress()+
-                                                                    "Rate per Hour: "+locationList.get(i).getPrice()));
+           String price = new Double(locationList.get(i).getPrice()).toString();
+           //  Log.d("data", "onMapReady: "+locationList.get(i).getDescription());
+           MarkerOptions custom = new MarkerOptions().position(new LatLng(locationList.get(i).getLatitude(),locationList.get(i).getLongitude()))
+               .title(""+price+" $/Hr").visible(true);
+           mMap.addMarker(custom);
+
+
+
+
+
+
        }
 
 
@@ -124,6 +137,7 @@ public class LocationsOnMap extends FragmentActivity implements OnMapReadyCallba
 
 
 
+
         mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
             @Override
             public void onInfoWindowClick(Marker marker) {
@@ -138,6 +152,23 @@ public class LocationsOnMap extends FragmentActivity implements OnMapReadyCallba
 
                 startActivity(intent);
 
+            }
+        });
+
+        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(Marker marker) {
+                LatLng clickedLocation= marker.getPosition();
+                String title = marker.getTitle();
+                Intent intent = new Intent(LocationsOnMap.this ,SelectLocationToReserve.class);
+                intent.putExtra("ltdLng",clickedLocation);
+                intent.putExtra("title", title);
+                intent.putExtra("searchedLocation",searchedLocation);
+                intent.putExtra("activityName","LocationsOnMap");
+
+                startActivity(intent);
+
+                return false;
             }
         });
 
