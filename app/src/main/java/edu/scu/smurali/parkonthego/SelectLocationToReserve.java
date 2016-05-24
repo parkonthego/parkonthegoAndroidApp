@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
@@ -46,7 +47,15 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import edu.scu.smurali.parkonthego.retrofit.reponses.LocationData;
+import edu.scu.smurali.parkonthego.retrofit.reponses.LocationResponse;
 import edu.scu.smurali.parkonthego.retrofit.reponses.SearchData;
+import edu.scu.smurali.parkonthego.retrofit.reponses.SearchResponse;
+import edu.scu.smurali.parkonthego.retrofit.services.LocationServices;
+import edu.scu.smurali.parkonthego.util.PreferencesManager;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import static edu.scu.smurali.parkonthego.R.*;
 
@@ -59,6 +68,8 @@ public class SelectLocationToReserve extends FragmentActivity {
     public static final String TAG = "Nfc Functionality";
     private TextView selectLocation,price;
     private Button selectLocationReserveButton;
+    private Context mContext;
+    LocationData recognisedLocation;
 
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
@@ -108,15 +119,7 @@ public class SelectLocationToReserve extends FragmentActivity {
 
         ArrayList<SearchData> locationList = (ArrayList<SearchData>) intent.getSerializableExtra("listOfLocations");
 
-        SearchData locationSelected = new SearchData();
 
-        for(int i=0;i<locationList.size();i++)
-        {
-            if(locationList.get(i).getLatitude()==location.latitude&&locationList.get(i).getLongitude()==location.longitude)
-            {
-            locationSelected= locationList.get(i);
-            }
-    }
         ////////////////////////////////////////////// to set price and other variables in positions//////////////////////////
 
 
@@ -153,7 +156,19 @@ public class SelectLocationToReserve extends FragmentActivity {
         //  FragmentManager fragmentManager = getChildFragmentManager();
         if(intentSource!=null)
         if(intentSource.equalsIgnoreCase("LocationsOnMap")) {
+            SearchData locationSelected = new SearchData();
+
+            for(int i=0;i<locationList.size();i++)
+            {
+                if(locationList.get(i).getLatitude()==location.latitude&&locationList.get(i).getLongitude()==location.longitude)
+                {
+                    locationSelected= locationList.get(i);
+                }
+            }
+
+            String priceString = new Double(locationSelected.getPrice()).toString();
             selectLocation.setText(locationSelected.getDescription());
+            price.setText(priceString);
             mSupportMapFragment = (MapFragment) getFragmentManager().findFragmentById(id.mapFrameLayout);
             if (mSupportMapFragment == null) {
                 FragmentManager fragmentManager = getFragmentManager();
@@ -454,10 +469,11 @@ public class SelectLocationToReserve extends FragmentActivity {
 
                 Log.d("Location", "onPostExecute: "+ result);
                 /////////////// to do data search from server////////////////////////
-                selectLocation.setText("Read content: " + result);
+             //   selectLocation.setText("Read content: " + result);
                 //////////to be replaced by searchinf array of locations using nfc id////////////////////////////
 
-                final LatLng searchedLocation = new LatLng(37.346317, -121.938025);
+               // final LatLng searchedLocation = new LatLng(37.346317, -121.938025);
+                findLocationByID(result);
 
                 ///////////////////
                 mSupportMapFragment = (MapFragment) getFragmentManager().findFragmentById(id.mapFrameLayout);
@@ -479,7 +495,8 @@ public class SelectLocationToReserve extends FragmentActivity {
 
                                 // -> marker_latlng // MAKE THIS WHATEVER YOU WANT
 
-                                MarkerOptions custom = new MarkerOptions().position(searchedLocation).title("Marker in location      " + searchedLocation.latitude + "," + searchedLocation.longitude)
+                                MarkerOptions custom = new MarkerOptions().position(new LatLng(recognisedLocation.getLatitude(),recognisedLocation.getLongitude()))
+                                        .title("Marker in location      " +recognisedLocation.getDescription())
                                         .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
 
                                 googleMap.addMarker(custom);
@@ -493,7 +510,7 @@ public class SelectLocationToReserve extends FragmentActivity {
 //                                        .width(5)
 //                                        .color(Color.RED));
 
-                                CameraPosition cameraPosition = new CameraPosition.Builder().target(searchedLocation).zoom(15.0f).build();
+                                CameraPosition cameraPosition = new CameraPosition.Builder().target(new LatLng(recognisedLocation.getLatitude(),recognisedLocation.getLongitude())).zoom(15.0f).build();
                                 CameraUpdate cameraUpdate = CameraUpdateFactory.newCameraPosition(cameraPosition);
                                 googleMap.moveCamera(cameraUpdate);
                                 googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
@@ -511,6 +528,75 @@ public class SelectLocationToReserve extends FragmentActivity {
 
 
                 }
+            }
+        }
+        public void findLocationByID( String id) {
+
+            if (ParkOnTheGo.getInstance().isConnectedToInterNet()) {
+                LocationServices locationServices = ParkOnTheGo.getInstance().getLocationServices();
+//            ParkOnTheGo.getInstance().showProgressDialog(mContext.getString(R.string
+//                    .login_signin), mContext.getString(R.string.login_please_wait));
+                Call<LocationResponse> call = locationServices.getLocationDetails(id);
+                Log.d("Calling", "register: " + call);
+                call.enqueue(new Callback<LocationResponse>() {
+                    @Override
+                    public void onResponse(Call<LocationResponse> call,
+                                           Response<LocationResponse> response) {
+                        //ParkOnTheGo.getInstance().hideProgressDialog();
+                        if (response.isSuccessful()) {
+                            parseResponse(response.body());
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<LocationResponse> call, Throwable throwable) {
+                        Toast.makeText(getApplicationContext(), "Request failed" + throwable, Toast.LENGTH_SHORT).show();
+
+                        // ParkOnTheGo.getInstance().hideProgressDialog();
+                        // ParkOnTheGo.getInstance().handleError(throwable);
+                    }
+                });
+            } else {
+                ParkOnTheGo.getInstance().showAlert(mContext.getString(R.string.no_network));
+            }
+        }
+
+        private void parseResponse(LocationResponse response) {
+            Toast.makeText(getApplicationContext(), "Login Sucess" + response.getSuccess(), Toast.LENGTH_SHORT).show();
+            if (response.getSuccess() == true) {
+                //PreferencesManager pm = PreferencesManager.getInstance(mContext);
+               // Log.d("Data", "parseResponse: " + response.getData().size() );
+
+                 recognisedLocation = response.getData();
+                String priceString = new Double(recognisedLocation.getPrice()).toString();
+
+                selectLocation.setText(recognisedLocation.getDescription());
+                price.setText(priceString);
+//                for(int i=0;i<response.getData().size();i++)
+//                {
+//
+//                    locationList.add(response.getData().get(i));
+//                    Log.d("Data", "parseResponse: " + locationList.get(i).toString());
+//                }
+//                Intent intent = new Intent(HomeScreenActivity.this, LocationsOnMap.class);
+////
+////
+//                intent.putExtra("locationList",locationList);
+//                intent.putExtra("searchedLocationLat",searchedLatLng.latitude);
+//                intent.putExtra("searchedLocationLong",searchedLatLng.longitude);
+//                intent.putExtra("searchedLocationAddress",searchedAddress);
+//                startActivity(intent);
+
+
+////            pm.updateUserId(response.getData().getId());
+////            pm.updateUserName(response.getData().getDisplayName());
+////            response.getData().getId();
+//            Intent intent = new Intent(LoginActivity.this, HomeScreenActivity.class);
+//            startActivity(intent);
+
+
+            } else {
+
             }
         }
     }

@@ -159,15 +159,15 @@ public class LocationsOnMap extends FragmentActivity implements OnMapReadyCallba
         mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(Marker marker) {
-                LatLng clickedLocation= marker.getPosition();
-                String title = marker.getTitle();
-                Intent intent = new Intent(LocationsOnMap.this ,SelectLocationToReserve.class);
-                intent.putExtra("ltdLng",clickedLocation);
-                intent.putExtra("title", title);
-                intent.putExtra("searchedLocation",searchedLocation);
-                intent.putExtra("activityName","LocationsOnMap");
-
-                startActivity(intent);
+//                LatLng clickedLocation= marker.getPosition();
+//                String title = marker.getTitle();
+//                Intent intent = new Intent(LocationsOnMap.this ,SelectLocationToReserve.class);
+//                intent.putExtra("ltdLng",clickedLocation);
+//                intent.putExtra("title", title);
+//                intent.putExtra("searchedLocation",searchedLocation);
+//                intent.putExtra("activityName","LocationsOnMap");
+//
+//                startActivity(intent);
 
                 return false;
             }
