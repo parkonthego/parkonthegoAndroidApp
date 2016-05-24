@@ -43,7 +43,10 @@ import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.Arrays;
+
+import edu.scu.smurali.parkonthego.retrofit.reponses.SearchData;
 
 import static edu.scu.smurali.parkonthego.R.*;
 
@@ -54,7 +57,7 @@ public class SelectLocationToReserve extends FragmentActivity {
     private NfcAdapter mNfcAdapter;
     public static final String MIME_TEXT_PLAIN = "text/plain";
     public static final String TAG = "Nfc Functionality";
-    private TextView selectLocation;
+    private TextView selectLocation,price;
     private Button selectLocationReserveButton;
 
     /**
@@ -97,9 +100,28 @@ public class SelectLocationToReserve extends FragmentActivity {
 
         Intent intent = getIntent();
         final LatLng location = (LatLng) intent.getExtras().get("ltdLng");
-       final String title = intent.getExtras().getString("title");
+        final String title = intent.getExtras().getString("title");
         final LatLng searchedLocation = (LatLng) intent.getExtras().get("searchedLocation");
         selectLocation = (TextView) findViewById(R.id.selectLocation);
+        price = (TextView)findViewById(id.pricePerHour);
+
+
+        ArrayList<SearchData> locationList = (ArrayList<SearchData>) intent.getSerializableExtra("listOfLocations");
+
+        SearchData locationSelected = new SearchData();
+
+        for(int i=0;i<locationList.size();i++)
+        {
+            if(locationList.get(i).getLatitude()==location.latitude&&locationList.get(i).getLongitude()==location.longitude)
+            {
+            locationSelected= locationList.get(i);
+            }
+    }
+
+
+
+
+
 
         String intentSource= (String) intent.getExtras().get("activityName");
         //       // LatLng location = (LatLng) intent.getExtras().get("ltdLng");
@@ -130,7 +152,7 @@ public class SelectLocationToReserve extends FragmentActivity {
         //  FragmentManager fragmentManager = getChildFragmentManager();
         if(intentSource!=null)
         if(intentSource.equalsIgnoreCase("LocationsOnMap")) {
-
+            selectLocation.setText(locationSelected.getDescription());
             mSupportMapFragment = (MapFragment) getFragmentManager().findFragmentById(id.mapFrameLayout);
             if (mSupportMapFragment == null) {
                 FragmentManager fragmentManager = getFragmentManager();

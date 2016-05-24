@@ -72,7 +72,7 @@ public class LocationsOnMap extends FragmentActivity implements OnMapReadyCallba
         mMap = googleMap;
 
        Intent intent = getIntent();
-       ArrayList<SearchData> locationList= (ArrayList<SearchData>) intent.getSerializableExtra("locationList");
+       final ArrayList<SearchData> locationList= (ArrayList<SearchData>) intent.getSerializableExtra("locationList");
        double searchedLocationLat = (Double) intent.getSerializableExtra("searchedLocationLat");
         double searchedLocationLong = (Double) intent.getSerializableExtra("searchedLocationLong");
       String searchedLocationAddress = intent.getStringExtra("searchedLocationAddress");
@@ -149,6 +149,7 @@ public class LocationsOnMap extends FragmentActivity implements OnMapReadyCallba
                 intent.putExtra("title", title);
                 intent.putExtra("searchedLocation",searchedLocation);
                 intent.putExtra("activityName","LocationsOnMap");
+                intent.putExtra("listOfLocations",locationList);
 
                 startActivity(intent);
 
