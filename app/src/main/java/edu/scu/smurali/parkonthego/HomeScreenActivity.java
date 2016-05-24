@@ -1,26 +1,21 @@
 package edu.scu.smurali.parkonthego;
 
-import android.app.DialogFragment;
-import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.ActionBar;
-import android.util.Log;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.api.Status;
@@ -33,13 +28,7 @@ import java.util.ArrayList;
 
 public class HomeScreenActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-   private Button searchParkingLocations;
-    private LatLng searchedLatLng;
-    private  String searchedAddress;
     PlaceAutocompleteFragment autocompleteFragment;
-
-   // TextView startDate, startTime, endDate, endTime;
-
     GridView grid, grid2;
     String[] web = {
             "START DATE",
@@ -47,27 +36,29 @@ public class HomeScreenActivity extends AppCompatActivity
 
 
     } ;
-
     String[] web2 = {
             "END DATE",
             "END TIME",
     } ;
 
+    // TextView startDate, startTime, endDate, endTime;
     int[] imageId = {
             R.drawable.calender,
             R.drawable.clock,
 
     };
-
     int[] imageId2 = {
             R.drawable.calender,
             R.drawable.clock
     };
+    ArrayList<Location> locationList = new ArrayList<Location>();
+    private Button searchParkingLocations;
+    private LatLng searchedLatLng;
 
 
     ///////////////////////////////////////////////////////test code//////////////////////////////////////////////
+    private String searchedAddress;
 
-    ArrayList<Location> locationList = new ArrayList<Location>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -298,9 +289,6 @@ public class HomeScreenActivity extends AppCompatActivity
 //
 
 //}
-
-
-
 
 
 }
