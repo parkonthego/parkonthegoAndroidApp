@@ -1,10 +1,17 @@
 package edu.scu.smurali.parkonthego;
 
 import android.content.Intent;
+import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ExpandableListView;
@@ -30,6 +37,7 @@ public class MyReservationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_reservation);
 
+
         try {
             ActionBar actionBar = getSupportActionBar();
             actionBar.setTitle("ParkOnTheGo");
@@ -43,6 +51,9 @@ public class MyReservationActivity extends AppCompatActivity {
         catch(NullPointerException ex){
             Log.d("MyReservation Screen", "onCreate: Null pointer in action bar "+ex.getMessage());
         }
+
+
+
 
 
 
@@ -128,6 +139,32 @@ public class MyReservationActivity extends AppCompatActivity {
         listDataChild.put(listDataHeader.get(1), reservation2);
 
     }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.home_screen, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_uninstall) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+
+
 
 
 }

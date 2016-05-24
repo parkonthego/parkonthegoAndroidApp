@@ -18,130 +18,130 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#BBBBBB"
-        android:id="@+id/linearLayout">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#BBBBBB"
+                android:id="@+id/linearLayout">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Personal Details"
-        android:id="@+id/textView"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="15dp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="Personal Details"
+                    android:id="@+id/textView"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginTop="15dp" />
 
-    <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/imageButton"
-        android:src="@android:drawable/ic_menu_edit"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginLeft="150dp" />
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/imageButton"
+                    android:src="@android:drawable/ic_menu_edit"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginLeft="150dp" />
 
-    </LinearLayout>
+            </LinearLayout>
 
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="First Name"
-        android:id="@+id/textView10"
-        android:layout_below="@+id/linearLayout"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="15dp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="First Name"
+                android:id="@+id/textView10"
+                android:layout_below="@+id/linearLayout"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="15dp" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/settings_first_name"
-        android:id="@+id/settingsFirstName"
-        android:layout_below="@+id/textView10"
-        android:layout_alignParentStart="true"
-        android:editable="true" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="@string/settings_first_name"
+                android:id="@+id/settingsFirstName"
+                android:layout_below="@+id/textView10"
+                android:layout_alignParentStart="true"
+                android:editable="true" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Last Name"
-        android:id="@+id/textView12"
-        android:layout_above="@+id/settingsFirstName"
-        android:layout_centerHorizontal="true" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Last Name"
+                android:id="@+id/textView12"
+                android:layout_above="@+id/settingsFirstName"
+                android:layout_centerHorizontal="true" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/settings_last_name"
-        android:id="@+id/settingsLastName"
-        android:editable="true"
-        android:layout_below="@+id/textView12"
-        android:layout_centerHorizontal="true" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="@string/settings_last_name"
+                android:id="@+id/settingsLastName"
+                android:editable="true"
+                android:layout_below="@+id/textView12"
+                android:layout_centerHorizontal="true" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Email ID"
-        android:id="@+id/textView14"
-        android:layout_below="@+id/settingsLastName"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="15dp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Email ID"
+                android:id="@+id/textView14"
+                android:layout_below="@+id/settingsLastName"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="15dp" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/settings_email"
-        android:id="@+id/settingsEmailID"
-        android:layout_below="@+id/textView14"
-        android:layout_alignParentStart="true"
-        android:editable="true" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="@string/settings_email"
+                android:id="@+id/settingsEmailID"
+                android:layout_below="@+id/textView14"
+                android:layout_alignParentStart="true"
+                android:editable="true" />
 
             <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#BBBBBB"
-        android:layout_alignParentStart="true"
-        android:id="@+id/linearLayout2"
-        android:layout_below="@+id/settingsEmailID"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#BBBBBB"
+                android:layout_alignParentStart="true"
+                android:id="@+id/linearLayout2"
+                android:layout_below="@+id/settingsEmailID"
                 android:layout_marginTop="80dp">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Payment Details"
-        android:id="@+id/textView17"
-        android:layout_below="@+id/editText2"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="15dp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="Payment Details"
+                    android:id="@+id/textView17"
+                    android:layout_below="@+id/editText2"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginTop="15dp" />
 
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/imageButton2"
-            android:src="@android:drawable/ic_menu_edit"
-            android:layout_marginLeft="150dp" />
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/imageButton2"
+                    android:src="@android:drawable/ic_menu_edit"
+                    android:layout_marginLeft="150dp" />
 
-    </LinearLayout>
+            </LinearLayout>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Card Details"
-        android:id="@+id/textView18"
-        android:layout_below="@+id/linearLayout2"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="15dp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Card Details"
+                android:id="@+id/textView18"
+                android:layout_below="@+id/linearLayout2"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="15dp" />
 
             <Button
                 android:layout_width="wrap_content"

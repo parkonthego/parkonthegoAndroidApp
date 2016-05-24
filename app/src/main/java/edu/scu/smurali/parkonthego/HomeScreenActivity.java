@@ -314,18 +314,32 @@ public class HomeScreenActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
+        if(id == R.id.nav_home){
+            Intent intent = new Intent(HomeScreenActivity.this,HomeScreenActivity.class);
+            startActivity(intent);
+
+        }
+
         if (id == R.id.nav_reservation) {
 
 
-            Intent intent = new Intent(HomeScreenActivity.this,MyReservationActivity.class);
-            startActivity(intent);
+//            Intent intent = new Intent(HomeScreenActivity.this,MyReservationActivity.class);
+//            startActivity(intent);
 
 
         } else if (id == R.id.nav_settings) {
 
+//            Intent intent = new Intent(HomeScreenActivity.this,SettingsActivity.class);
+//            startActivity(intent);
+
+
         } else if (id == R.id.nav_call) {
 
         } else if (id == R.id.nav_help) {
+
+//            Intent intent = new Intent(HomeScreenActivity.this,HelpActivity.class);
+//            startActivity(intent);
+
 
         } else if(id == R.id.nav_logout){
 
