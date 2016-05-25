@@ -1,7 +1,10 @@
 package edu.scu.smurali.parkonthego;
 
+import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.app.DialogFragment;
 import android.app.FragmentTransaction;
+import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -16,15 +19,18 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.google.android.gms.common.api.Status;
@@ -34,6 +40,7 @@ import com.google.android.gms.location.places.ui.PlaceSelectionListener;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import edu.scu.smurali.parkonthego.retrofit.reponses.LoginResponse;
@@ -56,7 +63,10 @@ public class HomeScreenActivity extends AppCompatActivity
     private Context mContext;
     ArrayList<SearchData> locationList;
 
-   TextView startDate, startTime, endDate, endTime;
+    private static TextView startDate;
+    private static TextView startTime;
+    private static TextView endDate;
+    private static TextView endTime;
 
     ImageButton startDateButton, endDateButton, startTimeButton, endTimeButton;
 
@@ -82,6 +92,11 @@ public class HomeScreenActivity extends AppCompatActivity
         catch(NullPointerException ex){
             Log.d("Home Screen", "onCreate: Null pointer in action bar "+ex.getMessage());
         }
+        startTime = (TextView) findViewById(R.id.homeScreenStartTime);
+        endTime = (TextView) findViewById(R.id.homeScreenEndTime);
+        startDate = (TextView) findViewById(R.id.homeScreenStartDate);
+        endDate = (TextView) findViewById(R.id.homeScreenEndDate);
+
         locationList = new ArrayList<SearchData>();
         //Intent intent = getIntent();
 //        final String userId =(String) intent.getExtras().get("userId");
@@ -96,7 +111,7 @@ public class HomeScreenActivity extends AppCompatActivity
             @Override
             public void onClick(View v) {
 
-                DialogFragment newFragment = new TimePickerFragment();
+                DialogFragment newFragment = new StartTimePickerFragment();
                 FragmentTransaction ft =getFragmentManager().beginTransaction();
                 newFragment.show(ft, "timePicker");
             }
@@ -109,7 +124,7 @@ public class HomeScreenActivity extends AppCompatActivity
             @Override
             public void onClick(View v) {
 
-                DialogFragment newFragment = new TimePickerFragment();
+                DialogFragment newFragment = new EndTimePickerFragment();
                 FragmentTransaction ft =getFragmentManager().beginTransaction();
                 newFragment.show(ft, "timePicker");
             }
@@ -123,7 +138,7 @@ public class HomeScreenActivity extends AppCompatActivity
             @Override
             public void onClick(View v) {
 
-                DialogFragment newFragment = new DatePickerFragment();
+                DialogFragment newFragment = new StartDatePickerFragment();
                 FragmentTransaction ft =getFragmentManager().beginTransaction();
                 newFragment.show(ft, "datePicker");
             }
@@ -133,7 +148,7 @@ public class HomeScreenActivity extends AppCompatActivity
             @Override
             public void onClick(View v) {
 
-                DialogFragment newFragment = new DatePickerFragment();
+                DialogFragment newFragment = new EndDatePickerFragment();
                 FragmentTransaction ft =getFragmentManager().beginTransaction();
                 newFragment.show(ft, "datePicker");
             }
@@ -369,8 +384,7 @@ public class HomeScreenActivity extends AppCompatActivity
 
     public void showTimePickerDialog(View v) {
 
-        startTime = (TextView) findViewById(R.id.homeScreenStartTime);
-        endTime = (TextView) findViewById(R.id.homeScreenEndTime);
+
 
 
 
@@ -378,9 +392,11 @@ public class HomeScreenActivity extends AppCompatActivity
             @Override
             public void onClick(View v) {
 
-                DialogFragment newFragment = new TimePickerFragment();
+                DialogFragment newFragment = new StartTimePickerFragment();
                 FragmentTransaction ft =getFragmentManager().beginTransaction();
                 newFragment.show(ft, "timePicker");
+
+
             }
         });
 
@@ -388,9 +404,10 @@ public class HomeScreenActivity extends AppCompatActivity
             @Override
             public void onClick(View v) {
 
-                DialogFragment newFragment = new TimePickerFragment();
+                DialogFragment newFragment = new EndTimePickerFragment();
                 FragmentTransaction ft =getFragmentManager().beginTransaction();
                 newFragment.show(ft, "timePicker");
+
             }
         });
 
@@ -399,24 +416,24 @@ public class HomeScreenActivity extends AppCompatActivity
 
     public void showDatePickerDialog(View v) {
 
-        startDate = (TextView) findViewById(R.id.homeScreenStartDate);
-        endDate = (TextView) findViewById(R.id.homeScreenEndDate);
+
 
 
         startDate.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
 
-                DialogFragment newFragment = new DatePickerFragment();
+                DialogFragment newFragment = new StartDatePickerFragment();
                 FragmentTransaction ft =getFragmentManager().beginTransaction();
                 newFragment.show(ft, "datePicker");
+
             }
         });
 
         endDate.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                DialogFragment newFragment = new DatePickerFragment();
+                DialogFragment newFragment = new EndDatePickerFragment();
                 FragmentTransaction ft =getFragmentManager().beginTransaction();
                 newFragment.show(ft, "datePicker");
             }
@@ -424,6 +441,145 @@ public class HomeScreenActivity extends AppCompatActivity
 
 
 }
+    public static class StartDatePickerFragment extends DialogFragment
+            implements DatePickerDialog.OnDateSetListener {
+
+//        private TextView homeStartDate, homeEndDate;
+
+        public StartDatePickerFragment(){
+        }
+
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+
+            // Use the current date as the default date in the picker
+            final Calendar c = Calendar.getInstance();
+            int year = c.get(Calendar.YEAR);
+            int month = c.get(Calendar.MONTH);
+            int day = c.get(Calendar.DAY_OF_MONTH);
+
+            // Create a new instance of DatePickerDialog and return it
+            return new DatePickerDialog(getActivity(), this, year, month, day);
+        }
+
+        public void onDateSet(DatePicker view, int year, int month, int day) {
+            // Do something with the date chosen by the user
+
+            //String date = month + "-" + day + "-" + "year";
+
+
+
+
+            startDate.setText(new StringBuilder().append(day).append("/")
+                    .append(month).append("/").append(year));
+
+
+
+
+        }
+    }
+    public static class EndDatePickerFragment extends DialogFragment
+            implements DatePickerDialog.OnDateSetListener {
+
+//        private TextView homeStartDate, homeEndDate;
+
+        public EndDatePickerFragment(){
+        }
+
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+
+            // Use the current date as the default date in the picker
+            final Calendar c = Calendar.getInstance();
+            int year = c.get(Calendar.YEAR);
+            int month = c.get(Calendar.MONTH);
+            int day = c.get(Calendar.DAY_OF_MONTH);
+
+            // Create a new instance of DatePickerDialog and return it
+            return new DatePickerDialog(getActivity(), this, year, month, day);
+        }
+
+        public void onDateSet(DatePicker view, int year, int month, int day) {
+            // Do something with the date chosen by the user
+
+            //String date = month + "-" + day + "-" + "year";
+
+
+
+
+
+
+            endDate.setText(new StringBuilder().append(day).append("/")
+                    .append(month).append("/").append(year));
+
+
+        }
+    }
+    public static class StartTimePickerFragment extends DialogFragment
+            implements TimePickerDialog.OnTimeSetListener {
+
+        TextView homeStartTime, homeEndTime;
+
+
+
+
+
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            // Use the current time as the default values for the picker
+            final Calendar c = Calendar.getInstance();
+            int hour = c.get(Calendar.HOUR_OF_DAY);
+            int minute = c.get(Calendar.MINUTE);
+
+            // Create a new instance of TimePickerDialog and return it
+            return new TimePickerDialog(getActivity(), this, hour, minute,
+                    DateFormat.is24HourFormat(getActivity()));
+        }
+
+        public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+            // Do something with the time chosen by the user
+
+            String time = hourOfDay + ":" + minute;
+
+            startTime.setText(time);
+//            homeEndTime.setText(time);
+        }
+    }
+    public static class EndTimePickerFragment extends DialogFragment
+            implements TimePickerDialog.OnTimeSetListener {
+
+        TextView homeStartTime, homeEndTime;
+
+
+
+
+
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            // Use the current time as the default values for the picker
+            final Calendar c = Calendar.getInstance();
+            int hour = c.get(Calendar.HOUR_OF_DAY);
+            int minute = c.get(Calendar.MINUTE);
+
+            // Create a new instance of TimePickerDialog and return it
+            return new TimePickerDialog(getActivity(), this, hour, minute,
+                    DateFormat.is24HourFormat(getActivity()));
+        }
+
+        public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+            // Do something with the time chosen by the user
+
+            String time = hourOfDay + ":" + minute;
+
+//            homeStartTime.setText(time);
+            endTime.setText(time);
+        }
+    }
+
+
+
+
+
 
 
 
