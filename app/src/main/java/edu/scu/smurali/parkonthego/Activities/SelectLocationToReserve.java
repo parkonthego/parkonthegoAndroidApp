@@ -123,18 +123,7 @@ public class SelectLocationToReserve extends FragmentActivity {
         endDate = (TextView) findViewById(id.selectLocationEndDate);
         endTime = (TextView) findViewById(id.selectLocationEndTime);
 
-        //Date & time picker
-        sDateTime = intent.getStringExtra("startDateTime");
-        eDateTime = intent.getStringExtra("endDateTime");
-        String[] t = sDateTime.split(" ");
-        List<String> sDateTimeList = Arrays.asList(t);
-        t = eDateTime.split(" ");
-        List<String> eDateTimeList = Arrays.asList(t);
-        Log.d("Select location details", "onCreate: " + intent.getStringExtra("startDateTime"));
-        startDate.setText(sDateTimeList.get(0));
-        startTime.setText(sDateTimeList.get(1));
-        endDate.setText(eDateTimeList.get(0));
-        endTime.setText(eDateTimeList.get(1));
+
 
 
         ArrayList<SearchData> locationList = (ArrayList<SearchData>) intent.getSerializableExtra("listOfLocations");
@@ -174,8 +163,22 @@ public class SelectLocationToReserve extends FragmentActivity {
 
 
         //  FragmentManager fragmentManager = getChildFragmentManager();
+
+        /////////////////// if intent is from locations_on_maps activity////////////////////////////////////////////////////////
         if(intentSource!=null)
         if(intentSource.equalsIgnoreCase("LocationsOnMap")) {
+            //Date & time picker
+            sDateTime = intent.getStringExtra("startDateTime");
+            eDateTime = intent.getStringExtra("endDateTime");
+            String[] t = sDateTime.split(" ");
+            List<String> sDateTimeList = Arrays.asList(t);
+            t = eDateTime.split(" ");
+            List<String> eDateTimeList = Arrays.asList(t);
+            Log.d("Select location details", "onCreate: " + intent.getStringExtra("startDateTime"));
+            startDate.setText(sDateTimeList.get(0));
+            startTime.setText(sDateTimeList.get(1));
+            endDate.setText(eDateTimeList.get(0));
+            endTime.setText(eDateTimeList.get(1));
             SearchData locationSelected = new SearchData();
 
             for(int i=0;i<locationList.size();i++)
