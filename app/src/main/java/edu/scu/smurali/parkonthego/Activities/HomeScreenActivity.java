@@ -1,4 +1,4 @@
-package edu.scu.smurali.parkonthego;
+package edu.scu.smurali.parkonthego.Activities;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
@@ -6,17 +6,14 @@ import android.app.DialogFragment;
 import android.app.FragmentTransaction;
 import android.app.TimePickerDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.net.Uri;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.format.DateFormat;
@@ -24,10 +21,9 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.GridView;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -38,37 +34,43 @@ import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
 import com.google.android.gms.location.places.ui.PlaceSelectionListener;
 import com.google.android.gms.maps.model.LatLng;
+import com.mobsandgeeks.saripaar.ValidationError;
+import com.mobsandgeeks.saripaar.Validator;
+import com.mobsandgeeks.saripaar.annotation.NotEmpty;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import edu.scu.smurali.parkonthego.retrofit.reponses.LoginResponse;
+import edu.scu.smurali.parkonthego.ParkOnTheGo;
+import edu.scu.smurali.parkonthego.R;
 import edu.scu.smurali.parkonthego.retrofit.reponses.SearchData;
 import edu.scu.smurali.parkonthego.retrofit.reponses.SearchResponse;
 import edu.scu.smurali.parkonthego.retrofit.services.LocationServices;
-import edu.scu.smurali.parkonthego.retrofit.services.UserServices;
 import edu.scu.smurali.parkonthego.util.PreferencesManager;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.http.Query;
 
 public class HomeScreenActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, Validator.ValidationListener {
+    static int userId;
+    @NotEmpty(message = "Please select start date")
+    private static TextView startDate;
+    @NotEmpty(message = "Please select start time")
+    private static TextView startTime;
+    @NotEmpty(message = "Please select end date")
+    private static TextView endDate;
+    @NotEmpty(message = "Please select end time")
+    private static TextView endTime;
+    PlaceAutocompleteFragment autocompleteFragment;
+    ArrayList<SearchData> locationList;
+    ImageButton startDateButton, endDateButton, startTimeButton, endTimeButton;
     private Button searchParkingLocations;
     private LatLng searchedLatLng;
-    private  String searchedAddress;
-    PlaceAutocompleteFragment autocompleteFragment;
+    private String searchedAddress;
     private Context mContext;
-    ArrayList<SearchData> locationList;
-
-    private static TextView startDate;
-    private static TextView startTime;
-    private static TextView endDate;
-    private static TextView endTime;
-
-    ImageButton startDateButton, endDateButton, startTimeButton, endTimeButton;
+    private String sDateTime, eDateTime;
 
 
 //    ///////////////////////////////////////////////////////test code//////////////////////////////////////////////
@@ -88,10 +90,12 @@ public class HomeScreenActivity extends AppCompatActivity
             // actionBar.setHomeButtonEnabled(true);
 
 
+        } catch (NullPointerException ex) {
+            Log.d("Home Screen", "onCreate: Null pointer in action bar " + ex.getMessage());
         }
-        catch(NullPointerException ex){
-            Log.d("Home Screen", "onCreate: Null pointer in action bar "+ex.getMessage());
-        }
+        final Validator validator = new Validator(this);
+        validator.setValidationListener(this);
+
         startTime = (TextView) findViewById(R.id.homeScreenStartTime);
         endTime = (TextView) findViewById(R.id.homeScreenEndTime);
         startDate = (TextView) findViewById(R.id.homeScreenStartDate);
@@ -101,31 +105,29 @@ public class HomeScreenActivity extends AppCompatActivity
         //Intent intent = getIntent();
 //        final String userId =(String) intent.getExtras().get("userId");
         PreferencesManager pm = PreferencesManager.getInstance(mContext);
-        final  int userId= pm.getUserId();
+        userId = pm.getUserId();
 
 
         startTimeButton = (ImageButton) findViewById(R.id.startTimeImageButton);
         endTimeButton = (ImageButton) findViewById(R.id.endTimeImageButton);
 
-        startTimeButton.setOnClickListener(new View.OnClickListener(){
+        startTimeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 DialogFragment newFragment = new StartTimePickerFragment();
-                FragmentTransaction ft =getFragmentManager().beginTransaction();
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
                 newFragment.show(ft, "timePicker");
             }
         });
 
 
-
-
-        endTimeButton.setOnClickListener(new View.OnClickListener(){
+        endTimeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 DialogFragment newFragment = new EndTimePickerFragment();
-                FragmentTransaction ft =getFragmentManager().beginTransaction();
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
                 newFragment.show(ft, "timePicker");
             }
         });
@@ -134,28 +136,25 @@ public class HomeScreenActivity extends AppCompatActivity
         startDateButton = (ImageButton) findViewById(R.id.startDateImageButton);
         endDateButton = (ImageButton) findViewById(R.id.endDateImageButton);
 
-        startDateButton.setOnClickListener(new View.OnClickListener(){
+        startDateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 DialogFragment newFragment = new StartDatePickerFragment();
-                FragmentTransaction ft =getFragmentManager().beginTransaction();
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
                 newFragment.show(ft, "datePicker");
             }
         });
 
-        endDateButton.setOnClickListener(new View.OnClickListener(){
+        endDateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 DialogFragment newFragment = new EndDatePickerFragment();
-                FragmentTransaction ft =getFragmentManager().beginTransaction();
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
                 newFragment.show(ft, "datePicker");
             }
         });
-
-
-
 
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -167,27 +166,14 @@ public class HomeScreenActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        //////////////////////////////////////////////////////////////////////////////////////
-        //////////////////////////////////////////////////////////////////////////////getting locations near me data from server/////////////////////////////////
-
-//        locationList.add(new Location(1,37.346317, -121.938025, 10, "location1","help1"));
-//        locationList.add(new Location(2,37.345325, -121.936551, 10, "location1","help1"));
-//        locationList.add(new Location(3,37.345186, -121.936744, 10, "location1","help1"));
-//        locationList.add(new Location(4,37.345135, -121.935977, 10, "location1","help1"));
-//        locationList.add(new Location(5,37.348650, -121.939345, 10, "location1","help1"));
-//        locationList.add(new Location(6,37.3496, -121.9390, 10, "location1","help1"));
-//        locationList.add(new Location(7,37.347562, -121.932221, 10, "location1","help1"));
-
-
-
         autocompleteFragment = (PlaceAutocompleteFragment)
                 getFragmentManager().findFragmentById(R.id.place_autocomplete_fragment);
         autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
             @Override
             public void onPlaceSelected(Place place) {
 
-                searchedLatLng=place.getLatLng();
-                searchedAddress= place.getAddress().toString();
+                searchedLatLng = place.getLatLng();
+                searchedAddress = place.getAddress().toString();
 
 
                 Log.i("place name", "Place: " + place.getName());
@@ -201,44 +187,67 @@ public class HomeScreenActivity extends AppCompatActivity
         });
 
 
-        searchParkingLocations = (Button)findViewById(R.id.searchParkingLocation);
+        searchParkingLocations = (Button) findViewById(R.id.searchParkingLocation);
         searchParkingLocations.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(searchedLatLng==null)
-                {
-                    String message=" please select the destination adddress to find parking";
+                if (searchedLatLng == null) {
+                    String message = " please select the destination adddress to find parking";
                     String title = " Select Location";
-                    ParkOnTheGo.getInstance().showAlert(HomeScreenActivity.this,message,title);
-                }
-                else{
-                    searchLocationsNearMe(userId,searchedLatLng.latitude,searchedLatLng.longitude,5);
+                    ParkOnTheGo.getInstance().showAlert(HomeScreenActivity.this, message, title);
+                } else {
+                    validator.validate();
+
                 }
 
-//                Intent intent = new Intent(HomeScreenActivity.this, LocationsOnMap.class);
-////
-////
-//                intent.putExtra("locationList",locationList);
-//                intent.putExtra("searchedLocationLat",searchedLatLng.latitude);
-//                intent.putExtra("searchedLocationLong",searchedLatLng.longitude);
-//                intent.putExtra("searchedLocationAddress",searchedAddress);
-//                startActivity(intent);
             }
         });
 
 
     }
 
-    public void searchLocationsNearMe( int id,
-                                       Double lat,
-                                       Double lng,
-                                       Integer distance) {
+    @Override
+    public void onValidationSucceeded() {
+        String startDateValue = startDate.getText().toString();
+        String startTimeValue = startTime.getText().toString();
+        String endDateValue = endDate.getText().toString();
+        String endTimeValue = endTime.getText().toString();
+        sDateTime = startDateValue + " " + startTimeValue;
+        eDateTime = endDateValue + " " + endTimeValue;
+
+
+        searchLocationsNearMe(userId, searchedLatLng.latitude, searchedLatLng.longitude, 5, sDateTime, eDateTime);
+    }
+
+    @Override
+    public void onValidationFailed(List<ValidationError> errors) {
+        for (ValidationError error : errors) {
+            View view = error.getView();
+            String message = error.getCollatedErrorMessage(this);
+
+            // Display error messages ;)
+            if (view instanceof EditText) {
+                ((EditText) view).setError(message);
+            } else {
+                Toast toast = Toast.makeText(this, message, Toast.LENGTH_SHORT);
+                TextView v = (TextView) toast.getView().findViewById(android.R.id.message);
+                v.setTextColor(Color.RED);
+                toast.show();
+                // Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+
+    public void searchLocationsNearMe(int id,
+                                      Double lat,
+                                      Double lng,
+                                      Integer distance, String sDateTime, String eDateTime) {
 
         if (ParkOnTheGo.getInstance().isConnectedToInterNet()) {
             LocationServices locationServices = ParkOnTheGo.getInstance().getLocationServices();
 //            ParkOnTheGo.getInstance().showProgressDialog(mContext.getString(R.string
 //                    .login_signin), mContext.getString(R.string.login_please_wait));
-            Call<SearchResponse> call = locationServices.getLocationsNearMe(id, lat,lng,distance);
+            Call<SearchResponse> call = locationServices.getLocationsNearMe(id, lat, lng, distance, sDateTime, eDateTime);
             Log.d("Calling", "register: " + call);
             call.enqueue(new Callback<SearchResponse>() {
                 @Override
@@ -267,40 +276,30 @@ public class HomeScreenActivity extends AppCompatActivity
         Toast.makeText(getApplicationContext(), "Login Sucess" + response.getSuccess(), Toast.LENGTH_SHORT).show();
         if (response.getSuccess() == true) {
             PreferencesManager pm = PreferencesManager.getInstance(mContext);
-            Log.d("Data", "parseResponse: " + response.getData().size() );
+            Log.d("Data", "parseResponse: " + response.getData().size());
 
-          //  locationList= (ArrayList<SearchData>) response.getData();
-            for(int i=0;i<response.getData().size();i++)
-            {
+            //  locationList= (ArrayList<SearchData>) response.getData();
+            for (int i = 0; i < response.getData().size(); i++) {
 
                 locationList.add(response.getData().get(i));
                 Log.d("Data", "parseResponse: " + locationList.get(i).toString());
             }
-
-
-
-                Intent intent = new Intent(HomeScreenActivity.this, LocationsOnMap.class);
-//
-//
-                intent.putExtra("locationList", locationList);
-                intent.putExtra("searchedLocationLat", searchedLatLng.latitude);
-                intent.putExtra("searchedLocationLong", searchedLatLng.longitude);
-                intent.putExtra("searchedLocationAddress", searchedAddress);
-                startActivity(intent);
-
-
-////            pm.updateUserId(response.getData().getId());
-////            pm.updateUserName(response.getData().getDisplayName());
-////            response.getData().getId();
-//            Intent intent = new Intent(LoginActivity.this, HomeScreenActivity.class);
-//            startActivity(intent);
+            Intent intent = new Intent(HomeScreenActivity.this, LocationsOnMap.class);
+            intent.putExtra("locationList", locationList);
+            intent.putExtra("searchedLocationLat", searchedLatLng.latitude);
+            intent.putExtra("searchedLocationLong", searchedLatLng.longitude);
+            intent.putExtra("searchedLocationAddress", searchedAddress);
+            Log.d("Home screen", "parseResponse: " + sDateTime);
+            Log.d("Home screen", "parseResponse: " + eDateTime);
+            intent.putExtra("startDateTime", sDateTime);
+            intent.putExtra("endDateTime", eDateTime);
+            startActivity(intent);
 
 
         } else {
 
         }
     }
-
 
 
     @Override
@@ -341,20 +340,20 @@ public class HomeScreenActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if(id == R.id.nav_home){
-            Intent intent = new Intent(HomeScreenActivity.this,HomeScreenActivity.class);
+        if (id == R.id.nav_home) {
+            Intent intent = new Intent(HomeScreenActivity.this, HomeScreenActivity.class);
             startActivity(intent);
         }
 
         if (id == R.id.nav_reservation) {
 
-            Intent intent = new Intent(HomeScreenActivity.this,ReservationsActivity.class);
+            Intent intent = new Intent(HomeScreenActivity.this, ReservationsActivity.class);
             startActivity(intent);
 
 
         } else if (id == R.id.nav_settings) {
 
-            Intent intent = new Intent(HomeScreenActivity.this,SettingActivity.class);
+            Intent intent = new Intent(HomeScreenActivity.this, SettingActivity.class);
             startActivity(intent);
 
 
@@ -362,11 +361,10 @@ public class HomeScreenActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_help) {
 
-            Intent intent = new Intent(HomeScreenActivity.this,HelpActivity.class);
+            Intent intent = new Intent(HomeScreenActivity.this, HelpActivity.class);
             startActivity(intent);
 
-        } else if(id == R.id.nav_logout){
-
+        } else if (id == R.id.nav_logout) {
 
 
         }
@@ -385,27 +383,24 @@ public class HomeScreenActivity extends AppCompatActivity
     public void showTimePickerDialog(View v) {
 
 
-
-
-
-        startTime.setOnClickListener(new View.OnClickListener(){
+        startTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 DialogFragment newFragment = new StartTimePickerFragment();
-                FragmentTransaction ft =getFragmentManager().beginTransaction();
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
                 newFragment.show(ft, "timePicker");
 
 
             }
         });
 
-        endTime.setOnClickListener(new View.OnClickListener(){
+        endTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 DialogFragment newFragment = new EndTimePickerFragment();
-                FragmentTransaction ft =getFragmentManager().beginTransaction();
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
                 newFragment.show(ft, "timePicker");
 
             }
@@ -417,36 +412,35 @@ public class HomeScreenActivity extends AppCompatActivity
     public void showDatePickerDialog(View v) {
 
 
-
-
-        startDate.setOnClickListener(new View.OnClickListener(){
+        startDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 DialogFragment newFragment = new StartDatePickerFragment();
-                FragmentTransaction ft =getFragmentManager().beginTransaction();
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
                 newFragment.show(ft, "datePicker");
 
             }
         });
 
-        endDate.setOnClickListener(new View.OnClickListener(){
+        endDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 DialogFragment newFragment = new EndDatePickerFragment();
-                FragmentTransaction ft =getFragmentManager().beginTransaction();
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
                 newFragment.show(ft, "datePicker");
             }
         });
 
 
-}
+    }
+
     public static class StartDatePickerFragment extends DialogFragment
             implements DatePickerDialog.OnDateSetListener {
 
 //        private TextView homeStartDate, homeEndDate;
 
-        public StartDatePickerFragment(){
+        public StartDatePickerFragment() {
         }
 
         @Override
@@ -466,24 +460,21 @@ public class HomeScreenActivity extends AppCompatActivity
             // Do something with the date chosen by the user
 
             //String date = month + "-" + day + "-" + "year";
-
-
 
 
             startDate.setText(new StringBuilder().append(day).append("/")
                     .append(month).append("/").append(year));
 
 
-
-
         }
     }
+
     public static class EndDatePickerFragment extends DialogFragment
             implements DatePickerDialog.OnDateSetListener {
 
 //        private TextView homeStartDate, homeEndDate;
 
-        public EndDatePickerFragment(){
+        public EndDatePickerFragment() {
         }
 
         @Override
@@ -503,10 +494,6 @@ public class HomeScreenActivity extends AppCompatActivity
             // Do something with the date chosen by the user
 
             //String date = month + "-" + day + "-" + "year";
-
-
-
-
 
 
             endDate.setText(new StringBuilder().append(day).append("/")
@@ -515,13 +502,11 @@ public class HomeScreenActivity extends AppCompatActivity
 
         }
     }
+
     public static class StartTimePickerFragment extends DialogFragment
             implements TimePickerDialog.OnTimeSetListener {
 
         TextView homeStartTime, homeEndTime;
-
-
-
 
 
         @Override
@@ -545,13 +530,11 @@ public class HomeScreenActivity extends AppCompatActivity
 //            homeEndTime.setText(time);
         }
     }
+
     public static class EndTimePickerFragment extends DialogFragment
             implements TimePickerDialog.OnTimeSetListener {
 
         TextView homeStartTime, homeEndTime;
-
-
-
 
 
         @Override
@@ -575,14 +558,6 @@ public class HomeScreenActivity extends AppCompatActivity
             endTime.setText(time);
         }
     }
-
-
-
-
-
-
-
-
 
 
 }

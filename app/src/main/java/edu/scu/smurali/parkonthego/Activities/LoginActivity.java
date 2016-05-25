@@ -1,4 +1,4 @@
-package edu.scu.smurali.parkonthego;
+package edu.scu.smurali.parkonthego.Activities;
 
 import android.content.Context;
 import android.content.Intent;
@@ -21,6 +21,8 @@ import com.mobsandgeeks.saripaar.annotation.Password;
 
 import java.util.List;
 
+import edu.scu.smurali.parkonthego.ParkOnTheGo;
+import edu.scu.smurali.parkonthego.R;
 import edu.scu.smurali.parkonthego.retrofit.reponses.LoginResponse;
 import edu.scu.smurali.parkonthego.retrofit.services.UserServices;
 import edu.scu.smurali.parkonthego.util.PreferencesManager;

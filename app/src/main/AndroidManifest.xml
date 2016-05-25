@@ -26,7 +26,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".LoginActivity"
+            android:name=".Activities.LoginActivity"
             android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -34,13 +34,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".RegisterActivity" />
-        <activity android:name=".ForgotPasswordActivity" />
+        <activity android:name=".Activities.RegisterActivity" />
+        <activity android:name=".Activities.ForgotPasswordActivity" />
         <activity
-            android:name=".HomeScreenActivity"
+            android:name=".Activities.HomeScreenActivity"
             android:label="@string/title_activity_home_screen"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".ConfirmationActivity" />
+        <activity android:name=".Activities.ConfirmationActivity" />
 
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
@@ -55,11 +55,11 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name=".LocationsOnMap"
+            android:name=".Activities.LocationsOnMap"
             android:label="@string/title_activity_locations_on_map" />
-        <activity android:name=".StartReservationActivity" />
-        <activity android:name=".StopReservationActivity" />
-        <activity android:name=".SelectLocationToReserve">
+        <activity android:name=".Activities.StartReservationActivity" />
+        <activity android:name=".Activities.StopReservationActivity" />
+        <activity android:name=".Activities.SelectLocationToReserve">
             <intent-filter>
                 <action android:name="android.nfc.action.NDEF_DISCOVERED" />
 
@@ -77,15 +77,15 @@
             android:value="@integer/google_play_services_version" />
 
         <activity
-            android:name=".ReservationsActivity"
+            android:name=".Activities.ReservationsActivity"
             android:label="@string/title_activity_reservations"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".SettingActivity"
+            android:name=".Activities.SettingActivity"
             android:label="@string/title_activity_setting"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".HelpActivity"
+            android:name=".Activities.HelpActivity"
             android:label="@string/title_activity_help"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>

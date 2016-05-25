@@ -1,37 +1,43 @@
-package edu.scu.smurali.parkonthego;
+package edu.scu.smurali.parkonthego.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
-public class HelpActivity extends AppCompatActivity
+import edu.scu.smurali.parkonthego.R;
+
+public class SettingActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_help);
+        setContentView(R.layout.activity_setting);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+        try {
+            ActionBar actionBar = getSupportActionBar();
+            actionBar.setTitle("ParkOnTheGo");
+            actionBar.setIcon(R.mipmap.ic_park);
+            //  actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setDisplayShowHomeEnabled(true);
+            // actionBar.setHomeButtonEnabled(true);
+        }
+        catch(NullPointerException ex){
+            Log.d("Settings", "onCreate: Null pointer in action bar "+ex.getMessage());
+        }
+
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -56,7 +62,7 @@ public class HelpActivity extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.help, menu);
+        getMenuInflater().inflate(R.menu.setting, menu);
         return true;
     }
 
@@ -82,17 +88,21 @@ public class HelpActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if(id == R.id.nav_home){
-            Intent intent = new Intent(HelpActivity.this,HomeScreenActivity.class);
+            Intent intent = new Intent(SettingActivity.this,HomeScreenActivity.class);
             startActivity(intent);
+
         }
 
         if (id == R.id.nav_reservation) {
-            Intent intent = new Intent(HelpActivity.this,ReservationsActivity.class);
+
+
+            Intent intent = new Intent(SettingActivity.this,ReservationsActivity.class);
             startActivity(intent);
+
 
         } else if (id == R.id.nav_settings) {
 
-            Intent intent = new Intent(HelpActivity.this,SettingActivity.class);
+            Intent intent = new Intent(SettingActivity.this,SettingActivity.class);
             startActivity(intent);
 
 
@@ -100,10 +110,12 @@ public class HelpActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_help) {
 
-            Intent intent = new Intent(HelpActivity.this,HelpActivity.class);
+            Intent intent = new Intent(SettingActivity.this,HelpActivity.class);
             startActivity(intent);
 
         } else if(id == R.id.nav_logout){
+
+
 
         }
 

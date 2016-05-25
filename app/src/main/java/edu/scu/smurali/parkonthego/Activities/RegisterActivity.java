@@ -1,4 +1,4 @@
-package edu.scu.smurali.parkonthego;
+package edu.scu.smurali.parkonthego.Activities;
 
 import android.content.Context;
 import android.content.Intent;
@@ -15,6 +15,8 @@ import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import edu.scu.smurali.parkonthego.ParkOnTheGo;
+import edu.scu.smurali.parkonthego.R;
 import edu.scu.smurali.parkonthego.retrofit.reponses.SignUpResponse;
 import edu.scu.smurali.parkonthego.retrofit.services.UserServices;
 import retrofit2.Call;

@@ -1,4 +1,4 @@
-package edu.scu.smurali.parkonthego;
+package edu.scu.smurali.parkonthego.Activities;
 
 import android.content.Context;
 import android.graphics.Typeface;
@@ -10,6 +10,8 @@ import android.widget.TextView;
 
 import java.util.HashMap;
 import java.util.List;
+
+import edu.scu.smurali.parkonthego.R;
 
 /**
  * Created by shruthi on 23-05-2016.

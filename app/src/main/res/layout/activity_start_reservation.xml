@@ -7,7 +7,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="edu.scu.smurali.parkonthego.StartReservationActivity">
+    tools:context=".Activities.StartReservationActivity">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -17,91 +17,91 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="Reservation Details:"
                 android:id="@+id/reservationDetails"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentStart="true" />
-
-            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="START:"
-                android:id="@+id/startReservationStart"
-                android:layout_below="@+id/reservationDetails"
                 android:layout_alignParentStart="true"
-                android:layout_marginTop="25dp" />
+                android:layout_alignParentTop="true"
+                android:text="Reservation Details:"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
 
             <TextView
+                android:id="@+id/startReservationStart"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="05/19/2016"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/reservationDetails"
+                android:layout_marginTop="25dp"
+                android:text="START:"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+
+            <TextView
                 android:id="@+id/startReservationStartDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_alignTop="@+id/startReservationStart"
+                android:layout_marginLeft="15dp"
                 android:layout_toEndOf="@+id/startReservationStart"
-                android:layout_marginLeft="15dp" />
+                android:text="05/19/2016"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="5:00 PM"
                 android:id="@+id/startReservationStartTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignStart="@+id/startReservationStartDate"
                 android:layout_below="@+id/startReservationStart"
-                android:layout_alignStart="@+id/startReservationStartDate" />
+                android:text="5:00 PM"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="END:"
                 android:id="@+id/startReservationEnd"
-                android:layout_marginTop="29dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignEnd="@+id/startReservationStart"
                 android:layout_below="@+id/startReservationStartTime"
-                android:layout_alignEnd="@+id/startReservationStart" />
+                android:layout_marginTop="29dp"
+                android:text="END:"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="05/20/2016"
                 android:id="@+id/startReservationEndDate"
-                android:layout_alignTop="@+id/startReservationEnd"
-                android:layout_alignStart="@+id/startReservationStartTime" />
-
-            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="2:00 AM"
+                android:layout_alignStart="@+id/startReservationStartTime"
+                android:layout_alignTop="@+id/startReservationEnd"
+                android:text="05/20/2016"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <TextView
                 android:id="@+id/startReservationEndTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignStart="@+id/startReservationEndDate"
                 android:layout_below="@+id/startReservationEnd"
-                android:layout_alignStart="@+id/startReservationEndDate" />
+                android:text="2:00 AM"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <ImageView
+                android:id="@+id/imageView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/imageView"
-                android:src="@drawable/circle"
-                android:layout_below="@+id/startReservationEndTime"
-                android:layout_marginTop="25dp"
+                android:layout_alignParentBottom="true"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentStart="true"
-                android:layout_alignParentBottom="true" />
+                android:layout_below="@+id/startReservationEndTime"
+                android:layout_marginTop="25dp"
+                android:src="@drawable/circle" />
 
             <TextView
+                android:id="@+id/startReservationTapToStart"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="Tap To Start"
-                android:id="@+id/startReservationTapToStart"
                 android:layout_alignTop="@+id/imageView"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="115dp" />
+                android:layout_marginTop="115dp"
+                android:text="Tap To Start"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
 
         </RelativeLayout>
     </ScrollView>

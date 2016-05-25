@@ -9,7 +9,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="edu.scu.smurali.parkonthego.HomeScreenActivity"
+    tools:context=".Activities.HomeScreenActivity"
     tools:showIn="@layout/app_bar_home_screen">
 
     <ScrollView
@@ -22,127 +22,127 @@
 
 
             <LinearLayout
-                android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true">
+                android:layout_centerHorizontal="true"
+                android:orientation="vertical">
 
                 <LinearLayout
-                    android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="100dp"
-                    android:layout_gravity="center_horizontal">
+                    android:layout_gravity="center_horizontal"
+                    android:orientation="horizontal">
 
                     <LinearLayout
-                        android:orientation="horizontal"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_weight="0.5">
+                        android:layout_weight="0.5"
+                        android:orientation="horizontal">
 
                         <ImageButton
+                            android:id="@+id/startDateImageButton"
                             android:layout_width="125dp"
                             android:layout_height="75dp"
-                            android:id="@+id/startDateImageButton"
                             android:layout_weight="0.5"
-                            android:src="@drawable/calender"
-                            android:background="#ffffff" />
+                            android:background="#ffffff"
+                            android:src="@drawable/calender" />
 
                         <TextView
+                            android:id="@+id/homeScreenStartDate"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:textAppearance="?android:attr/textAppearanceLarge"
-                            android:text="Start Date"
-                            android:id="@+id/homeScreenStartDate"
-                            android:layout_weight="0.5"
                             android:layout_marginTop="20dp"
+                            android:layout_weight="0.5"
                             android:clickable="true"
-                            android:onClick="showDatePickerDialog" />
+                            android:hint="Start Date"
+                            android:onClick="showDatePickerDialog"
+                            android:textAppearance="?android:attr/textAppearanceLarge" />
                     </LinearLayout>
 
                     <LinearLayout
-                        android:orientation="horizontal"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_weight="0.5">
+                        android:layout_weight="0.5"
+                        android:orientation="horizontal">
 
                         <ImageButton
+                            android:id="@+id/startTimeImageButton"
                             android:layout_width="120dp"
                             android:layout_height="65dp"
-                            android:id="@+id/startTimeImageButton"
                             android:layout_weight="0.5"
-                            android:src="@drawable/alarmclock"
-                            android:background="#ffffff" />
+                            android:background="#ffffff"
+                            android:src="@drawable/alarmclock" />
 
                         <TextView
+                            android:id="@+id/homeScreenStartTime"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:textAppearance="?android:attr/textAppearanceLarge"
-                            android:text="Start Time"
-                            android:id="@+id/homeScreenStartTime"
-                            android:layout_weight="0.5"
                             android:layout_marginTop="20dp"
+                            android:layout_weight="0.5"
+                            android:clickable="true"
+                            android:hint="End Time"
                             android:onClick="showTimePickerDialog"
-                            android:clickable="true" />
+                            android:textAppearance="?android:attr/textAppearanceLarge" />
                     </LinearLayout>
                 </LinearLayout>
 
                 <LinearLayout
-                    android:orientation="horizontal"
                     android:layout_width="match_parent"
-                    android:layout_height="100dp">
+                    android:layout_height="100dp"
+                    android:orientation="horizontal">
 
                     <LinearLayout
-                        android:orientation="horizontal"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="0.5" >
-
-                        <ImageButton
-                            android:layout_width="125dp"
-                            android:layout_height="75dp"
-                            android:id="@+id/endDateImageButton"
-                            android:layout_weight="0.5"
-                            android:src="@drawable/calender"
-                            android:background="#ffffff" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:textAppearance="?android:attr/textAppearanceLarge"
-                            android:text="End Date"
-                            android:id="@+id/homeScreenEndDate"
-                            android:layout_weight="0.5"
-                            android:layout_marginTop="20dp"
-                            android:onClick="showDatePickerDialog"
-                            android:clickable="true" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:orientation="horizontal"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="0.5"
-                        android:id="@+id/linearLayout">
+                        android:orientation="horizontal">
 
                         <ImageButton
+                            android:id="@+id/endDateImageButton"
                             android:layout_width="125dp"
                             android:layout_height="75dp"
-                            android:id="@+id/endTimeImageButton"
                             android:layout_weight="0.5"
-                            android:src="@drawable/alarmclock"
-                            android:background="#ffffff" />
+                            android:background="#ffffff"
+                            android:src="@drawable/calender" />
 
                         <TextView
+                            android:id="@+id/homeScreenEndDate"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:textAppearance="?android:attr/textAppearanceLarge"
-                            android:text="End Time"
-                            android:id="@+id/homeScreenEndTime"
-                            android:layout_weight="0.5"
                             android:layout_marginTop="20dp"
+                            android:layout_weight="0.5"
+                            android:clickable="true"
+                            android:hint="End Date"
+                            android:onClick="showDatePickerDialog"
+                            android:textAppearance="?android:attr/textAppearanceLarge" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/linearLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.5"
+                        android:orientation="horizontal">
+
+                        <ImageButton
+                            android:id="@+id/endTimeImageButton"
+                            android:layout_width="125dp"
+                            android:layout_height="75dp"
+                            android:layout_weight="0.5"
+                            android:background="#ffffff"
+                            android:src="@drawable/alarmclock" />
+
+                        <TextView
+                            android:id="@+id/homeScreenEndTime"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
+                            android:layout_weight="0.5"
+                            android:clickable="true"
+                            android:hint="End Time"
                             android:onClick="showTimePickerDialog"
-                            android:clickable="true" />
+                            android:textAppearance="?android:attr/textAppearanceLarge" />
                     </LinearLayout>
                 </LinearLayout>
 
@@ -154,12 +154,12 @@
 
                     <fragment
                         android:id="@+id/place_autocomplete_fragment"
+                        android:name="com.google.android.gms.location.places.ui.PlaceAutocompleteFragment"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
-                        android:name="com.google.android.gms.location.places.ui.PlaceAutocompleteFragment"
-                        tools:layout="@android:layout/simple_dropdown_item_1line"
+                        android:layout_alignParentStart="true"
                         android:layout_centerVertical="true"
-                        android:layout_alignParentStart="true" />
+                        tools:layout="@android:layout/simple_dropdown_item_1line" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -167,11 +167,11 @@
                     android:layout_height="wrap_content">
 
                     <Button
+                        android:id="@+id/searchParkingLocation"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="SEARCH"
                         android:layout_marginTop="25dp"
-                        android:id="@+id/searchParkingLocation"/>
+                        android:text="SEARCH" />
                 </LinearLayout>
 
             </LinearLayout>

@@ -105,36 +105,6 @@ public class ParkOnTheGo extends Application {
         }
     }
 
-//    public void appendLog(String text) {
-//        String filename = "location_points" + ".txt";
-//        File logFile = new File(FileManager.getDirectory(getApplicationContext(), FileManager
-//                .HTML_FILES_DIR), filename);
-//
-//        if (!logFile.exists()) {
-//            try {
-//                logFile.createNewFile();
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//            logFile.setWritable(true);
-//            logFile.setExecutable(true);
-//        } else {
-//            logFile.setWritable(true);
-//            logFile.setExecutable(true);
-//        }
-//        try {
-//            // BufferedWriter for performance, true to set append to file flag
-//            BufferedWriter buf = new BufferedWriter(new FileWriter(logFile,
-//                    true));
-//            buf.append(text);
-//            buf.newLine();
-//            buf.close();
-//        } catch (IOException e) {
-//            // TODO Auto-generated catch block
-//            e.printStackTrace();
-//        }
-//
-//    }
 
     /**
      * Sets the current activity contest.

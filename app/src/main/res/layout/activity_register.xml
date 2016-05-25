@@ -7,76 +7,76 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".RegisterActivity">
+    tools:context=".Activities.RegisterActivity">
 
     <EditText
+        android:id="@+id/regFirstName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:hint="@string/reg_first_name"
-        android:ems="10"
-        android:id="@+id/regFirstName"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentRight="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:ems="10"
+        android:hint="@string/reg_first_name"
+        android:inputType="textPersonName" />
 
     <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:hint="@string/reg_last_name"
-        android:ems="10"
         android:id="@+id/regLastName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/regFirstName"
+        android:layout_alignParentStart="true"
         android:layout_below="@+id/regFirstName"
-        android:layout_alignParentStart="true"
         android:layout_marginTop="32dp"
-        android:layout_alignEnd="@+id/regFirstName" />
+        android:ems="10"
+        android:hint="@string/reg_last_name"
+        android:inputType="textPersonName" />
 
     <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textEmailAddress"
-        android:ems="10"
         android:id="@+id/regEmail"
-        android:layout_below="@+id/regLastName"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="37dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignEnd="@+id/regLastName"
-        android:hint="@string/reg_email" />
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/regLastName"
+        android:layout_marginTop="37dp"
+        android:ems="10"
+        android:hint="@string/reg_email"
+        android:inputType="textEmailAddress" />
 
     <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textPassword"
-        android:ems="10"
         android:id="@+id/regPassword"
-        android:hint="@string/reg_password"
-        android:layout_centerVertical="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true" />
-
-    <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="textPassword"
-        android:ems="10"
-        android:id="@+id/regCfnPassword"
-        android:layout_below="@+id/regPassword"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:ems="10"
+        android:hint="@string/reg_password"
+        android:inputType="textPassword" />
+
+    <EditText
+        android:id="@+id/regCfnPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/regPassword"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/regPassword"
         android:layout_marginTop="34dp"
+        android:ems="10"
         android:hint="@string/reg_confirm_password"
-        android:layout_alignEnd="@+id/regPassword" />
+        android:inputType="textPassword" />
 
 
     <Button
+        android:id="@+id/regRegisterButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Register"
-        android:id="@+id/regRegisterButton"
+        android:layout_alignEnd="@+id/regCfnPassword"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
         android:layout_marginBottom="50dp"
-        android:layout_alignEnd="@+id/regCfnPassword" />
+        android:text="Register" />
 </RelativeLayout>

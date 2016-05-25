@@ -20,5 +20,7 @@ public interface LocationServices {
             @Query("userId") int id,
             @Query("lat") Double lat,
             @Query("long") Double lng,
-            @Query("dis") Integer distance);
+            @Query("dis") Integer distance,
+            @Query("startdatetime") String startDateTime,
+            @Query("enddatetime") String endDateTime);
 }

@@ -1,4 +1,4 @@
-package edu.scu.smurali.parkonthego;
+package edu.scu.smurali.parkonthego.Activities;
 
 import android.app.Activity;
 import android.app.FragmentManager;
@@ -15,15 +15,11 @@ import android.nfc.NfcAdapter;
 import android.nfc.Tag;
 import android.nfc.tech.Ndef;
 import android.os.AsyncTask;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.GridView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,7 +31,6 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
@@ -46,30 +41,35 @@ import com.google.android.gms.maps.model.PolylineOptions;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
+import edu.scu.smurali.parkonthego.ParkOnTheGo;
+import edu.scu.smurali.parkonthego.R;
 import edu.scu.smurali.parkonthego.retrofit.reponses.LocationData;
 import edu.scu.smurali.parkonthego.retrofit.reponses.LocationResponse;
 import edu.scu.smurali.parkonthego.retrofit.reponses.SearchData;
-import edu.scu.smurali.parkonthego.retrofit.reponses.SearchResponse;
 import edu.scu.smurali.parkonthego.retrofit.services.LocationServices;
-import edu.scu.smurali.parkonthego.util.PreferencesManager;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static edu.scu.smurali.parkonthego.R.*;
+import static edu.scu.smurali.parkonthego.R.id;
+import static edu.scu.smurali.parkonthego.R.layout;
 
 public class SelectLocationToReserve extends FragmentActivity {
 
 
-    private MapFragment mSupportMapFragment;
-    private NfcAdapter mNfcAdapter;
     public static final String MIME_TEXT_PLAIN = "text/plain";
     public static final String TAG = "Nfc Functionality";
+    LocationData recognisedLocation;
+    private MapFragment mSupportMapFragment;
+    private NfcAdapter mNfcAdapter;
     private TextView selectLocation,price;
     private Button selectLocationReserveButton;
     private Context mContext;
-    LocationData recognisedLocation;
+    private TextView startDate, startTime, endDate, endTime;
+    private String sDateTime = "", eDateTime = "";
+    private String selectedLocation;
 
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
@@ -77,32 +77,31 @@ public class SelectLocationToReserve extends FragmentActivity {
      */
     private GoogleApiClient client;
 
+    public static void setupForegroundDispatch(final Activity activity, NfcAdapter adapter) {
+        final Intent intent = new Intent(activity.getApplicationContext(), activity.getClass());
+        intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
 
-    // GRID VIEW
+        final PendingIntent pendingIntent = PendingIntent.getActivity(activity.getApplicationContext(), 0, intent, 0);
 
-    GridView grid, grid2;
-    String[] web = {
-            "START DATE",
-            "START TIME",
+        IntentFilter[] filters = new IntentFilter[1];
+        String[][] techList = new String[][]{};
 
+        // Notice that this is the same filter as in our manifest.
+        filters[0] = new IntentFilter();
+        filters[0].addAction(NfcAdapter.ACTION_NDEF_DISCOVERED);
+        filters[0].addCategory(Intent.CATEGORY_DEFAULT);
+        try {
+            filters[0].addDataType(MIME_TEXT_PLAIN);
+        } catch (IntentFilter.MalformedMimeTypeException e) {
+            throw new RuntimeException("Check your mime type.");
+        }
 
-    };
+        adapter.enableForegroundDispatch(activity, pendingIntent, filters, techList);
+    }
 
-    String[] web2 = {
-            "END DATE",
-            "END TIME",
-    };
-
-    int[] imageId = {
-            R.drawable.calender,
-            R.drawable.clock,
-
-    };
-
-    int[] imageId2 = {
-            R.drawable.calender,
-            R.drawable.clock
-    };
+    public static void stopForegroundDispatch(final Activity activity, NfcAdapter adapter) {
+        adapter.disableForegroundDispatch(activity);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,8 +113,28 @@ public class SelectLocationToReserve extends FragmentActivity {
         final String title = intent.getExtras().getString("title");
         final LatLng searchedLocation = (LatLng) intent.getExtras().get("searchedLocation");
         final String searchedLocationAddress = intent.getStringExtra("searchedLocationAddress");
+        selectedLocation = intent.getStringExtra("selectedLocationObject");
+        Log.d("SelectionLocation json", "onCreate: " + selectedLocation);
         selectLocation = (TextView) findViewById(R.id.selectLocation);
         price = (TextView)findViewById(id.pricePerHour);
+
+        startDate = (TextView) findViewById(id.selectLocationStartDate);
+        startTime = (TextView) findViewById(id.selectLocationStartTime);
+        endDate = (TextView) findViewById(id.selectLocationEndDate);
+        endTime = (TextView) findViewById(id.selectLocationEndTime);
+
+        //Date & time picker
+        sDateTime = intent.getStringExtra("startDateTime");
+        eDateTime = intent.getStringExtra("endDateTime");
+        String[] t = sDateTime.split(" ");
+        List<String> sDateTimeList = Arrays.asList(t);
+        t = eDateTime.split(" ");
+        List<String> eDateTimeList = Arrays.asList(t);
+        Log.d("Select location details", "onCreate: " + intent.getStringExtra("startDateTime"));
+        startDate.setText(sDateTimeList.get(0));
+        startTime.setText(sDateTimeList.get(1));
+        endDate.setText(eDateTimeList.get(0));
+        endTime.setText(eDateTimeList.get(1));
 
 
         ArrayList<SearchData> locationList = (ArrayList<SearchData>) intent.getSerializableExtra("listOfLocations");
@@ -231,51 +250,21 @@ public class SelectLocationToReserve extends FragmentActivity {
             client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
 
 
-        // GRID VIEW
-
-//        GridAdapter adapter = new GridAdapter(SelectLocationToReserve.this, web, imageId);
-//        grid=(GridView)findViewById(id.selectLocationGrid);
-//        grid.setAdapter(adapter);
-//
-//        grid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view,
-//                                    int position, long id) {
-//                Toast.makeText(SelectLocationToReserve.this, "You Clicked at " +web[+ position], Toast.LENGTH_SHORT).show();
-//
-//            }
-//        });
-//
-//        GridAdapter adapter2 = new GridAdapter(SelectLocationToReserve.this, web2, imageId2);
-//        grid2=(GridView)findViewById(id.selectLocationGrid2);
-//        grid2.setAdapter(adapter2);
-//
-//        grid2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view,
-//                                    int position, long id) {
-//                Toast.makeText(SelectLocationToReserve.this, "You Clicked at " +web[+ position], Toast.LENGTH_SHORT).show();
-//
-//            }
-//
-//
-//
-//        });
-//
-//
-
         selectLocationReserveButton = (Button)findViewById(R.id.selectLocationReserveButton);
 
         selectLocationReserveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
                 Intent intent = new Intent(SelectLocationToReserve.this, ConfirmationActivity.class);
                // intent.putExtra("locationList",locationList);
                 intent.putExtra("location",location);
                // intent.putExtra("searchedLocationLong",searchedLatLng.longitude);
                 intent.putExtra("title",title);
+                intent.putExtra("startDateTime", sDateTime);
+                intent.putExtra("startEndTime", eDateTime);
+                intent.putExtra("selectedLocation", selectedLocation);
                 startActivity(intent);
             }
         });
@@ -283,8 +272,6 @@ public class SelectLocationToReserve extends FragmentActivity {
 
 
     }
-
-
 
     @Override
     public void onStart() {
@@ -325,6 +312,7 @@ public class SelectLocationToReserve extends FragmentActivity {
         AppIndex.AppIndexApi.end(client, viewAction);
         client.disconnect();
     }
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -345,6 +333,7 @@ public class SelectLocationToReserve extends FragmentActivity {
 
         super.onPause();
     }
+
     @Override
     protected void onNewIntent(Intent intent) {
         /**
@@ -356,6 +345,7 @@ public class SelectLocationToReserve extends FragmentActivity {
          */
         handleIntent(intent);
     }
+
     private void handleIntent(Intent intent) {
         // TODO: handle Intent
         String action = intent.getAction();
@@ -386,33 +376,6 @@ public class SelectLocationToReserve extends FragmentActivity {
         }
     }
 
-
-    public static void setupForegroundDispatch(final Activity activity, NfcAdapter adapter) {
-        final Intent intent = new Intent(activity.getApplicationContext(), activity.getClass());
-        intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-
-        final PendingIntent pendingIntent = PendingIntent.getActivity(activity.getApplicationContext(), 0, intent, 0);
-
-        IntentFilter[] filters = new IntentFilter[1];
-        String[][] techList = new String[][]{};
-
-        // Notice that this is the same filter as in our manifest.
-        filters[0] = new IntentFilter();
-        filters[0].addAction(NfcAdapter.ACTION_NDEF_DISCOVERED);
-        filters[0].addCategory(Intent.CATEGORY_DEFAULT);
-        try {
-            filters[0].addDataType(MIME_TEXT_PLAIN);
-        } catch (IntentFilter.MalformedMimeTypeException e) {
-            throw new RuntimeException("Check your mime type.");
-        }
-
-        adapter.enableForegroundDispatch(activity, pendingIntent, filters, techList);
-    }
-
-
-    public static void stopForegroundDispatch(final Activity activity, NfcAdapter adapter) {
-        adapter.disableForegroundDispatch(activity);
-    }
     private class NdefReaderTask extends AsyncTask<Tag, Void, String> {
 
         @Override
