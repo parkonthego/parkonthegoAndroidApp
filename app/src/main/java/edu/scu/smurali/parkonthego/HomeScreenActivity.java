@@ -21,6 +21,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.api.Status;
@@ -52,35 +54,12 @@ public class HomeScreenActivity extends AppCompatActivity
     private Context mContext;
     ArrayList<SearchData> locationList;
 
-    // TextView startDate, startTime, endDate, endTime;
+   TextView startDate, startTime, endDate, endTime;
 
-    GridView grid, grid2;
-    String[] web = {
-            "START DATE",
-            "START TIME",
+    ImageButton startDateButton, endDateButton, startTimeButton, endTimeButton;
 
 
-    } ;
-
-    String[] web2 = {
-            "END DATE",
-            "END TIME",
-    } ;
-
-    // TextView startDate, startTime, endDate, endTime;
-    int[] imageId = {
-            R.drawable.calender,
-            R.drawable.clock,
-
-    };
-
-    int[] imageId2 = {
-            R.drawable.calender,
-            R.drawable.clock
-    };
-
-
-    ///////////////////////////////////////////////////////test code//////////////////////////////////////////////
+//    ///////////////////////////////////////////////////////test code//////////////////////////////////////////////
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,6 +85,59 @@ public class HomeScreenActivity extends AppCompatActivity
 //        final String userId =(String) intent.getExtras().get("userId");
         PreferencesManager pm = PreferencesManager.getInstance(mContext);
         final  int userId= pm.getUserId();
+
+
+        startTimeButton = (ImageButton) findViewById(R.id.startTimeImageButton);
+        endTimeButton = (ImageButton) findViewById(R.id.endTimeImageButton);
+
+        startTimeButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+
+                DialogFragment newFragment = new TimePickerFragment();
+                FragmentTransaction ft =getFragmentManager().beginTransaction();
+                newFragment.show(ft, "timePicker");
+            }
+        });
+
+
+
+
+        endTimeButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+
+                DialogFragment newFragment = new TimePickerFragment();
+                FragmentTransaction ft =getFragmentManager().beginTransaction();
+                newFragment.show(ft, "timePicker");
+            }
+        });
+
+
+        startDateButton = (ImageButton) findViewById(R.id.startDateImageButton);
+        endDateButton = (ImageButton) findViewById(R.id.endDateImageButton);
+
+        startDateButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+
+                DialogFragment newFragment = new DatePickerFragment();
+                FragmentTransaction ft =getFragmentManager().beginTransaction();
+                newFragment.show(ft, "datePicker");
+            }
+        });
+
+        endDateButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+
+                DialogFragment newFragment = new DatePickerFragment();
+                FragmentTransaction ft =getFragmentManager().beginTransaction();
+                newFragment.show(ft, "datePicker");
+            }
+        });
+
+
 
 
 
@@ -167,40 +199,6 @@ public class HomeScreenActivity extends AppCompatActivity
 //                startActivity(intent);
             }
         });
-
-        GridAdapter adapter = new GridAdapter(HomeScreenActivity.this, web, imageId);
-        grid=(GridView)findViewById(R.id.grid);
-        grid.setAdapter(adapter);
-
-        grid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view,
-                                    int position, long id) {
-                Toast.makeText(HomeScreenActivity.this, "You Clicked at " +web[+ position], Toast.LENGTH_SHORT).show();
-
-            }
-        });
-
-        GridAdapter adapter2 = new GridAdapter(HomeScreenActivity.this, web2, imageId2);
-        grid2=(GridView)findViewById(R.id.grid2);
-        grid2.setAdapter(adapter2);
-
-        grid2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view,
-                                    int position, long id) {
-                Toast.makeText(HomeScreenActivity.this, "You Clicked at " +web[+ position], Toast.LENGTH_SHORT).show();
-
-            }
-
-
-
-        });
-
-
-
 
 
     }
@@ -317,29 +315,26 @@ public class HomeScreenActivity extends AppCompatActivity
         if(id == R.id.nav_home){
             Intent intent = new Intent(HomeScreenActivity.this,HomeScreenActivity.class);
             startActivity(intent);
-
         }
 
         if (id == R.id.nav_reservation) {
 
-
-//            Intent intent = new Intent(HomeScreenActivity.this,MyReservationActivity.class);
-//            startActivity(intent);
+            Intent intent = new Intent(HomeScreenActivity.this,ReservationsActivity.class);
+            startActivity(intent);
 
 
         } else if (id == R.id.nav_settings) {
 
-//            Intent intent = new Intent(HomeScreenActivity.this,SettingsActivity.class);
-//            startActivity(intent);
+            Intent intent = new Intent(HomeScreenActivity.this,SettingActivity.class);
+            startActivity(intent);
 
 
         } else if (id == R.id.nav_call) {
 
         } else if (id == R.id.nav_help) {
 
-//            Intent intent = new Intent(HomeScreenActivity.this,HelpActivity.class);
-//            startActivity(intent);
-
+            Intent intent = new Intent(HomeScreenActivity.this,HelpActivity.class);
+            startActivity(intent);
 
         } else if(id == R.id.nav_logout){
 
@@ -353,64 +348,68 @@ public class HomeScreenActivity extends AppCompatActivity
     }
 
 
+
+
     /*DatePicker and TimePicker code starts here*/
 
 
-//    public void showTimePickerDialog(View v) {
-//
-//        startTime = (TextView) findViewById(R.id.homeScreenStartTime);
-//        endTime = (TextView) findViewById(R.id.homeScreenEndTime);
-//
-//        startTime.setOnClickListener(new View.OnClickListener(){
-//            @Override
-//            public void onClick(View v) {
-//
-//                DialogFragment newFragment = new TimePickerFragment();
-//                FragmentTransaction ft =getFragmentManager().beginTransaction();
-//                newFragment.show(ft, "timePicker");
-//            }
-//        });
-//
-//        endTime.setOnClickListener(new View.OnClickListener(){
-//            @Override
-//            public void onClick(View v) {
-//
-//                DialogFragment newFragment = new TimePickerFragment();
-//                FragmentTransaction ft =getFragmentManager().beginTransaction();
-//                newFragment.show(ft, "timePicker");
-//            }
-//        });
-//
-//
-//    }
-//
-//    public void showDatePickerDialog(View v) {
-//
-//        startDate = (TextView) findViewById(R.id.homeScreenStartDate);
-//        endDate = (TextView) findViewById(R.id.homeScreenEndDate);
-//
-//        startDate.setOnClickListener(new View.OnClickListener(){
-//            @Override
-//            public void onClick(View v) {
-//
-//                DialogFragment newFragment = new DatePickerFragment();
-//                FragmentTransaction ft =getFragmentManager().beginTransaction();
-//                newFragment.show(ft, "datePicker");
-//            }
-//        });
-//
-//        endDate.setOnClickListener(new View.OnClickListener(){
-//            @Override
-//            public void onClick(View v) {
-//
-//                DialogFragment newFragment = new DatePickerFragment();
-//                FragmentTransaction ft =getFragmentManager().beginTransaction();
-//                newFragment.show(ft, "datePicker");
-//            }
-//        });
-//
+    public void showTimePickerDialog(View v) {
 
-//}
+        startTime = (TextView) findViewById(R.id.homeScreenStartTime);
+        endTime = (TextView) findViewById(R.id.homeScreenEndTime);
+
+
+
+        startTime.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+
+                DialogFragment newFragment = new TimePickerFragment();
+                FragmentTransaction ft =getFragmentManager().beginTransaction();
+                newFragment.show(ft, "timePicker");
+            }
+        });
+
+        endTime.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+
+                DialogFragment newFragment = new TimePickerFragment();
+                FragmentTransaction ft =getFragmentManager().beginTransaction();
+                newFragment.show(ft, "timePicker");
+            }
+        });
+
+
+    }
+
+    public void showDatePickerDialog(View v) {
+
+        startDate = (TextView) findViewById(R.id.homeScreenStartDate);
+        endDate = (TextView) findViewById(R.id.homeScreenEndDate);
+
+
+        startDate.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+
+                DialogFragment newFragment = new DatePickerFragment();
+                FragmentTransaction ft =getFragmentManager().beginTransaction();
+                newFragment.show(ft, "datePicker");
+            }
+        });
+
+        endDate.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                DialogFragment newFragment = new DatePickerFragment();
+                FragmentTransaction ft =getFragmentManager().beginTransaction();
+                newFragment.show(ft, "datePicker");
+            }
+        });
+
+
+}
 
 
 
