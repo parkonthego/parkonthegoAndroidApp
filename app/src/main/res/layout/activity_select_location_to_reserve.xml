@@ -65,7 +65,8 @@
         android:layout_height="50dp"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:id="@+id/selectLocation"
-        android:layout_alignTop="@+id/locationLabelSLTR"
+        android:layout_alignBaseline="@+id/locationLabelSLTR"
+        android:layout_alignBottom="@+id/locationLabelSLTR"
         android:layout_toEndOf="@+id/locationLabelSLTR" />
 
     <TextView
@@ -82,9 +83,8 @@
           android:textAppearance="?android:attr/textAppearanceLarge"
           android:text="START:"
           android:id="@+id/textView2"
-          android:layout_above="@+id/locationLabelSLTR"
-          android:layout_alignParentStart="true"
-          android:layout_marginBottom="138dp" />
+          android:layout_centerVertical="true"
+          android:layout_alignParentStart="true" />
 
       <TextView
           android:layout_width="wrap_content"
@@ -122,8 +122,9 @@
           android:textAppearance="?android:attr/textAppearanceMedium"
           android:text="05/20/2016"
           android:id="@+id/selectLocationEndDate"
-          android:layout_alignTop="@+id/textView6"
-          android:layout_alignStart="@+id/selectLocationStartTime" />
+          android:layout_alignBaseline="@+id/selectLocationEndTime"
+          android:layout_alignBottom="@+id/selectLocationEndTime"
+          android:layout_alignStart="@+id/selectLocationStartDate" />
 
       <TextView
           android:layout_width="wrap_content"
@@ -131,9 +132,8 @@
           android:textAppearance="?android:attr/textAppearanceMedium"
           android:text="2:00 AM"
           android:id="@+id/selectLocationEndTime"
-          android:layout_below="@+id/textView6"
-          android:layout_alignStart="@+id/selectLocationEndDate"
-          android:layout_marginTop="15dp" />
+          android:layout_alignBottom="@+id/textView6"
+          android:layout_alignStart="@+id/selectLocationStartTime" />
 
 
 </RelativeLayout>
