@@ -8,6 +8,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -73,9 +74,9 @@ public class LocationsOnMap extends FragmentActivity implements OnMapReadyCallba
 
        Intent intent = getIntent();
        final ArrayList<SearchData> locationList= (ArrayList<SearchData>) intent.getSerializableExtra("locationList");
-       double searchedLocationLat = (Double) intent.getSerializableExtra("searchedLocationLat");
-        double searchedLocationLong = (Double) intent.getSerializableExtra("searchedLocationLong");
-      String searchedLocationAddress = intent.getStringExtra("searchedLocationAddress");
+       final double searchedLocationLat = (Double) intent.getSerializableExtra("searchedLocationLat");
+        final double searchedLocationLong = (Double) intent.getSerializableExtra("searchedLocationLong");
+      final String searchedLocationAddress = intent.getStringExtra("searchedLocationAddress");
 
         final LatLng searchedLocation = new LatLng(searchedLocationLat,searchedLocationLong);
 
@@ -89,6 +90,7 @@ public class LocationsOnMap extends FragmentActivity implements OnMapReadyCallba
             MarkerOptions custom = new MarkerOptions().position(new LatLng(searchedLocationLat, searchedLocationLong)).title("Destination:" + searchedLocationAddress)
                     .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
             mMap.addMarker(custom);
+
         }
 
        for(int i=0;i<locationList.size();i++)
@@ -142,16 +144,25 @@ public class LocationsOnMap extends FragmentActivity implements OnMapReadyCallba
             @Override
             public void onInfoWindowClick(Marker marker) {
 
-                LatLng clickedLocation= marker.getPosition();
-                String title = marker.getTitle();
-                Intent intent = new Intent(LocationsOnMap.this ,SelectLocationToReserve.class);
-                intent.putExtra("ltdLng",clickedLocation);
-                intent.putExtra("title", title);
-                intent.putExtra("searchedLocation",searchedLocation);
-                intent.putExtra("activityName","LocationsOnMap");
-                intent.putExtra("listOfLocations",locationList);
 
-                startActivity(intent);
+                if(marker.getPosition().latitude==searchedLocationLat&&marker.getPosition().longitude==searchedLocationLong)
+                {
+                    Toast.makeText(LocationsOnMap.this, "this is your destination location", Toast.LENGTH_LONG).show();
+                }
+                else {
+
+                    LatLng clickedLocation = marker.getPosition();
+                    String title = marker.getTitle();
+                    Intent intent = new Intent(LocationsOnMap.this, SelectLocationToReserve.class);
+                    intent.putExtra("ltdLng", clickedLocation);
+                    intent.putExtra("title", title);
+                    intent.putExtra("searchedLocation", searchedLocation);
+                    intent.putExtra("searchedLocationAddress",searchedLocationAddress);
+                    intent.putExtra("activityName", "LocationsOnMap");
+                    intent.putExtra("listOfLocations", locationList);
+
+                    startActivity(intent);
+                }
 
             }
         });

@@ -3,9 +3,11 @@ package edu.scu.smurali.parkonthego;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.provider.Settings;
+import android.support.v7.app.AlertDialog;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
@@ -165,7 +167,52 @@ public class ParkOnTheGo extends Application {
 
     }
 
+    public void showAlert(Context mContext,String alertMessage ,String title ) {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+        builder.setMessage(alertMessage)
+                .setTitle(title);
+// Add the buttons
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                // User clicked OK button
+            }
+        });
+//                builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+//                    public void onClick(DialogInterface dialog, int id) {
+//                        // User cancelled the dialog
+//                    }
+//                });
+// Set other dialog properties
+
+
+// Create the AlertDialog
+        AlertDialog dialog = builder.create();
+        dialog.show();
+
+    }
     public void showAlert(String alertMessage) {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(alertMessage)
+                .setTitle("Error");
+// Add the buttons
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                // User clicked OK button
+            }
+        });
+//                builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+//                    public void onClick(DialogInterface dialog, int id) {
+//                        // User cancelled the dialog
+//                    }
+//                });
+// Set other dialog properties
+
+
+// Create the AlertDialog
+        AlertDialog dialog = builder.create();
+        dialog.show();
 
     }
 
