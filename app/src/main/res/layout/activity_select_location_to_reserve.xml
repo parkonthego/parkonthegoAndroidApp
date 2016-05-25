@@ -18,37 +18,14 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:id="@+id/mapFrameLayout"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true">
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:id="@+id/mapFrameLayout"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentStart="true">
 
-    </FrameLayout>
-
-           <GridView
-                android:numColumns="2"
-                android:gravity="center"
-                android:columnWidth="100dp"
-                android:stretchMode="columnWidth"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:id="@+id/selectLocationGrid"
-                android:layout_below="@+id/mapFrameLayout"
-               android:layout_marginTop="20dp" />
-
-            <GridView
-                android:numColumns="2"
-                android:gravity="center"
-                android:columnWidth="100dp"
-                android:stretchMode="columnWidth"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:id="@+id/selectLocationGrid2"
-                android:layout_below="@+id/selectLocationGrid"
-
-                android:layout_marginTop="20dp" />
+            </FrameLayout>
 
 
             android:name="com.google.android.gms.maps.SupportMapFragment
@@ -71,7 +48,6 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="@string/price"
         android:id="@+id/priceLabelSLTR"
-        android:layout_marginBottom="100dp"
         android:layout_above="@+id/selectLocationReserveButton"
         android:layout_alignParentStart="true" />
 
@@ -100,14 +76,15 @@
         android:layout_alignTop="@+id/priceLabelSLTR"
         android:layout_toEndOf="@+id/priceLabelSLTR" />
 
-    <!--  <TextView
+      <TextView
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:textAppearance="?android:attr/textAppearanceLarge"
           android:text="START:"
           android:id="@+id/textView2"
-          android:layout_centerVertical="true"
-          android:layout_alignParentStart="true" />
+          android:layout_above="@+id/locationLabelSLTR"
+          android:layout_alignParentStart="true"
+          android:layout_marginBottom="138dp" />
 
       <TextView
           android:layout_width="wrap_content"
@@ -125,9 +102,9 @@
           android:textAppearance="?android:attr/textAppearanceMedium"
           android:text="5:00 PM"
           android:id="@+id/selectLocationStartTime"
-          android:layout_below="@+id/selectLocationStartDate"
-          android:layout_alignStart="@+id/selectLocationStartDate"
-          android:layout_marginTop="15dp" />
+          android:layout_alignTop="@+id/selectLocationStartDate"
+          android:layout_alignStart="@+id/selectLocation"
+          android:layout_marginStart="41dp" />
 
       <TextView
           android:layout_width="wrap_content"
@@ -156,8 +133,7 @@
           android:id="@+id/selectLocationEndTime"
           android:layout_below="@+id/textView6"
           android:layout_alignStart="@+id/selectLocationEndDate"
-          android:layout_marginTop="15dp" />-->
-
+          android:layout_marginTop="15dp" />
 
 
 </RelativeLayout>
