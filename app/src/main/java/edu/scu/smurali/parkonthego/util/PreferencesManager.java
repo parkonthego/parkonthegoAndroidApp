@@ -44,5 +44,11 @@ public class PreferencesManager {
         return sharedPreferences.getString("name", null);
     }
 
+    public void clear() {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.clear();
+        editor.commit();
+    }
+
 
 }
