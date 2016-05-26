@@ -19,6 +19,7 @@ import edu.scu.smurali.parkonthego.ParkOnTheGo;
 import edu.scu.smurali.parkonthego.R;
 import edu.scu.smurali.parkonthego.retrofit.reponses.SignUpResponse;
 import edu.scu.smurali.parkonthego.retrofit.services.UserServices;
+import edu.scu.smurali.parkonthego.util.PreferencesManager;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -156,8 +157,13 @@ public class RegisterActivity extends AppCompatActivity {
     private void parseResponse(SignUpResponse response) {
         Toast.makeText(getApplicationContext(), "Request Sucess" + response.getSuccess(), Toast.LENGTH_SHORT).show();
         if (response.getSuccess() == true) {
+            PreferencesManager pm = PreferencesManager.getInstance(mContext);
+            pm.updateUserId(response.getData().getId());
+            pm.updateUserName(response.getData().getDisplayName());
+            response.getData().getId();
             Intent intent = new Intent(RegisterActivity.this, HomeScreenActivity.class);
             startActivity(intent);
+            finish();
 
         } else {
 
