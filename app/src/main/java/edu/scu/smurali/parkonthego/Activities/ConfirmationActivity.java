@@ -14,6 +14,9 @@ import android.widget.Toast;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.gson.Gson;
 
+import java.util.Arrays;
+import java.util.List;
+
 import edu.scu.smurali.parkonthego.ParkOnTheGo;
 import edu.scu.smurali.parkonthego.R;
 import edu.scu.smurali.parkonthego.retrofit.reponses.ReservationCfnResponse;
@@ -32,6 +35,9 @@ public class ConfirmationActivity extends AppCompatActivity {
     private Button cfnReserveButton;
     private Context mContext;
     private SearchData locationObject;
+    private TextView confirmationStartDateTextView;
+    private TextView confirmationEndDateTextView,confirmationStartTimeTextView,confirmationEndTimeTextView ,confirmationPricePerHrTextView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +61,12 @@ public class ConfirmationActivity extends AppCompatActivity {
 //        ////////////////////////////////////////////////testing varun raparla/////////////////////////////////////////////////////////////////////////////
         Intent intent = getIntent();
         confirmationLocationTextView = (TextView) findViewById(R.id.confirmationLocationTextView);
+        confirmationStartDateTextView = (TextView)findViewById(R.id.confirmationStartDateTextView);
+        confirmationEndDateTextView=(TextView)findViewById(R.id.confirmationEndDateTextView);
+        confirmationEndTimeTextView=(TextView)findViewById(R.id.confirmationEndTimeTextView);
+        confirmationStartTimeTextView=(TextView)findViewById(R.id.confirmationStartTimeTextView);
+        confirmationPricePerHrTextView=(TextView)findViewById(R.id.confirmationPricePerHrTextView);
+
         LatLng location = intent.getParcelableExtra("location");
         String title = intent.getExtras().getString("title");
         title = intent.getExtras().getString("title");
@@ -68,7 +80,18 @@ public class ConfirmationActivity extends AppCompatActivity {
 
 //       // LatLng location = (LatLng) intent.getExtras().get("ltdLng");
 //        String title = intent.getExtras().getString("title");
-        confirmationLocationTextView.setText(title);
+        confirmationLocationTextView.setText(locationObject.getDescription());
+        String[] t = startDateTime.split(" ");
+        List<String> sDateTimeList = Arrays.asList(t);
+        t = endDateTime.split(" ");
+        List<String> eDateTimeList = Arrays.asList(t);
+        Log.d("Select location details", "onCreate: " + intent.getStringExtra("startDateTime"));
+        confirmationStartDateTextView.setText(sDateTimeList.get(0));
+        confirmationStartTimeTextView.setText(sDateTimeList.get(1));
+        confirmationEndDateTextView.setText(eDateTimeList.get(0));
+        confirmationEndTimeTextView.setText(eDateTimeList.get(1));
+        confirmationPricePerHrTextView.setText(new Double(locationObject.getPrice()).toString());
+
 
         cfnReserveButton.setOnClickListener(new View.OnClickListener() {
             @Override

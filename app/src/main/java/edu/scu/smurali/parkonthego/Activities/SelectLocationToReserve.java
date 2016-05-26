@@ -721,8 +721,9 @@ public class SelectLocationToReserve extends FragmentActivity {
 
         public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
             // Do something with the time chosen by the user
+            String min = String.format("%02d",minute);
 
-            String time = hourOfDay + ":" + minute;
+            String time = hourOfDay + ":" + min;
 
             startTime.setText(time);
 //            homeEndTime.setText(time);
@@ -749,8 +750,9 @@ public class SelectLocationToReserve extends FragmentActivity {
 
         public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
             // Do something with the time chosen by the user
+            String min = String.format("%02d",minute);
 
-            String time = hourOfDay + ":" + minute;
+            String time = hourOfDay + ":" + min;
 
 //            homeStartTime.setText(time);
             endTime.setText(time);

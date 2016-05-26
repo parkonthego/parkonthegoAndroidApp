@@ -155,6 +155,47 @@ public class HomeScreenActivity extends AppCompatActivity
                 newFragment.show(ft, "datePicker");
             }
         });
+        startTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                DialogFragment newFragment = new StartTimePickerFragment();
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                newFragment.show(ft, "timePicker");
+
+
+            }
+        });
+
+        endTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                DialogFragment newFragment = new EndTimePickerFragment();
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                newFragment.show(ft, "timePicker");
+
+            }
+        });
+        startDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                DialogFragment newFragment = new StartDatePickerFragment();
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                newFragment.show(ft, "datePicker");
+
+            }
+        });
+
+        endDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DialogFragment newFragment = new EndDatePickerFragment();
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                newFragment.show(ft, "datePicker");
+            }
+        });
 
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -380,60 +421,60 @@ public class HomeScreenActivity extends AppCompatActivity
     /*DatePicker and TimePicker code starts here*/
 
 
-    public void showTimePickerDialog(View v) {
-
-
-        startTime.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                DialogFragment newFragment = new StartTimePickerFragment();
-                FragmentTransaction ft = getFragmentManager().beginTransaction();
-                newFragment.show(ft, "timePicker");
-
-
-            }
-        });
-
-        endTime.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                DialogFragment newFragment = new EndTimePickerFragment();
-                FragmentTransaction ft = getFragmentManager().beginTransaction();
-                newFragment.show(ft, "timePicker");
-
-            }
-        });
-
-
-    }
-
-    public void showDatePickerDialog(View v) {
-
-
-        startDate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                DialogFragment newFragment = new StartDatePickerFragment();
-                FragmentTransaction ft = getFragmentManager().beginTransaction();
-                newFragment.show(ft, "datePicker");
-
-            }
-        });
-
-        endDate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                DialogFragment newFragment = new EndDatePickerFragment();
-                FragmentTransaction ft = getFragmentManager().beginTransaction();
-                newFragment.show(ft, "datePicker");
-            }
-        });
-
-
-    }
+//    public void showTimePickerDialog(View v) {
+//
+//
+//        startTime.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//                DialogFragment newFragment = new StartTimePickerFragment();
+//                FragmentTransaction ft = getFragmentManager().beginTransaction();
+//                newFragment.show(ft, "timePicker");
+//
+//
+//            }
+//        });
+//
+//        endTime.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//                DialogFragment newFragment = new EndTimePickerFragment();
+//                FragmentTransaction ft = getFragmentManager().beginTransaction();
+//                newFragment.show(ft, "timePicker");
+//
+//            }
+//        });
+//
+//
+//    }
+//
+//    public void showDatePickerDialog(View v) {
+//
+//
+//        startDate.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//                DialogFragment newFragment = new StartDatePickerFragment();
+//                FragmentTransaction ft = getFragmentManager().beginTransaction();
+//                newFragment.show(ft, "datePicker");
+//
+//            }
+//        });
+//
+//        endDate.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                DialogFragment newFragment = new EndDatePickerFragment();
+//                FragmentTransaction ft = getFragmentManager().beginTransaction();
+//                newFragment.show(ft, "datePicker");
+//            }
+//        });
+//
+//
+//    }
 
     public static class StartDatePickerFragment extends DialogFragment
             implements DatePickerDialog.OnDateSetListener {
@@ -524,8 +565,8 @@ public class HomeScreenActivity extends AppCompatActivity
 
         public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
             // Do something with the time chosen by the user
-
-            String time = hourOfDay + ":" + minute;
+            String min = String.format("%02d",minute);
+            String time = hourOfDay + ":" + min;
 
             startTime.setText(time);
 //            homeEndTime.setText(time);
@@ -552,8 +593,9 @@ public class HomeScreenActivity extends AppCompatActivity
 
         public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
             // Do something with the time chosen by the user
-
-            String time = hourOfDay + ":" + minute;
+            //String min = new Integer(minute).toString();
+            String min = String.format("%02d",minute);
+            String time = hourOfDay + ":" + min;
 
 //            homeStartTime.setText(time);
             endTime.setText(time);
