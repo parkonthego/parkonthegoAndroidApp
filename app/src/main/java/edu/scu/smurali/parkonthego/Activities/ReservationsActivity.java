@@ -1,5 +1,6 @@
 package edu.scu.smurali.parkonthego.Activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -20,7 +21,15 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import edu.scu.smurali.parkonthego.ParkOnTheGo;
 import edu.scu.smurali.parkonthego.R;
+import edu.scu.smurali.parkonthego.retrofit.reponses.ReservationData;
+import edu.scu.smurali.parkonthego.retrofit.reponses.ReservationResponse;
+import edu.scu.smurali.parkonthego.retrofit.services.ReservationServices;
+import edu.scu.smurali.parkonthego.util.PreferencesManager;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class ReservationsActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -29,6 +38,7 @@ public class ReservationsActivity extends AppCompatActivity
     ExpandableListView expListView;
     List<String> listDataHeader;
     HashMap<String, List<String>> listDataChild;
+    private Context mContext;
 
 
     @Override
@@ -37,6 +47,7 @@ public class ReservationsActivity extends AppCompatActivity
         setContentView(R.layout.activity_reservations);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        this.mContext = this;
 
         try {
             ActionBar actionBar = getSupportActionBar();
@@ -68,12 +79,9 @@ public class ReservationsActivity extends AppCompatActivity
         expListView = (ExpandableListView) findViewById(R.id.expandableListView);
 
         // preparing list data
-        prepareListData();
+        getUserReservation();
 
-        listAdapter = new ExpandableListAdapter(this, listDataHeader, listDataChild);
 
-        // setting list adapter
-        expListView.setAdapter(listAdapter);
 
         expListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
 
@@ -116,38 +124,95 @@ public class ReservationsActivity extends AppCompatActivity
     }
 
 
+//Getting data from server
+
+    public void getUserReservation() {
+
+        if (ParkOnTheGo.getInstance().isConnectedToInterNet()) {
+            ReservationServices reservationServices = ParkOnTheGo.getInstance().getReservationServices();
+//            ParkOnTheGo.getInstance().showProgressDialog(mContext.getString(R.string
+//                    .login_signin), mContext.getString(R.string.login_please_wait));
+            Call<ReservationResponse> call = reservationServices.getUserReservations(PreferencesManager.getInstance(mContext).getUserId());
+            Log.d("Calling", "Reservation: " + call);
+            call.enqueue(new Callback<ReservationResponse>() {
+                @Override
+                public void onResponse(Call<ReservationResponse> call,
+                                       Response<ReservationResponse> response) {
+                    //ParkOnTheGo.getInstance().hideProgressDialog();
+                    if (response.isSuccessful()) {
+                        parseResponse(response.body());
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ReservationResponse> call, Throwable throwable) {
+                    Toast.makeText(getApplicationContext(), "Request failed" + throwable, Toast.LENGTH_SHORT).show();
+
+                    // ParkOnTheGo.getInstance().hideProgressDialog();
+                    // ParkOnTheGo.getInstance().handleError(throwable);
+                }
+            });
+        } else {
+            ParkOnTheGo.getInstance().showAlert(mContext.getString(R.string.no_network));
+        }
+    }
+
+    private void parseResponse(ReservationResponse response) {
+        Toast.makeText(getApplicationContext(), "Reservation Data Sucess " + response.getSuccess(), Toast.LENGTH_SHORT).show();
+        if (response.getSuccess() == true) {
+            listDataHeader = new ArrayList<String>();
+            listDataChild = new HashMap<String, List<String>>();
+
+
+            List<String> reservationOption = new ArrayList<String>();
+
+            reservationOption.add("Direction");
+            reservationOption.add("Start");
+            reservationOption.add("Cancel");
+            reservationOption.add("Edit");
+
+            List<ReservationData> reservationsData = response.getData();
+            for (ReservationData rev : reservationsData) {
+                String temp = rev.getDescription() + "\n" +
+                        rev.getStartingTime() + " " + rev.getEndTime();
+                listDataChild.put(temp, reservationOption);
+                listDataHeader.add(temp);
+
+            }
+            listAdapter = new ExpandableListAdapter(this, listDataHeader, listDataChild);
+
+            //  setting list adapter
+            expListView.setAdapter(listAdapter);
+//            // Adding child data
+//            listDataHeader.add("reservation1");
+//            listDataHeader.add("reservation2");
+//
+//            List<String> reservation1 = new ArrayList<String>();
+//
+//            reservation1.add("Direction");
+//            reservation1.add("Start");
+//            reservation1.add("Cancel");
+//            reservation1.add("Edit");
+//
+//            List<String> reservation2 = new ArrayList<String>();
+//
+//            reservation2.add("Direction");
+//            reservation2.add("Start");
+//            reservation2.add("Cancel");
+//            reservation2.add("Edit");
+//
+//            listDataChild.put(listDataHeader.get(0), reservation1); // Header, Child data
+//            listDataChild.put(listDataHeader.get(1), reservation2);
+
+        } else {
+
+        }
+    }
 
 
 
 
-// LIST CONTENTS
 
-private void prepareListData() {
-    listDataHeader = new ArrayList<String>();
-    listDataChild = new HashMap<String, List<String>>();
-
-    // Adding child data
-    listDataHeader.add("reservation1");
-    listDataHeader.add("reservation2");
-
-    List<String> reservation1 = new ArrayList<String>();
-
-    reservation1.add("Direction");
-    reservation1.add("Start");
-    reservation1.add("Cancel");
-    reservation1.add("Edit");
-
-    List<String> reservation2 = new ArrayList<String>();
-
-    reservation2.add("Direction");
-    reservation2.add("Start");
-    reservation2.add("Cancel");
-    reservation2.add("Edit");
-
-    listDataChild.put(listDataHeader.get(0), reservation1); // Header, Child data
-    listDataChild.put(listDataHeader.get(1), reservation2);
-
-}
 
 
     @Override
