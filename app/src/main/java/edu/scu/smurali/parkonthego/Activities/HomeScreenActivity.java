@@ -449,8 +449,9 @@ public class HomeScreenActivity extends AppCompatActivity
             // Use the current date as the default date in the picker
             final Calendar c = Calendar.getInstance();
             int year = c.get(Calendar.YEAR);
-            int month = c.get(Calendar.MONTH);
+            int month = c.get(Calendar.MONTH) + 1;
             int day = c.get(Calendar.DAY_OF_MONTH);
+            Log.d("Start Date Dialog", "onCreateDialog: " + year + " " + month + " " + day);
 
             // Create a new instance of DatePickerDialog and return it
             return new DatePickerDialog(getActivity(), this, year, month, day);
@@ -462,8 +463,8 @@ public class HomeScreenActivity extends AppCompatActivity
             //String date = month + "-" + day + "-" + "year";
 
 
-            startDate.setText(new StringBuilder().append(day).append("/")
-                    .append(month).append("/").append(year));
+            startDate.setText(new StringBuilder().append(month).append("/")
+                    .append(day).append("/").append(year));
 
 
         }
@@ -483,7 +484,7 @@ public class HomeScreenActivity extends AppCompatActivity
             // Use the current date as the default date in the picker
             final Calendar c = Calendar.getInstance();
             int year = c.get(Calendar.YEAR);
-            int month = c.get(Calendar.MONTH);
+            int month = c.get(Calendar.MONTH) + 1;
             int day = c.get(Calendar.DAY_OF_MONTH);
 
             // Create a new instance of DatePickerDialog and return it
@@ -496,8 +497,8 @@ public class HomeScreenActivity extends AppCompatActivity
             //String date = month + "-" + day + "-" + "year";
 
 
-            endDate.setText(new StringBuilder().append(day).append("/")
-                    .append(month).append("/").append(year));
+            endDate.setText(new StringBuilder().append(month).append("/")
+                    .append(day).append("/").append(year));
 
 
         }
