@@ -570,7 +570,7 @@ public class HomeScreenActivity extends AppCompatActivity
 
         public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
             // Do something with the time chosen by the user
-            String min = String.format("%02d",minute);
+            String min = String.format("%02d", minute);
             String time = hourOfDay + ":" + min;
 
             startTime.setText(time);
@@ -599,7 +599,7 @@ public class HomeScreenActivity extends AppCompatActivity
         public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
             // Do something with the time chosen by the user
             //String min = new Integer(minute).toString();
-            String min = String.format("%02d",minute);
+            String min = String.format("%02d", minute);
             String time = hourOfDay + ":" + min;
 
 //            homeStartTime.setText(time);

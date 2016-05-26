@@ -36,7 +36,7 @@ public class ConfirmationActivity extends AppCompatActivity {
     private Context mContext;
     private SearchData locationObject;
     private TextView confirmationStartDateTextView;
-    private TextView confirmationEndDateTextView,confirmationStartTimeTextView,confirmationEndTimeTextView ,confirmationPricePerHrTextView;
+    private TextView confirmationEndDateTextView, confirmationStartTimeTextView, confirmationEndTimeTextView, confirmationPricePerHrTextView;
 
 
     @Override
@@ -61,11 +61,11 @@ public class ConfirmationActivity extends AppCompatActivity {
 //        ////////////////////////////////////////////////testing varun raparla/////////////////////////////////////////////////////////////////////////////
         Intent intent = getIntent();
         confirmationLocationTextView = (TextView) findViewById(R.id.confirmationLocationTextView);
-        confirmationStartDateTextView = (TextView)findViewById(R.id.confirmationStartDateTextView);
-        confirmationEndDateTextView=(TextView)findViewById(R.id.confirmationEndDateTextView);
-        confirmationEndTimeTextView=(TextView)findViewById(R.id.confirmationEndTimeTextView);
-        confirmationStartTimeTextView=(TextView)findViewById(R.id.confirmationStartTimeTextView);
-        confirmationPricePerHrTextView=(TextView)findViewById(R.id.confirmationPricePerHrTextView);
+        confirmationStartDateTextView = (TextView) findViewById(R.id.confirmationStartDateTextView);
+        confirmationEndDateTextView = (TextView) findViewById(R.id.confirmationEndDateTextView);
+        confirmationEndTimeTextView = (TextView) findViewById(R.id.confirmationEndTimeTextView);
+        confirmationStartTimeTextView = (TextView) findViewById(R.id.confirmationStartTimeTextView);
+        confirmationPricePerHrTextView = (TextView) findViewById(R.id.confirmationPricePerHrTextView);
 
         LatLng location = intent.getParcelableExtra("location");
         String title = intent.getExtras().getString("title");
