@@ -465,8 +465,8 @@ private MapFragment mSupportMapFragment;
             //String date = month + "-" + day + "-" + "year";
 
 
-            startDate.setText(new StringBuilder().append(day).append("/")
-                    .append(month).append("/").append(year));
+            startDate.setText(new StringBuilder().append(month).append("/")
+                    .append(day).append("/").append(year));
 
 
         }
@@ -499,8 +499,9 @@ private MapFragment mSupportMapFragment;
             //String date = month + "-" + day + "-" + "year";
 
 
-            endDate.setText(new StringBuilder().append(day).append("/")
-                    .append(month).append("/").append(year));
+            endDate.setText(new StringBuilder().append(month).append("/")
+                    .append(day).append("/").append(year));
+
 
 
         }
