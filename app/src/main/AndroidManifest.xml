@@ -3,6 +3,7 @@
     package="edu.scu.smurali.parkonthego">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
 
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
