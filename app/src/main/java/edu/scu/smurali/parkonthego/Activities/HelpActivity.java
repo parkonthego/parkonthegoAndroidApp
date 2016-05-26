@@ -1,5 +1,6 @@
 package edu.scu.smurali.parkonthego.Activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -15,16 +16,19 @@ import android.view.MenuItem;
 import android.view.View;
 
 import edu.scu.smurali.parkonthego.R;
+import edu.scu.smurali.parkonthego.util.PreferencesManager;
 
 public class HelpActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    private Context mContext;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_help);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        mContext = this;
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -106,7 +110,12 @@ public class HelpActivity extends AppCompatActivity
             startActivity(intent);
 
         } else if(id == R.id.nav_logout){
-
+            PreferencesManager.getInstance(mContext).clear();
+            Intent intent = new Intent(HelpActivity.this, LoginActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+            finish();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

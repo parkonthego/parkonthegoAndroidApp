@@ -280,7 +280,12 @@ public class ReservationsActivity extends AppCompatActivity
             startActivity(intent);
 
         } else if(id == R.id.nav_logout){
-
+            PreferencesManager.getInstance(mContext).clear();
+            Intent intent = new Intent(ReservationsActivity.this, LoginActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+            finish();
 
 
         }

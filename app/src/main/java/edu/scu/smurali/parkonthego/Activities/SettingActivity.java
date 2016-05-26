@@ -1,5 +1,6 @@
 package edu.scu.smurali.parkonthego.Activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -14,9 +15,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import edu.scu.smurali.parkonthego.R;
+import edu.scu.smurali.parkonthego.util.PreferencesManager;
 
 public class SettingActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    private Context mContext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +28,7 @@ public class SettingActivity extends AppCompatActivity
         setContentView(R.layout.activity_setting);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        mContext = this;
 
         try {
             ActionBar actionBar = getSupportActionBar();
@@ -114,7 +119,12 @@ public class SettingActivity extends AppCompatActivity
             startActivity(intent);
 
         } else if(id == R.id.nav_logout){
-
+            PreferencesManager.getInstance(mContext).clear();
+            Intent intent = new Intent(SettingActivity.this, LoginActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+            finish();
 
 
         }

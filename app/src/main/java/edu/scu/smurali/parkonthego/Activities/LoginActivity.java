@@ -129,6 +129,7 @@ public class LoginActivity extends AppCompatActivity implements Validator.Valida
 
     }
 
+
     @Override
     public void onValidationSucceeded() {
         String emailValue = email.getText().toString();
