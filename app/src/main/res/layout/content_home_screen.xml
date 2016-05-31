@@ -14,7 +14,8 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="#ffffff">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -46,7 +47,7 @@
                             android:layout_height="75dp"
                             android:layout_weight="0.5"
                             android:background="#ffffff"
-                            android:src="@drawable/calender" />
+                            android:src="@drawable/calendar" />
 
                         <TextView
                             android:id="@+id/homeScreenStartDate"
@@ -72,7 +73,7 @@
                             android:layout_height="65dp"
                             android:layout_weight="0.5"
                             android:background="#ffffff"
-                            android:src="@drawable/alarmclock" />
+                            android:src="@drawable/clock" />
 
                         <TextView
                             android:id="@+id/homeScreenStartTime"
@@ -104,7 +105,7 @@
                             android:layout_height="75dp"
                             android:layout_weight="0.5"
                             android:background="#ffffff"
-                            android:src="@drawable/calender" />
+                            android:src="@drawable/calendar" />
 
                         <TextView
                             android:id="@+id/homeScreenEndDate"
@@ -131,7 +132,7 @@
                             android:layout_height="75dp"
                             android:layout_weight="0.5"
                             android:background="#ffffff"
-                            android:src="@drawable/alarmclock" />
+                            android:src="@drawable/clock" />
 
                         <TextView
                             android:id="@+id/homeScreenEndTime"
