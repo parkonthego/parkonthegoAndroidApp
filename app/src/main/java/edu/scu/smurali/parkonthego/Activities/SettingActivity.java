@@ -17,6 +17,8 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 import edu.scu.smurali.parkonthego.R;
 import edu.scu.smurali.parkonthego.util.PreferencesManager;
@@ -25,6 +27,8 @@ public class SettingActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private Context mContext;
+
+    TextView changePassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +49,17 @@ public class SettingActivity extends AppCompatActivity
         catch(NullPointerException ex){
             Log.d("Settings", "onCreate: Null pointer in action bar "+ex.getMessage());
         }
+
+        changePassword = (TextView) findViewById(R.id.settingChangePassword);
+
+        changePassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+
 
 
 
@@ -83,7 +98,7 @@ public class SettingActivity extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_save) {
             return true;
         }
 
