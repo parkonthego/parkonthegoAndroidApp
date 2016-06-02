@@ -1,6 +1,7 @@
 package edu.scu.smurali.parkonthego;
 
-
+import android.support.multidex.MultiDex;
+import android.support.multidex.MultiDexApplication;
 import android.app.Application;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -22,16 +23,25 @@ import retrofit2.converter.gson.GsonConverterFactory;
 /**
  * Created by chshi on 5/21/2016.
  */
-public class ParkOnTheGo extends Application {
+public class ParkOnTheGo extends MultiDexApplication {
 
     private static ParkOnTheGo mInstance;
     private static Context mContext;
     private static Context mApplicationContext;
     private Retrofit mRetrofit;
 
+
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        MultiDex.install(this);
+    }
+
     /**
      * Returns the Application class instance
      */
+
     public static synchronized ParkOnTheGo getInstance() {
         if (mInstance == null) {
             mInstance = new ParkOnTheGo();
