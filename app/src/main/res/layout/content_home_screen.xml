@@ -58,7 +58,8 @@
                             android:clickable="true"
                             android:hint="Start Date"
                             android:onClick="showDatePickerDialog"
-                            android:textAppearance="?android:attr/textAppearanceLarge" />
+                            android:textAppearance="?android:attr/textAppearanceLarge"
+                            android:textSize="18sp" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -84,7 +85,8 @@
                             android:clickable="true"
                             android:hint="Start Time"
                             android:onClick="showTimePickerDialog"
-                            android:textAppearance="?android:attr/textAppearanceLarge" />
+                            android:textAppearance="?android:attr/textAppearanceLarge"
+                            android:textSize="18sp"/>
                     </LinearLayout>
                 </LinearLayout>
 
@@ -116,7 +118,8 @@
                             android:clickable="true"
                             android:hint="End Date"
                             android:onClick="showDatePickerDialog"
-                            android:textAppearance="?android:attr/textAppearanceLarge" />
+                            android:textAppearance="?android:attr/textAppearanceLarge"
+                            android:textSize="18sp" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -143,7 +146,8 @@
                             android:clickable="true"
                             android:hint="End Time"
                             android:onClick="showTimePickerDialog"
-                            android:textAppearance="?android:attr/textAppearanceLarge" />
+                            android:textAppearance="?android:attr/textAppearanceLarge"
+                            android:textSize="18sp" />
                     </LinearLayout>
                 </LinearLayout>
 

@@ -13,7 +13,7 @@
     tools:showIn="@layout/app_bar_setting">
 
 
-    <LinearLayout
+   <!-- <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -162,13 +162,15 @@
 
             <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:weightSum="1">
 
                 <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="65dp"
-                    android:text="Reset Password" />
+                    android:text="Reset Password"
+                    android:layout_weight="0.72" />
 
             </LinearLayout>
 
@@ -223,7 +225,80 @@
         android:layout_alignParentEnd="true"
         android:layout_below="@+id/linearLayout2"
         android:layout_marginTop="52dp"
-        android:text="ADD CARD" />
+        android:text="ADD CARD" />-->
 
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/view2"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true">
+
+            <AutoCompleteTextView
+                android:id="@+id/settingFirstName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="First Name"
+                android:inputType="textEmailAddress"
+                android:maxLines="1"
+                android:singleLine="true" />
+
+        </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/view3"
+        android:layout_marginTop="35dp"
+        android:layout_below="@+id/view2"
+        android:layout_alignParentStart="true">
+
+        <AutoCompleteTextView
+            android:id="@+id/settingLastName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Last Name"
+            android:inputType="textEmailAddress"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:layout_marginTop="48dp"
+            android:layout_below="@+id/view2"
+            android:layout_alignParentStart="true" />
+
+
+    </android.support.design.widget.TextInputLayout>
+
+
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/view"
+        android:layout_marginTop="35dp"
+        android:layout_below="@+id/view3"
+        android:layout_alignParentStart="true">
+
+        <AutoCompleteTextView
+            android:id="@+id/settingEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Email"
+            android:inputType="textEmailAddress"
+            android:maxLines="1"
+            android:singleLine="true" />
+
+    </android.support.design.widget.TextInputLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Change Password"
+        android:id="@+id/settingChangePassword"
+        android:layout_below="@+id/view"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="35dp"
+        android:clickable="true"
+        android:textSize="20sp"/>
 
 </RelativeLayout>

@@ -187,26 +187,9 @@ public class ReservationsActivity extends AppCompatActivity
 
             //  setting list adapter
             expListView.setAdapter(listAdapter);
-//            // Adding child data
-//            listDataHeader.add("reservation1");
-//            listDataHeader.add("reservation2");
-//
-//            List<String> reservation1 = new ArrayList<String>();
-//
-//            reservation1.add("Direction");
-//            reservation1.add("Start");
-//            reservation1.add("Cancel");
-//            reservation1.add("Edit");
-//
-//            List<String> reservation2 = new ArrayList<String>();
-//
-//            reservation2.add("Direction");
-//            reservation2.add("Start");
-//            reservation2.add("Cancel");
-//            reservation2.add("Edit");
-//
-//            listDataChild.put(listDataHeader.get(0), reservation1); // Header, Child data
-//            listDataChild.put(listDataHeader.get(1), reservation2);
+
+
+
 
         } else {
 
