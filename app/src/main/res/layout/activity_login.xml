@@ -7,7 +7,8 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".Activities.LoginActivity">
+    tools:context=".Activities.LoginActivity"
+    android:background="@drawable/carbackground">
 
     <ScrollView
         android:id="@+id/scrollView3"
@@ -70,7 +71,9 @@
         android:layout_alignParentStart="true"
         android:layout_below="@+id/loginPasswordEditText"
         android:layout_marginTop="30dp"
-        android:text="@string/login_button" />
+        android:text="@string/login_button"
+        android:background="#008888"
+        android:textColor="#FFFFFF" />
 
     <Button
         android:id="@+id/registerButton"
@@ -80,7 +83,9 @@
         android:layout_alignParentStart="true"
         android:layout_below="@+id/stayLoggedInCheckBox"
         android:layout_marginTop="27dp"
-        android:text="@string/login_register" />
+        android:text="@string/login_register"
+        android:textColor="#FFFFFF"
+        android:background="#008888" />
 
 
         </RelativeLayout>

@@ -10,10 +10,12 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".Activities.ReservationsActivity"
-    tools:showIn="@layout/app_bar_reservations">
+    tools:showIn="@layout/app_bar_reservations"
+    android:background="@drawable/carbackground">
 
-
-
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
 
         <ExpandableListView
             android:id="@+id/expandableListView"
@@ -21,6 +23,8 @@
             android:layout_height="match_parent"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true" />
+
+        </LinearLayout>
 
 
 

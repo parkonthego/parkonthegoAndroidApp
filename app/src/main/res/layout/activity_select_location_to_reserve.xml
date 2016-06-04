@@ -7,7 +7,8 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".Activities.SelectLocationToReserve">
+    tools:context=".Activities.SelectLocationToReserve"
+    android:background="@drawable/carbackground">
 
 
     <ScrollView
@@ -42,7 +43,9 @@
         android:layout_alignBottom="@+id/scrollView4"
         android:layout_alignParentEnd="true"
         android:layout_alignParentStart="true"
-        android:text="Reserve" />
+        android:text="Reserve"
+        android:background="#008888"
+        android:textColor="#FFFFFF" />
 
     <TextView
         android:id="@+id/priceLabelSLTR"
@@ -72,7 +75,8 @@
         android:layout_toEndOf="@+id/locationLabelSLTR"
         android:textSize="18sp"
 
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="#008888" />
 
     <TextView
         android:id="@+id/pricePerHour"
@@ -82,7 +86,8 @@
         android:layout_toEndOf="@+id/priceLabelSLTR"
         android:textSize="18sp"
 
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="#008888" />
 
       <TextView
           android:id="@+id/textView2"
@@ -103,7 +108,7 @@
           android:layout_toEndOf="@+id/textView2"
           android:text="05/19/2016"
           android:textAppearance="?android:attr/textAppearanceMedium"
-          android:textColor="#000000"
+          android:textColor="#008888"
           android:textSize="18sp" />
 
       <TextView
@@ -115,7 +120,7 @@
           android:textAppearance="?android:attr/textAppearanceMedium"
           android:layout_alignTop="@+id/selectLocationStartDate"
           android:layout_toEndOf="@+id/selectLocationStartDate"
-          android:textColor="#000000"
+          android:textColor="#008888"
           android:textSize="18sp" />
 
       <TextView
@@ -137,7 +142,7 @@
           android:layout_alignStart="@+id/selectLocationStartDate"
           android:text="05/20/2016"
           android:textAppearance="?android:attr/textAppearanceMedium"
-          android:textColor="#000000"
+          android:textColor="#008888"
           android:textSize="18sp" />
 
       <TextView
@@ -148,7 +153,7 @@
           android:layout_alignStart="@+id/selectLocationStartTime"
           android:text="2:00 AM"
           android:textAppearance="?android:attr/textAppearanceMedium"
-          android:textColor="#000000"
+          android:textColor="#008888"
           android:textSize="18sp" />
 
 
