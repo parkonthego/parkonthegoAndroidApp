@@ -7,7 +7,8 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".Activities.StartReservationActivity">
+    tools:context=".Activities.StartReservationActivity"
+    android:background="@drawable/carbackground">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -32,7 +33,7 @@
                 android:layout_alignParentStart="true"
                 android:layout_below="@+id/reservationDetails"
                 android:layout_marginTop="25dp"
-                android:text="START:"
+                android:text="Start:"
                 android:textAppearance="?android:attr/textAppearanceLarge" />
 
             <TextView
@@ -43,7 +44,8 @@
                 android:layout_marginLeft="15dp"
                 android:layout_toEndOf="@+id/startReservationStart"
                 android:text="05/19/2016"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="#008888" />
 
             <TextView
                 android:id="@+id/startReservationStartTime"
@@ -52,7 +54,8 @@
                 android:layout_alignStart="@+id/startReservationStartDate"
                 android:layout_below="@+id/startReservationStart"
                 android:text="5:00 PM"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="#008888" />
 
             <TextView
                 android:id="@+id/startReservationEnd"
@@ -61,7 +64,7 @@
                 android:layout_alignEnd="@+id/startReservationStart"
                 android:layout_below="@+id/startReservationStartTime"
                 android:layout_marginTop="29dp"
-                android:text="END:"
+                android:text="End:"
                 android:textAppearance="?android:attr/textAppearanceLarge" />
 
             <TextView
@@ -71,7 +74,8 @@
                 android:layout_alignStart="@+id/startReservationStartTime"
                 android:layout_alignTop="@+id/startReservationEnd"
                 android:text="05/20/2016"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="#008888" />
 
             <TextView
                 android:id="@+id/startReservationEndTime"
@@ -80,7 +84,8 @@
                 android:layout_alignStart="@+id/startReservationEndDate"
                 android:layout_below="@+id/startReservationEnd"
                 android:text="2:00 AM"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="#008888" />
 
             <ImageView
                 android:id="@+id/imageView"

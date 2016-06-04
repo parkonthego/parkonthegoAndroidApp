@@ -20,6 +20,7 @@
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/nav_header_reservations"
-        app:menu="@menu/activity_reservations_drawer" />
+        app:menu="@menu/activity_reservations_drawer"
+        android:background="@drawable/carbackground" />
 
 </android.support.v4.widget.DrawerLayout>

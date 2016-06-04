@@ -10,12 +10,12 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".Activities.HomeScreenActivity"
-    tools:showIn="@layout/app_bar_home_screen">
+    tools:showIn="@layout/app_bar_home_screen"
+    android:background="@drawable/carbackground">
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#ffffff">
+        android:layout_height="match_parent">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -32,31 +32,35 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Starts:"
-                    android:textSize="18sp"/>
+                    android:text="From:"
+                    android:textSize="18sp"
+                    android:layout_marginTop="15dp"
+                    android:textColor="#000000" />
 
 
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="100dp"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:layout_marginTop="15dp">
 
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_weight="0.5"
                         android:orientation="horizontal">
 
                         <ImageButton
                             android:id="@+id/startDateImageButton"
-                            android:layout_width="125dp"
-                            android:layout_height="75dp"
+                            android:layout_width="120dp"
+                            android:layout_height="65dp"
                             android:layout_weight="0.5"
-                            android:background="#ffffff"
-                            android:src="@drawable/calendar" />
+
+                            android:src="@drawable/calendar"
+                            android:background="@drawable/transparent"/>
 
                         <TextView
                             android:id="@+id/homeScreenStartDate"
@@ -68,12 +72,13 @@
                             android:hint="Start Date"
                             android:onClick="showDatePickerDialog"
                             android:textAppearance="?android:attr/textAppearanceLarge"
-                            android:textSize="18sp" />
+                            android:textSize="18sp"
+                            android:textColor="#008888" />
                     </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_weight="0.5"
                         android:orientation="horizontal">
 
@@ -82,7 +87,7 @@
                             android:layout_width="120dp"
                             android:layout_height="65dp"
                             android:layout_weight="0.5"
-                            android:background="#ffffff"
+                            android:background="@drawable/transparent"
                             android:src="@drawable/clock" />
 
                         <TextView
@@ -95,34 +100,38 @@
                             android:hint="Start Time"
                             android:onClick="showTimePickerDialog"
                             android:textAppearance="?android:attr/textAppearanceLarge"
-                            android:textSize="18sp"/>
+                            android:textSize="18sp"
+                            android:textColor="#008888" />
                     </LinearLayout>
                 </LinearLayout>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Ends:"
-                    android:textSize="18sp"/>
+                    android:text="To:"
+                    android:textSize="18sp"
+                    android:layout_marginTop="15dp"
+                    android:textColor="#000000" />
 
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="100dp"
-                    android:orientation="horizontal">
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="15dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_weight="0.5"
                         android:orientation="horizontal">
 
                         <ImageButton
                             android:id="@+id/endDateImageButton"
-                            android:layout_width="125dp"
-                            android:layout_height="75dp"
+                            android:layout_width="120dp"
+                            android:layout_height="65dp"
                             android:layout_weight="0.5"
-                            android:background="#ffffff"
+                            android:background="@drawable/transparent"
                             android:src="@drawable/calendar" />
 
                         <TextView
@@ -135,22 +144,23 @@
                             android:hint="End Date"
                             android:onClick="showDatePickerDialog"
                             android:textAppearance="?android:attr/textAppearanceLarge"
-                            android:textSize="18sp" />
+                            android:textSize="18sp"
+                            android:textColor="#008888" />
                     </LinearLayout>
 
                     <LinearLayout
                         android:id="@+id/linearLayout"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_weight="0.5"
                         android:orientation="horizontal">
 
                         <ImageButton
                             android:id="@+id/endTimeImageButton"
-                            android:layout_width="125dp"
-                            android:layout_height="75dp"
+                            android:layout_width="120dp"
+                            android:layout_height="65dp"
                             android:layout_weight="0.5"
-                            android:background="#ffffff"
+                            android:background="@drawable/transparent"
                             android:src="@drawable/clock" />
 
                         <TextView
@@ -163,7 +173,8 @@
                             android:hint="End Time"
                             android:onClick="showTimePickerDialog"
                             android:textAppearance="?android:attr/textAppearanceLarge"
-                            android:textSize="18sp" />
+                            android:textSize="18sp"
+                            android:textColor="#008888" />
                     </LinearLayout>
                 </LinearLayout>
 
@@ -171,7 +182,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Location:"
-                    android:textSize="18sp"/>
+                    android:textSize="18sp"
+                    android:layout_marginTop="15dp"
+                    android:textColor="#000000" />
 
 
 
@@ -187,7 +200,8 @@
                         android:layout_height="50dp"
                         android:layout_alignParentStart="true"
                         android:layout_centerVertical="true"
-                        tools:layout="@android:layout/simple_dropdown_item_1line" />
+                        tools:layout="@android:layout/simple_dropdown_item_1line"
+                        android:layout_marginTop="15dp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -199,7 +213,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="25dp"
-                        android:text="SEARCH" />
+                        android:text="SEARCH"
+                        android:background="#008888"
+                        android:textColor="#FFFFFF" />
                 </LinearLayout>
 
             </LinearLayout>
