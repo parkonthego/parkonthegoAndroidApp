@@ -26,4 +26,20 @@ public interface UserServices {
             @Field("password") String password);
 
 
+    @FormUrlEncoded
+    @POST("register/updateProfile")
+    Call<SignUpResponse> updateProfile(
+            @Field("id") int id,
+            @Field("firstname") String firstname,
+            @Field("lastname") String lastname,
+            @Field("email") String email
+    );
+
+    @FormUrlEncoded
+    @POST("register/getProfile")
+    Call<SignUpResponse> getProfile(
+            @Field("id") int id
+    );
+
+
 }
