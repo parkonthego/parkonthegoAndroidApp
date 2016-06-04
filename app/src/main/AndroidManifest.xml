@@ -20,28 +20,33 @@
         android:required="true" />
 
     <application
+        android:name=".ParkOnTheGo"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
-        android:name="edu.scu.smurali.parkonthego.ParkOnTheGo">
+        android:theme="@style/AppTheme">
         <activity
             android:name=".Activities.LoginActivity"
-            android:noHistory="true">
+            android:noHistory="true"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activities.RegisterActivity" />
-        <activity android:name=".Activities.ForgotPasswordActivity" />
+        <activity android:name=".Activities.RegisterActivity"
+                  android:screenOrientation="portrait"/>
+        <activity android:name=".Activities.ForgotPasswordActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".Activities.HomeScreenActivity"
             android:label="@string/title_activity_home_screen"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".Activities.ConfirmationActivity" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Activities.ConfirmationActivity"
+            android:screenOrientation="portrait"/>
 
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
@@ -57,10 +62,14 @@
 
         <activity
             android:name=".Activities.LocationsOnMap"
-            android:label="@string/title_activity_locations_on_map" />
-        <activity android:name=".Activities.StartReservationActivity" />
-        <activity android:name=".Activities.StopReservationActivity" />
-        <activity android:name=".Activities.SelectLocationToReserve">
+            android:label="@string/title_activity_locations_on_map"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Activities.StartReservationActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Activities.StopReservationActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Activities.SelectLocationToReserve"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.nfc.action.NDEF_DISCOVERED" />
 
@@ -80,15 +89,21 @@
         <activity
             android:name=".Activities.ReservationsActivity"
             android:label="@string/title_activity_reservations"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".Activities.SettingActivity"
             android:label="@string/title_activity_setting"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".Activities.HelpActivity"
             android:label="@string/title_activity_help"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Activities.EditActivity"
+                  android:screenOrientation="portrait"/>
     </application>
+
 
 </manifest>

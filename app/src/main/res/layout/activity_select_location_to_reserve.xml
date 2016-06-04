@@ -23,7 +23,7 @@
             <FrameLayout
                 android:id="@+id/mapFrameLayout"
                 android:layout_width="match_parent"
-                android:layout_height="250dp"
+                android:layout_height="200dp"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true">
 
@@ -42,11 +42,11 @@
         android:layout_alignBottom="@+id/scrollView4"
         android:layout_alignParentEnd="true"
         android:layout_alignParentStart="true"
-        android:text="Continue" />
+        android:text="Reserve" />
 
     <TextView
         android:id="@+id/priceLabelSLTR"
-        android:layout_width="200dp"
+        android:layout_width="100dp"
         android:layout_height="50dp"
         android:layout_above="@+id/selectLocationReserveButton"
         android:layout_alignParentStart="true"
@@ -55,7 +55,7 @@
 
     <TextView
         android:id="@+id/locationLabelSLTR"
-        android:layout_width="200dp"
+        android:layout_width="100dp"
         android:layout_height="50dp"
         android:layout_above="@+id/priceLabelSLTR"
         android:layout_alignParentStart="true"
@@ -65,19 +65,23 @@
 
     <TextView
         android:id="@+id/selectLocation"
-        android:layout_width="200dp"
+        android:layout_width="250dp"
         android:layout_height="50dp"
         android:layout_alignBaseline="@+id/locationLabelSLTR"
         android:layout_alignBottom="@+id/locationLabelSLTR"
         android:layout_toEndOf="@+id/locationLabelSLTR"
+        android:textSize="18sp"
+
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <TextView
         android:id="@+id/pricePerHour"
-        android:layout_width="200dp"
+        android:layout_width="250dp"
         android:layout_height="50dp"
         android:layout_alignTop="@+id/priceLabelSLTR"
         android:layout_toEndOf="@+id/priceLabelSLTR"
+        android:textSize="18sp"
+
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
       <TextView
@@ -87,7 +91,7 @@
           android:layout_above="@+id/locationLabelSLTR"
           android:layout_alignParentStart="true"
           android:layout_marginBottom="83dp"
-          android:text="START:"
+          android:text="Start:"
           android:textAppearance="?android:attr/textAppearanceLarge" />
 
       <TextView
@@ -95,20 +99,24 @@
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_alignBottom="@+id/textView2"
-          android:layout_marginLeft="15dp"
+          android:layout_marginLeft="55dp"
           android:layout_toEndOf="@+id/textView2"
           android:text="05/19/2016"
-          android:textAppearance="?android:attr/textAppearanceMedium" />
+          android:textAppearance="?android:attr/textAppearanceMedium"
+          android:textColor="#000000"
+          android:textSize="18sp" />
 
       <TextView
           android:id="@+id/selectLocationStartTime"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:layout_alignStart="@+id/selectLocation"
-          android:layout_alignTop="@+id/selectLocationStartDate"
-          android:layout_marginStart="41dp"
+          android:layout_marginStart="40dp"
           android:text="5:00 PM"
-          android:textAppearance="?android:attr/textAppearanceMedium" />
+          android:textAppearance="?android:attr/textAppearanceMedium"
+          android:layout_alignTop="@+id/selectLocationStartDate"
+          android:layout_toEndOf="@+id/selectLocationStartDate"
+          android:textColor="#000000"
+          android:textSize="18sp" />
 
       <TextView
           android:id="@+id/textView6"
@@ -117,7 +125,7 @@
           android:layout_alignParentStart="true"
           android:layout_below="@+id/selectLocationStartTime"
           android:layout_marginTop="34dp"
-          android:text="END:"
+          android:text="End:"
           android:textAppearance="?android:attr/textAppearanceLarge" />
 
       <TextView
@@ -128,7 +136,9 @@
           android:layout_alignBottom="@+id/selectLocationEndTime"
           android:layout_alignStart="@+id/selectLocationStartDate"
           android:text="05/20/2016"
-          android:textAppearance="?android:attr/textAppearanceMedium" />
+          android:textAppearance="?android:attr/textAppearanceMedium"
+          android:textColor="#000000"
+          android:textSize="18sp" />
 
       <TextView
           android:id="@+id/selectLocationEndTime"
@@ -137,7 +147,9 @@
           android:layout_alignBottom="@+id/textView6"
           android:layout_alignStart="@+id/selectLocationStartTime"
           android:text="2:00 AM"
-          android:textAppearance="?android:attr/textAppearanceMedium" />
+          android:textAppearance="?android:attr/textAppearanceMedium"
+          android:textColor="#000000"
+          android:textSize="18sp" />
 
 
 </RelativeLayout>
