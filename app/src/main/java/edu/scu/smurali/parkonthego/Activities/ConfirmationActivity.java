@@ -17,6 +17,7 @@ import com.google.gson.Gson;
 import java.util.Arrays;
 import java.util.List;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import edu.scu.smurali.parkonthego.ParkOnTheGo;
 import edu.scu.smurali.parkonthego.R;
 import edu.scu.smurali.parkonthego.retrofit.reponses.ReservationCfnResponse;
@@ -142,8 +143,19 @@ public class ConfirmationActivity extends AppCompatActivity {
     private void parseResponse(ReservationCfnResponse response) {
         Toast.makeText(getApplicationContext(), "Login Sucess" + response.getSuccess(), Toast.LENGTH_SHORT).show();
         if (response.getSuccess() == true) {
-            ParkOnTheGo.getInstance().showAlert(mContext, "Reservation sucessful|!!! \n Your reservation id " + response.getData().getId(), "Status");
-            startActivity(new Intent(ConfirmationActivity.this, HomeScreenActivity.class));
+            new SweetAlertDialog(this, SweetAlertDialog.SUCCESS_TYPE)
+                    .setTitleText("Reservation saved")
+                    .setConfirmText("Ok")
+                    .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                        @Override
+                        public void onClick(SweetAlertDialog sDialog) {
+                            sDialog.dismissWithAnimation();
+                            startActivity(new Intent(ConfirmationActivity.this, HomeScreenActivity.class));
+                        }
+                    })
+                    .show();
+
+
         } else {
 
         }

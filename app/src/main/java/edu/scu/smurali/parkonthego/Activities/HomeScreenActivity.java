@@ -48,9 +48,11 @@ import java.util.List;
 
 import edu.scu.smurali.parkonthego.ParkOnTheGo;
 import edu.scu.smurali.parkonthego.R;
+import edu.scu.smurali.parkonthego.retrofit.reponses.ProfileResponse;
 import edu.scu.smurali.parkonthego.retrofit.reponses.SearchData;
 import edu.scu.smurali.parkonthego.retrofit.reponses.SearchResponse;
 import edu.scu.smurali.parkonthego.retrofit.services.LocationServices;
+import edu.scu.smurali.parkonthego.retrofit.services.UserServices;
 import edu.scu.smurali.parkonthego.util.PreferencesManager;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -76,6 +78,11 @@ public class HomeScreenActivity extends AppCompatActivity
     private Context mContext;
     private String sDateTime, eDateTime;
 
+    private TextView navUserName;
+    private TextView navEmail;
+
+    PreferencesManager pm;
+
 
 //    ///////////////////////////////////////////////////////test code//////////////////////////////////////////////
 
@@ -85,6 +92,8 @@ public class HomeScreenActivity extends AppCompatActivity
         setContentView(R.layout.activity_home_screen);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        mContext = this;
+        pm = PreferencesManager.getInstance(mContext);
         try {
             ActionBar actionBar = getSupportActionBar();
             actionBar.setTitle("ParkOnTheGo");
@@ -249,7 +258,21 @@ public class HomeScreenActivity extends AppCompatActivity
         });
 
 
+        //Get profile from server
+        getProfile();
+
+        View header = navigationView.getHeaderView(0);
+
+        navUserName = (TextView) header.findViewById(R.id.userName);
+
+        navUserName.setText(pm.getUserName());
+        navEmail = (TextView) header.findViewById(R.id.email);
+        navEmail.setText(pm.getEmail());
+
+
     }
+
+
 
     @Override
     public void onValidationSucceeded() {
@@ -388,12 +411,14 @@ public class HomeScreenActivity extends AppCompatActivity
         if (id == R.id.nav_home) {
             Intent intent = new Intent(HomeScreenActivity.this, HomeScreenActivity.class);
             startActivity(intent);
+            finish();
         }
 
         if (id == R.id.nav_reservation) {
 
             Intent intent = new Intent(HomeScreenActivity.this, ReservationsActivity.class);
             startActivity(intent);
+            finish();
 
 
         } else if (id == R.id.nav_settings) {
@@ -402,6 +427,7 @@ public class HomeScreenActivity extends AppCompatActivity
 
             Intent intent = new Intent(HomeScreenActivity.this, SettingActivity.class);
             startActivity(intent);
+            finish();
 
 
         } else if (id == R.id.nav_call) {
@@ -435,6 +461,7 @@ public class HomeScreenActivity extends AppCompatActivity
 
             }
             startActivity(callIntent);
+            finish();
 
 
 
@@ -447,6 +474,7 @@ public class HomeScreenActivity extends AppCompatActivity
 
             Intent intent = new Intent(HomeScreenActivity.this, HelpActivity.class);
             startActivity(intent);
+            finish();
 
         } else if (id == R.id.nav_logout) {
             PreferencesManager.getInstance(mContext).clear();
@@ -466,63 +494,6 @@ public class HomeScreenActivity extends AppCompatActivity
 
 
 
-    /*DatePicker and TimePicker code starts here*/
-
-
-//    public void showTimePickerDialog(View v) {
-//
-//
-//        startTime.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                DialogFragment newFragment = new StartTimePickerFragment();
-//                FragmentTransaction ft = getFragmentManager().beginTransaction();
-//                newFragment.show(ft, "timePicker");
-//
-//
-//            }
-//        });
-//
-//        endTime.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                DialogFragment newFragment = new EndTimePickerFragment();
-//                FragmentTransaction ft = getFragmentManager().beginTransaction();
-//                newFragment.show(ft, "timePicker");
-//
-//            }
-//        });
-//
-//
-//    }
-//
-//    public void showDatePickerDialog(View v) {
-//
-//
-//        startDate.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                DialogFragment newFragment = new StartDatePickerFragment();
-//                FragmentTransaction ft = getFragmentManager().beginTransaction();
-//                newFragment.show(ft, "datePicker");
-//
-//            }
-//        });
-//
-//        endDate.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                DialogFragment newFragment = new EndDatePickerFragment();
-//                FragmentTransaction ft = getFragmentManager().beginTransaction();
-//                newFragment.show(ft, "datePicker");
-//            }
-//        });
-//
-//
-//    }
 
     public static class StartDatePickerFragment extends DialogFragment
             implements DatePickerDialog.OnDateSetListener {
@@ -649,6 +620,53 @@ public class HomeScreenActivity extends AppCompatActivity
             endTime.setText(time);
         }
     }
+
+    public void getProfile() {
+
+        if (ParkOnTheGo.getInstance().isConnectedToInterNet()) {
+            UserServices userServices = ParkOnTheGo.getInstance().getUserServices();
+            // ParkOnTheGo.getInstance().showProgressDialog("Login", "Please Wait");
+            ParkOnTheGo.getInstance().showProgressDialog();
+            Call<ProfileResponse> call = userServices.getProfile(PreferencesManager.getInstance(mContext).getUserId());
+            Log.d("Calling", "Get profile: " + call);
+            call.enqueue(new Callback<ProfileResponse>() {
+                @Override
+                public void onResponse(Call<ProfileResponse> call,
+                                       Response<ProfileResponse> response) {
+                    ParkOnTheGo.getInstance().hideProgressDialog();
+                    if (response.isSuccessful()) {
+                        parseProfileResponse(response.body());
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ProfileResponse> call, Throwable throwable) {
+                    Toast.makeText(getApplicationContext(), "Request failed" + throwable, Toast.LENGTH_SHORT).show();
+
+                    ParkOnTheGo.getInstance().hideProgressDialog();
+                    ParkOnTheGo.getInstance().handleError(throwable);
+                }
+            });
+        } else {
+            ParkOnTheGo.getInstance().showAlert(mContext.getString(R.string.no_network));
+        }
+    }
+
+    private void parseProfileResponse(ProfileResponse response) {
+        if (response.getSuccess() == true) {
+            pm.updateFirstName(response.getData().getFirstName());
+            pm.updateLastName(response.getData().getLastName());
+            pm.updateEmail(response.getData().getEmail());
+            pm.updateUserName(response.getData().getFirstName()+" "+response.getData().getLastName());
+
+        } else {
+
+        }
+    }
+
+
+
+
 
 
 }

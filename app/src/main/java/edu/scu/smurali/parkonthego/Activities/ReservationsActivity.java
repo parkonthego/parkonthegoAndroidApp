@@ -25,6 +25,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -56,6 +57,11 @@ public class ReservationsActivity extends AppCompatActivity
     GestureDetector gestureDetector;
     TouchListener onTouchListener;
 
+    private TextView navUserName;
+    private TextView navEmail;
+
+    PreferencesManager pm;
+
 
 
 
@@ -66,7 +72,8 @@ public class ReservationsActivity extends AppCompatActivity
         setContentView(R.layout.activity_reservations);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        this.mContext = this;
+        mContext = this;
+        pm = PreferencesManager.getInstance(mContext);
 
 
         gestureDetector = new GestureDetector(this, new GestureListener());
@@ -98,6 +105,13 @@ public class ReservationsActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        View header = navigationView.getHeaderView(0);
+
+        navUserName = (TextView) header.findViewById(R.id.userName);
+        navUserName.setText(pm.getUserName());
+        navEmail = (TextView) header.findViewById(R.id.email);
+        navEmail.setText(pm.getEmail());
 
         // LIST VIEW
 
@@ -352,6 +366,7 @@ public class ReservationsActivity extends AppCompatActivity
         if(id == R.id.nav_home){
             Intent intent = new Intent(ReservationsActivity.this,HomeScreenActivity.class);
             startActivity(intent);
+            finish();
 
         }
 
@@ -360,12 +375,14 @@ public class ReservationsActivity extends AppCompatActivity
 
             Intent intent = new Intent(ReservationsActivity.this,ReservationsActivity.class);
             startActivity(intent);
+            finish();
 
 
         } else if (id == R.id.nav_settings) {
 
             Intent intent = new Intent(ReservationsActivity.this,SettingActivity.class);
             startActivity(intent);
+            finish();
 
 
         } else if (id == R.id.nav_call) {
@@ -399,12 +416,14 @@ public class ReservationsActivity extends AppCompatActivity
 
             }
             startActivity(callIntent);
+            finish();
 
 
         } else if (id == R.id.nav_help) {
 
             Intent intent = new Intent(ReservationsActivity.this,HelpActivity.class);
             startActivity(intent);
+            finish();
 
         } else if(id == R.id.nav_logout){
             PreferencesManager.getInstance(mContext).clear();
