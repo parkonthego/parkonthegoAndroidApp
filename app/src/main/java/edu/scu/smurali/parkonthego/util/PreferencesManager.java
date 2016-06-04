@@ -40,8 +40,38 @@ public class PreferencesManager {
         editor.commit();
     }
 
-    public String getUserName(String name) {
-        return sharedPreferences.getString("name", null);
+    public void updateFirstName(String fname) {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("firstName", fname);
+        editor.commit();
+    }
+
+    public void updateLastName(String lname) {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("lastName", lname);
+        editor.commit();
+    }
+
+    public void updateEmail(String email) {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("email", email);
+        editor.commit();
+    }
+
+    public String getUserName() {
+        return sharedPreferences.getString("userName", null);
+    }
+
+    public String getFirstName() {
+        return sharedPreferences.getString("firstName", null);
+    }
+
+    public String getLastName() {
+        return sharedPreferences.getString("lastName", null);
+    }
+
+    public String getEmail() {
+        return sharedPreferences.getString("email", null);
     }
 
     public void clear() {

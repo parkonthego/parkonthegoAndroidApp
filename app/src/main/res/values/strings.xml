@@ -120,4 +120,11 @@
     <string name="title_activity_setting">SettingActivity</string>
     <string name="title_activity_help">HelpActivity</string>
 
+    <string name="userName">user name</string>
+    <string name="email">email</string>
+    <string name="setting_first_name">First Name</string>
+    <string name="setting_last_name">Last Name</string>
+    <string name="setting_email">Email</string>
+    <string name="loading_data">Processing</string>
+
 </resources>

@@ -1,5 +1,6 @@
 package edu.scu.smurali.parkonthego;
 
+import android.app.ProgressDialog;
 import android.support.multidex.MultiDex;
 import android.support.multidex.MultiDexApplication;
 import android.app.Application;
@@ -9,6 +10,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.provider.Settings;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
@@ -29,6 +31,7 @@ public class ParkOnTheGo extends MultiDexApplication {
     private static Context mContext;
     private static Context mApplicationContext;
     private Retrofit mRetrofit;
+    private static ProgressDialog  progressDialog;
 
 
 
@@ -131,17 +134,12 @@ public class ParkOnTheGo extends MultiDexApplication {
 
     }
 
-    public void showProgressDialog() {
 
-    }
 
     public void showProgressDialog(String title, String description) {
 
     }
 
-    public void hideProgressDialog() {
-
-    }
 
     public void handleError(Throwable throwable) {
 
@@ -182,15 +180,7 @@ public class ParkOnTheGo extends MultiDexApplication {
                 // User clicked OK button
             }
         });
-//                builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-//                    public void onClick(DialogInterface dialog, int id) {
-//                        // User cancelled the dialog
-//                    }
-//                });
-// Set other dialog properties
 
-
-// Create the AlertDialog
         AlertDialog dialog = builder.create();
         dialog.show();
 
@@ -214,6 +204,41 @@ public class ParkOnTheGo extends MultiDexApplication {
                 }
         }
         return false;
+    }
+
+    /**
+     * Shows progress bar
+     */
+    public void showProgressDialog() {
+        try {
+            if (progressDialog != null && progressDialog.isShowing()) {
+                progressDialog.dismiss();
+            }
+            progressDialog = new ProgressDialog(getCurrentActivityContext());
+            progressDialog.setMessage(getCurrentActivityContext().getString(
+                    R.string.loading_data));
+            progressDialog.setCancelable(false);
+            if (!progressDialog.isShowing()) {
+                progressDialog.show();
+            }
+        } catch (Exception e) {
+            Log.d("Park on the go", "showProgressDialog");
+        }
+
+    }
+
+    /**
+     * Hides progress bar
+     */
+    public void hideProgressDialog() {
+        try {
+            if (progressDialog != null && progressDialog.isShowing()) {
+                progressDialog.dismiss();
+            }
+        } catch (Exception e) {
+            Log.d("Park on the go", "hideProgressDialog");
+        }
+
     }
 
 

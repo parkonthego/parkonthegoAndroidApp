@@ -15,9 +15,11 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import edu.scu.smurali.parkonthego.R;
 import edu.scu.smurali.parkonthego.util.PreferencesManager;
@@ -26,6 +28,10 @@ public class HelpActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private Context mContext;
+    private TextView navUserName;
+    private TextView navEmail;
+
+    PreferencesManager pm;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,15 +39,8 @@ public class HelpActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         mContext = this;
+        pm = PreferencesManager.getInstance(mContext);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -51,6 +50,13 @@ public class HelpActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        View header = navigationView.getHeaderView(0);
+
+        navUserName = (TextView) header.findViewById(R.id.userName);
+        navUserName.setText(pm.getUserName());
+        navEmail = (TextView) header.findViewById(R.id.email);
+        navEmail.setText(pm.getEmail());
     }
 
     @Override
@@ -94,16 +100,19 @@ public class HelpActivity extends AppCompatActivity
         if(id == R.id.nav_home){
             Intent intent = new Intent(HelpActivity.this,HomeScreenActivity.class);
             startActivity(intent);
+            finish();
         }
 
         if (id == R.id.nav_reservation) {
             Intent intent = new Intent(HelpActivity.this,ReservationsActivity.class);
             startActivity(intent);
+            finish();
 
         } else if (id == R.id.nav_settings) {
 
             Intent intent = new Intent(HelpActivity.this,SettingActivity.class);
             startActivity(intent);
+            finish();
 
 
         } else if (id == R.id.nav_call) {
@@ -137,6 +146,7 @@ public class HelpActivity extends AppCompatActivity
 
             }
             startActivity(callIntent);
+            finish();
 
 
 
@@ -144,6 +154,7 @@ public class HelpActivity extends AppCompatActivity
 
             Intent intent = new Intent(HelpActivity.this,HelpActivity.class);
             startActivity(intent);
+            finish();
 
         } else if(id == R.id.nav_logout){
             PreferencesManager.getInstance(mContext).clear();

@@ -1,7 +1,9 @@
 package edu.scu.smurali.parkonthego.Activities;
 
 import android.Manifest;
+import android.content.ClipData;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -12,18 +14,26 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.GestureDetector;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ExpandableListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+
+
 
 import edu.scu.smurali.parkonthego.ParkOnTheGo;
 import edu.scu.smurali.parkonthego.R;
@@ -44,6 +54,17 @@ public class ReservationsActivity extends AppCompatActivity
     HashMap<String, List<String>> listDataChild;
     private Context mContext;
 
+    GestureDetector gestureDetector;
+    TouchListener onTouchListener;
+
+    private TextView navUserName;
+    private TextView navEmail;
+
+    PreferencesManager pm;
+
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +72,15 @@ public class ReservationsActivity extends AppCompatActivity
         setContentView(R.layout.activity_reservations);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        this.mContext = this;
+        mContext = this;
+        pm = PreferencesManager.getInstance(mContext);
+
+
+        gestureDetector = new GestureDetector(this, new GestureListener());
+        onTouchListener = new TouchListener();
+
+
+
 
         try {
             ActionBar actionBar = getSupportActionBar();
@@ -77,13 +106,23 @@ public class ReservationsActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        View header = navigationView.getHeaderView(0);
+
+        navUserName = (TextView) header.findViewById(R.id.userName);
+        navUserName.setText(pm.getUserName());
+        navEmail = (TextView) header.findViewById(R.id.email);
+        navEmail.setText(pm.getEmail());
+
         // LIST VIEW
 
         // get the listview
         expListView = (ExpandableListView) findViewById(R.id.expandableListView);
 
+
         // preparing list data
         getUserReservation();
+
+     //   expListView.setOnTouchListener(onTouchListener);
 
 
 
@@ -92,14 +131,39 @@ public class ReservationsActivity extends AppCompatActivity
             @Override
             public boolean onChildClick(ExpandableListView parent, View v,
                                         int groupPosition, int childPosition, long id) {
-                Toast.makeText(
-                        getApplicationContext(),
-                        listDataHeader.get(groupPosition)
-                                + " : "
-                                + listDataChild.get(
-                                listDataHeader.get(groupPosition)).get(
-                                childPosition), Toast.LENGTH_SHORT)
-                        .show();
+
+                if(childPosition==0)
+                {
+                   // Direction
+                    // Redirect to google map code
+                }
+
+
+                if(childPosition==1)
+                {
+                    // Start the reservation
+                    Intent intent = new Intent(ReservationsActivity.this, StartReservationActivity.class);
+                    startActivity(intent);
+                }
+
+                if(childPosition==2)
+                {
+                    // Have to delete the reservation
+
+
+                }
+
+                if(childPosition==3)
+                {
+                    // Have to Edit the reservation
+
+
+                }
+
+
+
+
+
                 return false;
             }
         });
@@ -194,6 +258,65 @@ public class ReservationsActivity extends AppCompatActivity
         } else {
 
         }
+
+
+
+    }
+
+
+
+
+
+    protected class GestureListener extends GestureDetector.SimpleOnGestureListener
+    {
+        private static final int SWIPE_MIN_DISTANCE = 150;
+        private static final int SWIPE_MAX_OFF_PATH = 100;
+        private static final int SWIPE_THRESHOLD_VELOCITY = 100;
+
+        private MotionEvent mLastOnDownEvent = null;
+
+        @Override
+        public boolean onDown(MotionEvent e)
+        {
+            mLastOnDownEvent = e;
+            return super.onDown(e);
+        }
+
+        @Override
+        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY)
+        {
+            if(e1 == null){
+                e1 = mLastOnDownEvent;
+            }
+            if(e1==null || e2==null){
+                return false;
+            }
+
+            float dX = e2.getX() - e1.getX();
+            float dY = e1.getY() - e2.getY();
+
+            if (Math.abs(dY) < SWIPE_MAX_OFF_PATH && Math.abs(velocityX) >= SWIPE_THRESHOLD_VELOCITY && Math.abs(dX) >= SWIPE_MIN_DISTANCE ) {
+                if (dX > 0) {
+                    Toast.makeText(getApplicationContext(), "Right Swipe", Toast.LENGTH_SHORT).show();
+
+//                    listAdapter.listDataHeader.remove(position);
+//                    listAdapter.notifyDataSetChanged();
+
+                } else {
+                    Toast.makeText(getApplicationContext(), "Left Swipe", Toast.LENGTH_SHORT).show();
+                }
+                return true;
+            }
+            else if (Math.abs(dX) < SWIPE_MAX_OFF_PATH && Math.abs(velocityY)>=SWIPE_THRESHOLD_VELOCITY && Math.abs(dY)>=SWIPE_MIN_DISTANCE ) {
+                if (dY>0) {
+                    Toast.makeText(getApplicationContext(), "Up Swipe", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getApplicationContext(), "Down Swipe", Toast.LENGTH_SHORT).show();
+                }
+                return true;
+            }
+            return false;
+        }
     }
 
 
@@ -212,27 +335,27 @@ public class ReservationsActivity extends AppCompatActivity
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.reservations, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        // Inflate the menu; this adds items to the action bar if it is present.
+//        getMenuInflater().inflate(R.menu.reservations, menu);
+//        return true;
+//    }
+//
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        // Handle action bar item clicks here. The action bar will
+//        // automatically handle clicks on the Home/Up button, so long
+//        // as you specify a parent activity in AndroidManifest.xml.
+//        int id = item.getItemId();
+//
+//        //noinspection SimplifiableIfStatement
+//        if (id == R.id.action_settings) {
+//            return true;
+//        }
+//
+//        return super.onOptionsItemSelected(item);
+//    }
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
@@ -243,6 +366,7 @@ public class ReservationsActivity extends AppCompatActivity
         if(id == R.id.nav_home){
             Intent intent = new Intent(ReservationsActivity.this,HomeScreenActivity.class);
             startActivity(intent);
+            finish();
 
         }
 
@@ -251,12 +375,14 @@ public class ReservationsActivity extends AppCompatActivity
 
             Intent intent = new Intent(ReservationsActivity.this,ReservationsActivity.class);
             startActivity(intent);
+            finish();
 
 
         } else if (id == R.id.nav_settings) {
 
             Intent intent = new Intent(ReservationsActivity.this,SettingActivity.class);
             startActivity(intent);
+            finish();
 
 
         } else if (id == R.id.nav_call) {
@@ -290,12 +416,14 @@ public class ReservationsActivity extends AppCompatActivity
 
             }
             startActivity(callIntent);
+            finish();
 
 
         } else if (id == R.id.nav_help) {
 
             Intent intent = new Intent(ReservationsActivity.this,HelpActivity.class);
             startActivity(intent);
+            finish();
 
         } else if(id == R.id.nav_logout){
             PreferencesManager.getInstance(mContext).clear();
@@ -311,5 +439,21 @@ public class ReservationsActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+
+
+
+    protected class TouchListener implements View.OnTouchListener
+    {
+        @Override
+        public boolean onTouch(View v, MotionEvent e)
+        {
+            if (gestureDetector.onTouchEvent(e)){
+                return true;
+            }else{
+                return false;
+            }
+        }
     }
 }
