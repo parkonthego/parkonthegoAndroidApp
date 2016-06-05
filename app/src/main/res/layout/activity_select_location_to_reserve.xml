@@ -15,7 +15,7 @@
             <FrameLayout
                 android:id="@+id/mapFrameLayout"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="225dp"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true">
 
@@ -28,7 +28,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="#AAAAAA"
+        android:background="#BBBBBB"
         android:layout_gravity="right|bottom"
         android:layout_above="@+id/textView2"
         android:layout_alignParentStart="true"></LinearLayout>
@@ -116,7 +116,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="#AAAAAA"
+        android:background="#BBBBBB"
         android:layout_alignBottom="@+id/locationLabelSLTR"
         android:layout_alignEnd="@+id/selectLocation"
         android:id="@+id/linearLayout3"
@@ -147,7 +147,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="#AAAAAA"
+        android:background="#BBBBBB"
         android:layout_alignBottom="@+id/textView6"
         android:layout_alignParentStart="true"
         android:id="@+id/linearLayout2"
@@ -167,7 +167,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="#AAAAAA"
+        android:background="#BBBBBB"
         android:layout_below="@+id/textView2"
         android:layout_alignEnd="@+id/selectLocation"
         android:layout_marginTop="2dp"
@@ -176,7 +176,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="#AAAAAA"
+        android:background="#BBBBBB"
         android:id="@+id/linearLayout5"
         android:orientation="horizontal"
         android:layout_below="@+id/pricePerHour"

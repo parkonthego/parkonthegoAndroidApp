@@ -62,6 +62,10 @@ public class ReservationsActivity extends AppCompatActivity
 
     PreferencesManager pm;
 
+    private static final String FRAGMENT_TAG_DATA_PROVIDER = "data provider";
+    private static final String FRAGMENT_LIST_VIEW = "list view";
+    private static final String FRAGMENT_TAG_ITEM_PINNED_DIALOG = "item pinned dialog";
+
 
 
 
@@ -136,6 +140,7 @@ public class ReservationsActivity extends AppCompatActivity
                 {
                    // Direction
                     // Redirect to google map code
+
                 }
 
 
@@ -156,12 +161,11 @@ public class ReservationsActivity extends AppCompatActivity
                 if(childPosition==3)
                 {
                     // Have to Edit the reservation
+                    Intent intent = new Intent(ReservationsActivity.this, EditActivity.class);
+                    startActivity(intent);
 
 
                 }
-
-
-
 
 
                 return false;
@@ -188,6 +192,7 @@ public class ReservationsActivity extends AppCompatActivity
                         Toast.LENGTH_SHORT).show();
             }
         });
+
 
     }
 
