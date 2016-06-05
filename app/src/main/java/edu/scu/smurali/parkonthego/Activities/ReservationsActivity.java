@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.GravityCompat;
@@ -28,6 +29,9 @@ import android.widget.ExpandableListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.model.LatLng;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -59,6 +63,7 @@ public class ReservationsActivity extends AppCompatActivity
 
     private TextView navUserName;
     private TextView navEmail;
+    private HashMap<String,ReservationData> reservationListMap = new HashMap<String,ReservationData>();
 
     PreferencesManager pm;
 
@@ -156,6 +161,25 @@ public class ReservationsActivity extends AppCompatActivity
                 if(childPosition==3)
                 {
                     // Have to Edit the reservation
+                    // get the reservation details
+                    String desc = listDataHeader.get(groupPosition);
+                    ReservationData clickedReservation = reservationListMap.get(desc);
+
+                    // send intent to edit reservation page
+
+                    Intent intent = new Intent(ReservationsActivity.this, EditReservationActivity.class);
+                    intent.putExtra("ltdLng", new LatLng(clickedReservation.getLatitude(),clickedReservation.getLongitude()));
+                    intent.putExtra("title", clickedReservation.getPrice());
+                   intent.putExtra("searchedLocation", new LatLng(clickedReservation.getLatitude(),clickedReservation.getLongitude()));
+                    intent.putExtra("searchedLocationAddress", clickedReservation.getDescription());
+                    intent.putExtra("reservationData", (Serializable) clickedReservation);
+                     intent.putExtra("activityName", "LocationsOnMap");
+                   // intent.putExtra("listOfLocations", locationList);
+                    intent.putExtra("startDateTime", clickedReservation.getStartingTime());
+                    intent.putExtra("endDateTime", clickedReservation.getEndTime());
+                    startActivity(intent);
+
+
 
 
                 }
@@ -245,6 +269,7 @@ public class ReservationsActivity extends AppCompatActivity
                         rev.getStartingTime() + " " + rev.getEndTime();
                 listDataChild.put(temp, reservationOption);
                 listDataHeader.add(temp);
+                reservationListMap.put(temp,rev);
 
             }
             listAdapter = new ExpandableListAdapter(this, listDataHeader, listDataChild);
