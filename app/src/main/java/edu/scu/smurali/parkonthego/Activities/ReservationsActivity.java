@@ -283,7 +283,6 @@ public class ReservationsActivity extends AppCompatActivity
                         rev.getStartingTime() + " " + rev.getEndTime();
                 listDataChild.put(temp, reservationOption);
                 listDataHeader.add(temp);
-                reservationListMap.put(temp,rev);
 
             }
             listAdapter = new ExpandableListAdapter(this, listDataHeader, listDataChild);

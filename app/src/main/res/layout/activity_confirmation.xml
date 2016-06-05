@@ -50,7 +50,7 @@
                             android:editable="false"
                             android:text="@string/confirmation_end_date"
                             android:textAppearance="?android:attr/textAppearanceSmall"
-                            android:textColor="#000000"
+                            android:textColor="#008888"
                             android:layout_alignBottom="@+id/textView22"
                             android:layout_alignStart="@+id/confirmationStartDateTextView" />
     <LinearLayout
@@ -82,7 +82,7 @@
                             android:editable="false"
                             android:text="@string/confirmation_start_date"
                             android:textAppearance="?android:attr/textAppearanceSmall"
-                            android:textColor="#000000"
+                            android:textColor="#008888"
                             android:layout_alignBottom="@+id/textView20"
                             android:layout_toEndOf="@+id/textView32"
                             android:layout_marginLeft="15dp" />
@@ -95,7 +95,7 @@
         android:editable="false"
                             android:text="@string/confirmation_start_time"
                             android:textAppearance="?android:attr/textAppearanceSmall"
-                            android:textColor="#000000"
+                            android:textColor="#008888"
                             android:layout_marginLeft="15dp"
                             android:layout_alignTop="@+id/confirmationStartDateTextView"
                             android:layout_alignEnd="@+id/confirmationPaymentGateway" />
@@ -107,7 +107,7 @@
                             android:editable="false"
                             android:text="@string/confirmation_end_time"
                             android:textAppearance="?android:attr/textAppearanceSmall"
-                            android:textColor="#000000"
+                            android:textColor="#008888"
         android:layout_alignTop="@+id/confirmationEndDateTextView"
         android:layout_alignStart="@+id/confirmationStartTimeTextView" />
 
@@ -141,7 +141,7 @@
                         android:editable="false"
                         android:text="@string/confirmation_location"
                         android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:textColor="#000000"
+                        android:textColor="#008888"
                         android:layout_below="@+id/confirmationEndTimeTextView"
                         android:layout_alignStart="@+id/confirmationEndDateTextView"
                         android:layout_marginTop="15dp" />
@@ -174,7 +174,7 @@
                         android:editable="false"
                         android:text="@string/confirmation_price_per_hr"
                         android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:textColor="#000000"
+                        android:textColor="#008888"
                         android:layout_alignBottom="@+id/textView32"
                         android:layout_alignStart="@+id/confirmationLocationTextView" />
     <LinearLayout
@@ -205,7 +205,7 @@
                         android:editable="false"
                         android:text="@string/confirmation_total_time"
                         android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:textColor="#000000"
+                        android:textColor="#008888"
                         android:layout_alignBottom="@+id/textView30"
                         android:layout_alignStart="@+id/confirmationPricePerHrTextView"
                         android:layout_marginLeft="5dp" />
@@ -240,7 +240,7 @@
                         android:editable="false"
                         android:text="@string/confirmation_total_price"
                         android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:textColor="#000000" />
+                        android:textColor="#008888" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -280,7 +280,8 @@
         android:layout_marginLeft="5dp"
         android:layout_below="@+id/textView36"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="15dp" />
+        android:layout_marginTop="15dp"
+        android:textColor="#008888" />
 
 
 
