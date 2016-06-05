@@ -35,36 +35,34 @@
 
         </RelativeLayout>
     </ScrollView>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#AAAAAA"
+        android:layout_gravity="right|bottom"
+        android:layout_above="@+id/textView2"
+        android:layout_alignParentStart="true"></LinearLayout>
 
-    <Button
-        android:id="@+id/selectLocationReserveButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/scrollView4"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentStart="true"
-        android:text="Reserve"
-        android:background="#008888"
-        android:textColor="#FFFFFF" />
 
     <TextView
         android:id="@+id/priceLabelSLTR"
         android:layout_width="100dp"
         android:layout_height="50dp"
-        android:layout_above="@+id/selectLocationReserveButton"
-        android:layout_alignParentStart="true"
         android:text="@string/price"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_below="@+id/linearLayout3"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="15dp" />
 
     <TextView
         android:id="@+id/locationLabelSLTR"
         android:layout_width="100dp"
         android:layout_height="50dp"
-        android:layout_above="@+id/priceLabelSLTR"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="41dp"
         android:text="Location :"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_below="@+id/linearLayout2"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="25dp" />
 
     <TextView
         android:id="@+id/selectLocation"
@@ -76,28 +74,30 @@
         android:textSize="18sp"
 
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColor="#008888" />
+        android:textColor="#008888"
+        android:layout_marginBottom="2dp" />
 
     <TextView
         android:id="@+id/pricePerHour"
-        android:layout_width="250dp"
-        android:layout_height="50dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignTop="@+id/priceLabelSLTR"
         android:layout_toEndOf="@+id/priceLabelSLTR"
         android:textSize="18sp"
 
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColor="#008888" />
+        android:textColor="#008888"
+        android:layout_marginTop="5dp" />
 
       <TextView
           android:id="@+id/textView2"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:layout_above="@+id/locationLabelSLTR"
-          android:layout_alignParentStart="true"
-          android:layout_marginBottom="83dp"
           android:text="Start:"
-          android:textAppearance="?android:attr/textAppearanceLarge" />
+          android:textAppearance="?android:attr/textAppearanceLarge"
+          android:layout_centerVertical="true"
+          android:layout_alignParentStart="true"
+          android:layout_marginTop="15dp" />
 
       <TextView
           android:id="@+id/selectLocationStartDate"
@@ -123,15 +123,25 @@
           android:textColor="#008888"
           android:textSize="18sp" />
 
-      <TextView
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#AAAAAA"
+        android:layout_alignBottom="@+id/locationLabelSLTR"
+        android:layout_alignEnd="@+id/selectLocation"
+        android:id="@+id/linearLayout3"
+        android:orientation="horizontal"></LinearLayout>
+
+
+    <TextView
           android:id="@+id/textView6"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_alignParentStart="true"
           android:layout_below="@+id/selectLocationStartTime"
-          android:layout_marginTop="34dp"
           android:text="End:"
-          android:textAppearance="?android:attr/textAppearanceLarge" />
+          android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_marginTop="25dp" />
 
       <TextView
           android:id="@+id/selectLocationEndDate"
@@ -144,8 +154,17 @@
           android:textAppearance="?android:attr/textAppearanceMedium"
           android:textColor="#008888"
           android:textSize="18sp" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#AAAAAA"
+        android:layout_alignBottom="@+id/textView6"
+        android:layout_alignParentStart="true"
+        android:id="@+id/linearLayout2"
+        android:orientation="horizontal"></LinearLayout>
 
-      <TextView
+
+    <TextView
           android:id="@+id/selectLocationEndTime"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
@@ -155,6 +174,35 @@
           android:textAppearance="?android:attr/textAppearanceMedium"
           android:textColor="#008888"
           android:textSize="18sp" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#AAAAAA"
+        android:layout_below="@+id/textView2"
+        android:layout_alignEnd="@+id/selectLocation"
+        android:layout_marginTop="2dp"
+        android:id="@+id/linearLayout4"
+        android:orientation="horizontal"></LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#AAAAAA"
+        android:id="@+id/linearLayout5"
+        android:orientation="horizontal"
+        android:layout_below="@+id/pricePerHour"
+        android:layout_alignParentStart="true"></LinearLayout>
+
+    <Button
+        android:id="@+id/selectLocationReserveButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/scrollView4"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true"
+        android:text="Reserve"
+        android:background="#008888"
+        android:textColor="#FFFFFF" />
+
 
 
 </RelativeLayout>
