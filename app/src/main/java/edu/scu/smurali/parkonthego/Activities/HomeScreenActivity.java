@@ -160,8 +160,8 @@ public class HomeScreenActivity extends AppCompatActivity
                 updateLocation();
                 searchedLatLng = new LatLng(latitude,longitude);
                // searchedAddress = place.getAddress().toString();
-               String address =  getCompleteAddressString( latitude, longitude );
-                autocompleteFragment.setText(address);
+                searchedAddress =  getCompleteAddressString( latitude, longitude );
+                autocompleteFragment.setText(searchedAddress);
 
 
 

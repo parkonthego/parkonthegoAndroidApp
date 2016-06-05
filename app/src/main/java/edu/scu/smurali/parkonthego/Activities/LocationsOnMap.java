@@ -98,6 +98,7 @@ public class LocationsOnMap extends FragmentActivity implements OnMapReadyCallba
 //                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_launcher));
             mMap.addMarker(custom);
 
+
         }
 
         for (int i = 0; i < locationList.size(); i++) {
