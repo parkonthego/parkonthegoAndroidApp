@@ -21,6 +21,7 @@ import android.nfc.tech.Ndef;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.ActionBar;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.View;
@@ -124,6 +125,8 @@ private MapFragment mSupportMapFragment;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(layout.activity_select_location_to_reserve);
+
+      
 
         Intent intent = getIntent();
         final LatLng location = (LatLng) intent.getExtras().get("ltdLng");

@@ -47,7 +47,7 @@ public class ConfirmationActivity extends AppCompatActivity {
         setContentView(R.layout.activity_confirmation);
         try {
             ActionBar actionBar = getSupportActionBar();
-            actionBar.setTitle("ParkOnTheGo");
+            actionBar.setTitle("Confirmation Page");
             actionBar.setIcon(R.mipmap.ic_park);
             //  actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setDisplayShowHomeEnabled(true);

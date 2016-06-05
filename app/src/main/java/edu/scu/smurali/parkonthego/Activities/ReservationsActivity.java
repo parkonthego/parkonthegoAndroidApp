@@ -90,7 +90,7 @@ public class ReservationsActivity extends AppCompatActivity
 
         try {
             ActionBar actionBar = getSupportActionBar();
-            actionBar.setTitle("ParkOnTheGo");
+            actionBar.setTitle("My Reservations");
             actionBar.setIcon(R.mipmap.ic_park);
             //  actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setDisplayShowHomeEnabled(true);

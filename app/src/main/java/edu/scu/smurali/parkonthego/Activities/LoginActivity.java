@@ -60,7 +60,7 @@ public class LoginActivity extends AppCompatActivity implements Validator.Valida
 
         try {
             ActionBar actionBar = getSupportActionBar();
-            actionBar.setTitle("ParkOnTheGo");
+            actionBar.setTitle("LogIn");
             actionBar.setIcon(R.mipmap.ic_park);
             //  actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setDisplayShowHomeEnabled(true);

@@ -74,6 +74,19 @@ public class SettingActivity extends AppCompatActivity
         setContentView(R.layout.activity_setting);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        try {
+            ActionBar actionBar = getSupportActionBar();
+            actionBar.setTitle("Account Setting");
+            actionBar.setIcon(R.mipmap.ic_park);
+            //  actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setDisplayShowHomeEnabled(true);
+            mContext = this;
+            // actionBar.setHomeButtonEnabled(true);
+        } catch (NullPointerException ex) {
+            Log.d("Confirmation:", "onCreate: Null pointer in action bar " + ex.getMessage());
+        }
+
         mContext = this;
         isDataChanged =false;
         pm = PreferencesManager.getInstance(mContext);
