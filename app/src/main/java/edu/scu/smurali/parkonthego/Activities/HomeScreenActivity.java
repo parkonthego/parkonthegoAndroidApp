@@ -147,7 +147,7 @@ public class HomeScreenActivity extends AppCompatActivity
             //                                          int[] grantResults)
             // to handle the case where the user grants the permission. See the documentation
             // for ActivityCompat#requestPermissions for more details.
-            return;
+           // return;
         }
         //locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,0,0,HomeScreenActivity.this);
         currentLocationButton.setOnClickListener(new View.OnClickListener() {
@@ -359,13 +359,13 @@ public class HomeScreenActivity extends AppCompatActivity
                     strReturnedAddress.append(returnedAddress.getAddressLine(i)).append("\n");
                 }
                 strAdd = strReturnedAddress.toString();
-                Log.w("My Current loction address", "" + strReturnedAddress.toString());
+                Log.w("Current loction add", "" + strReturnedAddress.toString());
             } else {
-                Log.w("My Current loction address", "No Address returned!");
+                Log.w("Current  add", "No Address returned!");
             }
         } catch (Exception e) {
             e.printStackTrace();
-            Log.w("My Current loction address", "Canont get Address!");
+            Log.w("My Current  address", "Canont get Address!");
         }
         return strAdd;
     }

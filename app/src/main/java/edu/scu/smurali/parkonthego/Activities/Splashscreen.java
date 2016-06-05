@@ -10,8 +10,8 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import edu.scu.smurali.parkonthego.Activities.LoginActivity;
 import edu.scu.smurali.parkonthego.R;
+
 
 public class Splashscreen extends Activity {
     public void onAttachedToWindow() {
@@ -51,7 +51,7 @@ public class Splashscreen extends Activity {
                         waited += 100;
                     }
                     Intent intent = new Intent(Splashscreen.this,
-                            LoginActivity.class);
+                            HomeScreenActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                     startActivity(intent);
                     Splashscreen.this.finish();
