@@ -10,6 +10,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -45,6 +50,7 @@ import com.mobsandgeeks.saripaar.annotation.NotEmpty;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 import edu.scu.smurali.parkonthego.ParkOnTheGo;
 import edu.scu.smurali.parkonthego.R;
@@ -57,6 +63,8 @@ import edu.scu.smurali.parkonthego.util.PreferencesManager;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static android.location.LocationManager.*;
 
 public class HomeScreenActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, Validator.ValidationListener {
@@ -77,9 +85,15 @@ public class HomeScreenActivity extends AppCompatActivity
     private String searchedAddress;
     private Context mContext;
     private String sDateTime, eDateTime;
+    private Button currentLocationButton;
 
     private TextView navUserName;
     private TextView navEmail;
+    protected LocationManager locationManager;
+    protected LocationListener locationListener;
+    protected Context context;
+    protected Double latitude, longitude;
+
 
     PreferencesManager pm;
 
@@ -117,8 +131,36 @@ public class HomeScreenActivity extends AppCompatActivity
         locationList = new ArrayList<SearchData>();
         //Intent intent = getIntent();
 //        final String userId =(String) intent.getExtras().get("userId");
-        PreferencesManager pm = PreferencesManager.getInstance(mContext);
+        final PreferencesManager pm = PreferencesManager.getInstance(mContext);
         userId = pm.getUserId();
+        currentLocationButton = (Button)findViewById(R.id.currentLocationButton);
+        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        if (ActivityCompat.checkSelfPermission(HomeScreenActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        //locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,0,0,HomeScreenActivity.this);
+        currentLocationButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+                updateLocation();
+                searchedLatLng = new LatLng(latitude,longitude);
+               // searchedAddress = place.getAddress().toString();
+               String address =  getCompleteAddressString( latitude, longitude );
+                autocompleteFragment.setText(address);
+
+
+
+            }
+        });
+
 
 
         startTimeButton = (ImageButton) findViewById(R.id.startTimeImageButton);
@@ -258,6 +300,7 @@ public class HomeScreenActivity extends AppCompatActivity
         });
 
 
+
         //Get profile from server
         getProfile();
 
@@ -270,6 +313,55 @@ public class HomeScreenActivity extends AppCompatActivity
         navEmail.setText(pm.getEmail());
 
 
+
+
+    }
+    public void updateLocation() {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        if(latitude!=null && longitude!=null)
+        {
+            return;
+        }
+        Location loc = locationManager.getLastKnownLocation(PASSIVE_PROVIDER);
+        if (loc != null) {
+            latitude = loc.getLatitude();
+            longitude = loc.getLongitude();
+        } else {
+            latitude = null;
+            longitude = null;
+        }
+    }
+    private String getCompleteAddressString(double LATITUDE, double LONGITUDE) {
+        String strAdd = "";
+        Geocoder geocoder = new Geocoder(this, Locale.getDefault());
+        try {
+            List<Address> addresses = geocoder.getFromLocation(LATITUDE, LONGITUDE, 1);
+            if (addresses != null) {
+                Address returnedAddress = addresses.get(0);
+                StringBuilder strReturnedAddress = new StringBuilder("");
+
+                for (int i = 0; i < returnedAddress.getMaxAddressLineIndex(); i++) {
+                    strReturnedAddress.append(returnedAddress.getAddressLine(i)).append("\n");
+                }
+                strAdd = strReturnedAddress.toString();
+                Log.w("My Current loction address", "" + strReturnedAddress.toString());
+            } else {
+                Log.w("My Current loction address", "No Address returned!");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.w("My Current loction address", "Canont get Address!");
+        }
+        return strAdd;
     }
 
 
