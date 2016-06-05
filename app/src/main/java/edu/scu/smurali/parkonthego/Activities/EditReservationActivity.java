@@ -52,13 +52,17 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import edu.scu.smurali.parkonthego.ParkOnTheGo;
 import edu.scu.smurali.parkonthego.R;
 import edu.scu.smurali.parkonthego.retrofit.reponses.LocationData;
 import edu.scu.smurali.parkonthego.retrofit.reponses.LocationResponse;
+import edu.scu.smurali.parkonthego.retrofit.reponses.ReservationCfnResponse;
 import edu.scu.smurali.parkonthego.retrofit.reponses.ReservationData;
+import edu.scu.smurali.parkonthego.retrofit.reponses.ReservationUpdateResponse;
 import edu.scu.smurali.parkonthego.retrofit.reponses.SearchData;
 import edu.scu.smurali.parkonthego.retrofit.services.LocationServices;
+import edu.scu.smurali.parkonthego.retrofit.services.ReservationServices;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -273,6 +277,15 @@ public class EditReservationActivity extends AppCompatActivity {
         selectLocationReserveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                reservationData.getId();
+                reservationData.getParkingId();
+                reservationData.getUserId();
+                String startDateTimeString =  startDate.getText().toString()+ " " +startTime.getText().toString();
+                String endDateTimeString =  endDate.getText().toString()+ " " +endDate.getText().toString();
+                Double hours = ParkOnTheGo.getInstance().getDateTimeDiff(startDateTimeString, endDateTimeString);
+                double totalPrice = new Double(hours * reservationData.getPrice());
+
+                updateReservation(reservationData.getId(), reservationData.getParkingId(),reservationData.getUserId(),startDateTimeString,endDateTimeString,totalPrice);
 
 
 
@@ -483,6 +496,63 @@ public class EditReservationActivity extends AppCompatActivity {
 
 //            homeStartTime.setText(time);
             endTime.setText(time);
+        }
+    }
+
+    public void updateReservation(Integer reservationId, Integer parkingId,
+                                Integer userId,
+                                String sDateTime,
+                                String eDatetTime, Double totalPrice) {
+
+        if (ParkOnTheGo.getInstance().isConnectedToInterNet()) {
+            ReservationServices reservationServices = ParkOnTheGo.getInstance().getReservationServices();
+//            ParkOnTheGo.getInstance().showProgressDialog(mContext.getString(R.string
+//                    .login_signin), mContext.getString(R.string.login_please_wait));
+
+            Call<ReservationUpdateResponse> call = reservationServices.updateReservation(reservationId,parkingId, userId, sDateTime, eDatetTime, totalPrice);
+            Log.d("Calling", "register: " + call + " " + parkingId + " " + userId + " " + sDateTime + " " + eDatetTime + " " + totalPrice);
+            call.enqueue(new Callback<ReservationUpdateResponse>() {
+                @Override
+                public void onResponse(Call<ReservationUpdateResponse> call,
+                                       Response<ReservationUpdateResponse> response) {
+                    //ParkOnTheGo.getInstance().hideProgressDialog();
+                    if (response.isSuccessful()) {
+                        parseReservationUpdateResponse(response.body());
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ReservationUpdateResponse> call, Throwable throwable) {
+                    Toast.makeText(getApplicationContext(), "Request failed " + throwable, Toast.LENGTH_SHORT).show();
+                    Log.d("Failed", "onFailure: " + throwable);
+
+                    // ParkOnTheGo.getInstance().hideProgressDialog();
+                    // ParkOnTheGo.getInstance().handleError(throwable);
+                }
+            });
+        } else {
+            ParkOnTheGo.getInstance().showAlert(mContext.getString(R.string.no_network));
+        }
+    }
+
+    private void parseReservationUpdateResponse(ReservationUpdateResponse response) {
+
+        if (response.getSuccess() == true) {
+            new SweetAlertDialog(this, SweetAlertDialog.SUCCESS_TYPE)
+                    .setTitleText("Reservation updated")
+                    .setConfirmText("Ok")
+                    .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                        @Override
+                        public void onClick(SweetAlertDialog sDialog) {
+                            sDialog.dismissWithAnimation();
+                            startActivity(new Intent(EditReservationActivity.this, ReservationsActivity.class));
+                        }
+                    })
+                    .show();
+
+
+        } else {
+
         }
     }
 

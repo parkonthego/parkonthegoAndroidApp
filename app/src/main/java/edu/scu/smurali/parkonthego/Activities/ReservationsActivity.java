@@ -192,6 +192,7 @@ public class ReservationsActivity extends AppCompatActivity
                     intent.putExtra("startDateTime", clickedReservation.getStartingTime());
                     intent.putExtra("endDateTime", clickedReservation.getEndTime());
                     startActivity(intent);
+                    finish();
 
 
 
