@@ -94,6 +94,8 @@ public class LocationsOnMap extends FragmentActivity implements OnMapReadyCallba
         if (locationList.size() > 0) {
             MarkerOptions custom = new MarkerOptions().position(new LatLng(searchedLocationLat, searchedLocationLong)).title("Destination:" + searchedLocationAddress)
                     .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
+//            MarkerOptions custom = new MarkerOptions().position(new LatLng(searchedLocationLat, searchedLocationLong)).title("Destination:" + searchedLocationAddress)
+//                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_launcher));
             mMap.addMarker(custom);
 
         }
@@ -101,8 +103,12 @@ public class LocationsOnMap extends FragmentActivity implements OnMapReadyCallba
         for (int i = 0; i < locationList.size(); i++) {
             String price = new Double(locationList.get(i).getPrice()).toString();
             //  Log.d("data", "onMapReady: "+locationList.get(i).getDescription());
+//            MarkerOptions custom = new MarkerOptions().position(new LatLng(locationList.get(i).getLatitude(), locationList.get(i).getLongitude()))
+//                    .title("" + price + " $/Hr").visible(true);
             MarkerOptions custom = new MarkerOptions().position(new LatLng(locationList.get(i).getLatitude(), locationList.get(i).getLongitude()))
-                    .title("" + price + " $/Hr").visible(true);
+                    .title("" + price + " $/Hr").visible(true)
+                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.marker));
+
             Marker mk = mMap.addMarker(custom);
             markerMap.put(mk, locationList.get(i));
 
