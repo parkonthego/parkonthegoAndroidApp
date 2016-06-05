@@ -37,11 +37,12 @@ import java.util.HashMap;
 import java.util.List;
 
 
-
-
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import edu.scu.smurali.parkonthego.ParkOnTheGo;
 import edu.scu.smurali.parkonthego.R;
+import edu.scu.smurali.parkonthego.retrofit.reponses.ReservationCfnResponse;
 import edu.scu.smurali.parkonthego.retrofit.reponses.ReservationData;
+import edu.scu.smurali.parkonthego.retrofit.reponses.ReservationDeleteResponse;
 import edu.scu.smurali.parkonthego.retrofit.reponses.ReservationResponse;
 import edu.scu.smurali.parkonthego.retrofit.services.ReservationServices;
 import edu.scu.smurali.parkonthego.util.PreferencesManager;
@@ -154,6 +155,19 @@ public class ReservationsActivity extends AppCompatActivity
                 if(childPosition==2)
                 {
                     // Have to delete the reservation
+                    String desc = listDataHeader.get(groupPosition);
+                    final ReservationData clickedReservation = reservationListMap.get(desc);
+                    new SweetAlertDialog(mContext, SweetAlertDialog.WARNING_TYPE)
+                            .setTitleText("Are you sure?")
+                            .setConfirmText("Yes,delete it!")
+                            .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                                @Override
+                                public void onClick(SweetAlertDialog sDialog) {
+                                    deleteReservation(clickedReservation.getId());
+                                    sDialog.dismissWithAnimation();
+                                }
+                            })
+                            .show();
 
 
                 }
@@ -359,28 +373,6 @@ public class ReservationsActivity extends AppCompatActivity
         }
     }
 
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        // Inflate the menu; this adds items to the action bar if it is present.
-//        getMenuInflater().inflate(R.menu.reservations, menu);
-//        return true;
-//    }
-//
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        // Handle action bar item clicks here. The action bar will
-//        // automatically handle clicks on the Home/Up button, so long
-//        // as you specify a parent activity in AndroidManifest.xml.
-//        int id = item.getItemId();
-//
-//        //noinspection SimplifiableIfStatement
-//        if (id == R.id.action_settings) {
-//            return true;
-//        }
-//
-//        return super.onOptionsItemSelected(item);
-//    }
-
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -478,6 +470,63 @@ public class ReservationsActivity extends AppCompatActivity
             }else{
                 return false;
             }
+        }
+    }
+
+
+    public void deleteReservation(Integer reservationId ) {
+
+        if (ParkOnTheGo.getInstance().isConnectedToInterNet()) {
+            ReservationServices reservationServices = ParkOnTheGo.getInstance().getReservationServices();
+//            ParkOnTheGo.getInstance().showProgressDialog(mContext.getString(R.string
+//                    .login_signin), mContext.getString(R.string.login_please_wait));
+
+            Log.d("ID", "deleteReservation: "+reservationId.toString());
+            Call<ReservationDeleteResponse> call = reservationServices.deleteReservation(reservationId.toString());
+
+            call.enqueue(new Callback<ReservationDeleteResponse>() {
+                @Override
+                public void onResponse(Call<ReservationDeleteResponse> call,
+                                       Response<ReservationDeleteResponse> response) {
+                    //ParkOnTheGo.getInstance().hideProgressDialog();
+                    if (response.isSuccessful()) {
+                        parseDeleteReservationResponse(response.body());
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ReservationDeleteResponse> call, Throwable throwable) {
+                    Toast.makeText(getApplicationContext(), "Request failed " + throwable, Toast.LENGTH_SHORT).show();
+                    Log.d("Failed", "onFailure: " + throwable);
+
+                    // ParkOnTheGo.getInstance().hideProgressDialog();
+                    // ParkOnTheGo.getInstance().handleError(throwable);
+                }
+            });
+        } else {
+            ParkOnTheGo.getInstance().showAlert(mContext.getString(R.string.no_network));
+        }
+    }
+
+    private void parseDeleteReservationResponse(ReservationDeleteResponse response) {
+
+        if (response.getSuccess() == true) {
+            new SweetAlertDialog(this, SweetAlertDialog.SUCCESS_TYPE)
+                    .setTitleText("Reservation deleted")
+                    .setConfirmText("Ok")
+                    .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                        @Override
+                        public void onClick(SweetAlertDialog sDialog) {
+                            sDialog.dismissWithAnimation();
+                            getUserReservation();
+                            listAdapter.notifyDataSetChanged();
+                        }
+                    })
+                    .show();
+
+
+        } else {
+
         }
     }
 }

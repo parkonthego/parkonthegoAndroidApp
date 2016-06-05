@@ -15,6 +15,9 @@ import android.util.Log;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import edu.scu.smurali.parkonthego.retrofit.services.LocationServices;
 import edu.scu.smurali.parkonthego.retrofit.services.ReservationServices;
 import edu.scu.smurali.parkonthego.retrofit.services.UserServices;
@@ -239,6 +242,31 @@ public class ParkOnTheGo extends MultiDexApplication {
             Log.d("Park on the go", "hideProgressDialog");
         }
 
+    }
+
+
+    public double getDateTimeDiff(String startDateTime,String endDatetTime){
+        try{
+
+
+            // Custom date format
+            SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy HH:mm");
+
+            Date d1;
+            Date d2;
+
+            d1 = format.parse(startDateTime);
+            d2 = format.parse(endDatetTime);
+
+            long diff = d2.getTime() - d1.getTime();
+
+            double diffHours = diff / (60.0 * 60.0 * 1000.0);
+
+        return  diffHours;
+        }catch(Exception ex){
+            Log.d("Hour Difference", "getDateTimeDiff: Failed " + ex.getMessage());
+        }
+        return 0.0;
     }
 
 
