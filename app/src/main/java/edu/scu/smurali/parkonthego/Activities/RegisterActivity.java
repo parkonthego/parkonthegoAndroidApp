@@ -37,7 +37,7 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
         try {
             ActionBar actionBar = getSupportActionBar();
-            actionBar.setTitle("ParkOnTheGo");
+            actionBar.setTitle("Register");
             actionBar.setIcon(R.mipmap.ic_park);
             //  actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setDisplayShowHomeEnabled(true);

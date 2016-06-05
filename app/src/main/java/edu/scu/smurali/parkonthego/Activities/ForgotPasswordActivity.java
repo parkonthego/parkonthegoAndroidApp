@@ -25,7 +25,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         setContentView(R.layout.activity_forgot_password);
         try {
             ActionBar actionBar = getSupportActionBar();
-            actionBar.setTitle("ParkOnTheGo");
+            actionBar.setTitle("Forgot Password");
             actionBar.setIcon(R.mipmap.ic_park);
             //  actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setDisplayShowHomeEnabled(true);
