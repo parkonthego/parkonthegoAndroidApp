@@ -114,7 +114,8 @@
             android:name=".Activities.EditActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".Activities.EditReservationActivity" />
-        <activity android:name=".Activities.Splashscreen">
+        <activity android:name=".Activities.Splashscreen"
+                  android:theme="@style/Theme.Transparent">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
