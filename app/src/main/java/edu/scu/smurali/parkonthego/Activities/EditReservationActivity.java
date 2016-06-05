@@ -273,19 +273,9 @@ public class EditReservationActivity extends AppCompatActivity {
         selectLocationReserveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+           // have to update the reservation and get a confirmation box and go back to my reservations page
 
 
-                Intent intent = new Intent(EditReservationActivity.this, ConfirmationActivity.class);
-                // intent.putExtra("locationList",locationList);
-                intent.putExtra("location",location);
-                // intent.putExtra("searchedLocationLong",searchedLatLng.longitude);
-                String startDateTime = startDate.getText().toString()+" "+startTime.getText().toString();
-                String endDateTime = endDate.getText().toString()+" "+endTime.getText().toString();
-                intent.putExtra("title",title);
-                intent.putExtra("startDateTime", startDateTime);
-                intent.putExtra("startEndTime", endDateTime);
-                intent.putExtra("selectedLocation", selectedLocation);
-                startActivity(intent);
             }
         });
 
