@@ -37,8 +37,9 @@ public class ConfirmationActivity extends AppCompatActivity {
     private Context mContext;
     private SearchData locationObject;
     private TextView confirmationStartDateTextView;
-    private TextView confirmationEndDateTextView, confirmationStartTimeTextView, confirmationEndTimeTextView, confirmationPricePerHrTextView;
-
+    private TextView confirmationEndDateTextView, confirmationStartTimeTextView, confirmationEndTimeTextView, confirmationPricePerHrTextView,confirmationTotalCost, confirmationTotalTime;
+    private Double hours;
+    private Double totalPrice;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +68,8 @@ public class ConfirmationActivity extends AppCompatActivity {
         confirmationEndTimeTextView = (TextView) findViewById(R.id.confirmationEndTimeTextView);
         confirmationStartTimeTextView = (TextView) findViewById(R.id.confirmationStartTimeTextView);
         confirmationPricePerHrTextView = (TextView) findViewById(R.id.confirmationPricePerHrTextView);
+        confirmationTotalCost =  (TextView) findViewById(R.id.confirmationTotalPriceTextView);
+        confirmationTotalTime =  (TextView) findViewById(R.id.confirmationTotalTimeTextView);
 
         LatLng location = intent.getParcelableExtra("location");
         String title = intent.getExtras().getString("title");
@@ -92,7 +95,10 @@ public class ConfirmationActivity extends AppCompatActivity {
         confirmationEndDateTextView.setText(eDateTimeList.get(0));
         confirmationEndTimeTextView.setText(eDateTimeList.get(1));
         confirmationPricePerHrTextView.setText(new Double(locationObject.getPrice()).toString());
-
+        hours = ParkOnTheGo.getInstance().getDateTimeDiff(startDateTime, endDateTime);
+        confirmationTotalTime.setText(hours.toString()+" hours");
+        totalPrice = new Double(hours * locationObject.getPrice());
+        confirmationTotalCost.setText("$"+totalPrice.toString());
 
         cfnReserveButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -107,15 +113,15 @@ public class ConfirmationActivity extends AppCompatActivity {
     public void saveReservation(Integer parkingId,
                                 Integer userId,
                                 String sDateTime,
-                                String eDatetTime, Double cost) {
+                                String eDatetTime, Double totalPrice) {
 
         if (ParkOnTheGo.getInstance().isConnectedToInterNet()) {
             ReservationServices reservationServices = ParkOnTheGo.getInstance().getReservationServices();
 //            ParkOnTheGo.getInstance().showProgressDialog(mContext.getString(R.string
 //                    .login_signin), mContext.getString(R.string.login_please_wait));
 
-            Call<ReservationCfnResponse> call = reservationServices.createReservation(parkingId, userId, sDateTime, eDatetTime, cost);
-            Log.d("Calling", "register: " + call + " " + parkingId + " " + userId + " " + sDateTime + " " + eDatetTime + " " + cost);
+            Call<ReservationCfnResponse> call = reservationServices.createReservation(parkingId, userId, sDateTime, eDatetTime, totalPrice);
+            Log.d("Calling", "register: " + call + " " + parkingId + " " + userId + " " + sDateTime + " " + eDatetTime + " " + totalPrice);
             call.enqueue(new Callback<ReservationCfnResponse>() {
                 @Override
                 public void onResponse(Call<ReservationCfnResponse> call,

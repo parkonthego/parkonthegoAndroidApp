@@ -273,7 +273,8 @@ public class EditReservationActivity extends AppCompatActivity {
         selectLocationReserveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-           // have to update the reservation and get a confirmation box and go back to my reservations page
+
+
 
 
             }

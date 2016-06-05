@@ -35,6 +35,9 @@ public class ReservationData implements Serializable {
     @SerializedName("cost")
     @Expose
     private Double cost;
+    @SerializedName("status")
+    @Expose
+    private String status;
     @SerializedName("latitude")
     @Expose
     private Double latitude;
@@ -158,6 +161,20 @@ public class ReservationData implements Serializable {
      */
     public void setCost(Double cost) {
         this.cost = cost;
+    }
+
+    /**
+     * @return The status
+     */
+    public String getStatus() {
+        return status;
+    }
+
+    /**
+     * @param status The status
+     */
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     /**
