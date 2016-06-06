@@ -75,7 +75,7 @@ public class SelectLocationToReserve extends FragmentActivity {
     private static TextView startTime;
     private static TextView endDate;
     private static TextView endTime;
-    public LocationData recognisedLocation;
+    LocationData recognisedLocation;
 
     private MapFragment mSupportMapFragment;
     private NfcAdapter mNfcAdapter;
