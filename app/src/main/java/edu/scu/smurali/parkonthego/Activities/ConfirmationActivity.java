@@ -194,8 +194,27 @@ public class ConfirmationActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_cancel) {
-            Intent intent = new Intent(ConfirmationActivity.this,HomeScreenActivity.class);
-            startActivity(intent);
+            new SweetAlertDialog(ConfirmationActivity.this, SweetAlertDialog.WARNING_TYPE)
+                    .setTitleText("Cancel Reservation?")
+                    .setConfirmText("Yes")
+                    .setCancelText("No")
+                    .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                        @Override
+                        public void onClick(SweetAlertDialog sweetAlertDialog) {
+                            sweetAlertDialog.hide();
+                        }
+                    })
+                    .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                        @Override
+                        public void onClick(SweetAlertDialog sDialog) {
+                            sDialog.dismissWithAnimation();
+                            Intent intent = new Intent(ConfirmationActivity.this,HomeScreenActivity.class);
+                            startActivity(intent);
+                        }
+                    })
+                    .show();
+
+
         }
 
         return super.onOptionsItemSelected(item);

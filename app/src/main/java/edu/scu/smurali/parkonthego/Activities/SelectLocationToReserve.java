@@ -42,6 +42,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
@@ -53,6 +54,7 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import edu.scu.smurali.parkonthego.ParkOnTheGo;
 import edu.scu.smurali.parkonthego.R;
 import edu.scu.smurali.parkonthego.retrofit.reponses.LocationData;
@@ -144,8 +146,25 @@ public class SelectLocationToReserve extends FragmentActivity {
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(SelectLocationToReserve.this,HomeScreenActivity.class);
-                startActivity(intent);
+                new SweetAlertDialog(SelectLocationToReserve.this, SweetAlertDialog.WARNING_TYPE)
+                        .setTitleText("Abort the Search??")
+                        .setConfirmText("Yes")
+                        .setCancelText("Cancel")
+                        .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                            @Override
+                            public void onClick(SweetAlertDialog sweetAlertDialog) {
+                                sweetAlertDialog.hide();
+                            }
+                        })
+                        .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                            @Override
+                            public void onClick(SweetAlertDialog sDialog) {
+                                sDialog.dismissWithAnimation();
+                                startActivity(new Intent(SelectLocationToReserve.this, HomeScreenActivity.class));
+                            }
+                        })
+                        .show();
+
             }
         });
 
@@ -280,7 +299,8 @@ public class SelectLocationToReserve extends FragmentActivity {
                                 googleMap.addMarker(custom);
 
                                 googleMap.addMarker(new MarkerOptions().position(location)
-                                        .title("" + selectedLocationDescription));
+                                        .title("" + selectedLocationDescription)
+                                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.marker)));
 
 
                                 Polyline line = googleMap.addPolyline(new PolylineOptions()
@@ -288,13 +308,25 @@ public class SelectLocationToReserve extends FragmentActivity {
                                         .width(5)
                                         .color(Color.RED));
 
-                                CameraPosition cameraPosition = new CameraPosition.Builder().target(location).zoom(15.0f).build();
+                                CameraPosition cameraPosition = new CameraPosition.Builder().target(location).zoom(13.0f).build();
                                 CameraUpdate cameraUpdate = CameraUpdateFactory.newCameraPosition(cameraPosition);
                                 googleMap.moveCamera(cameraUpdate);
                                 googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
                                     @Override
                                     public void onMapClick(LatLng latLng) {
                                         ////////////////////////////////////////////////////////////////
+                                    }
+                                });
+
+                                googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+                                    @Override
+                                    public boolean onMarkerClick(Marker marker) {
+//                                        return true;
+                                        Uri gmmIntentUri = Uri.parse("google.streetview:cbll="+marker.getPosition().latitude+","+marker.getPosition().longitude+"&cbp=0,30,0,0,-15");
+                                        Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+                                        mapIntent.setPackage("com.google.android.apps.maps");
+                                        startActivity(mapIntent);
+                                        return true;
                                     }
                                 });
 
@@ -642,12 +674,12 @@ public class SelectLocationToReserve extends FragmentActivity {
                                 // set the map marker at the location of the parking
                                 MarkerOptions custom = new MarkerOptions().position(new LatLng(recognisedLocation.getLatitude(), recognisedLocation.getLongitude()))
                                         .title("" + recognisedLocation.getDescription())
-                                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
+                                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.marker));
 
                                 googleMap.addMarker(custom);
 
                                 // set the camera to the location plotted on map
-                                CameraPosition cameraPosition = new CameraPosition.Builder().target(new LatLng(recognisedLocation.getLatitude(), recognisedLocation.getLongitude())).zoom(15.0f).build();
+                                CameraPosition cameraPosition = new CameraPosition.Builder().target(new LatLng(recognisedLocation.getLatitude(), recognisedLocation.getLongitude())).zoom(13.0f).build();
                                 CameraUpdate cameraUpdate = CameraUpdateFactory.newCameraPosition(cameraPosition);
                                 googleMap.moveCamera(cameraUpdate);
                                 googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {

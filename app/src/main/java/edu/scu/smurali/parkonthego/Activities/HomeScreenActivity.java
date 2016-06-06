@@ -55,6 +55,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import edu.scu.smurali.parkonthego.ParkOnTheGo;
 import edu.scu.smurali.parkonthego.R;
 import edu.scu.smurali.parkonthego.retrofit.reponses.ProfileResponse;
@@ -143,7 +144,7 @@ public class HomeScreenActivity extends AppCompatActivity
         locationList = new ArrayList<SearchData>();
         final PreferencesManager pm = PreferencesManager.getInstance(mContext);
         userId = pm.getUserId();
-        currentLocationButton = (Button) findViewById(R.id.currentLocationButton);
+        currentLocationButton = (Button)findViewById(R.id.currentLocationButton);
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 /////////////////////////////////// permission checks start////////////////////////////////////////////////////////
 
@@ -313,15 +314,17 @@ public class HomeScreenActivity extends AppCompatActivity
         //////////////////////////////////// permision checks end/////////////////////////////////////////////////
 
 
-        // current location button//
+
+      // current location button//
         currentLocationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 updateLocation();
-                searchedLatLng = new LatLng(latitude, longitude);
-                searchedAddress = getCompleteAddressString(latitude, longitude);
+                searchedLatLng = new LatLng(latitude,longitude);
+                searchedAddress =  getCompleteAddressString( latitude, longitude );
                 autocompleteFragment.setText(searchedAddress);
+
 
 
             }
@@ -457,9 +460,9 @@ public class HomeScreenActivity extends AppCompatActivity
 //        searchParkingLocations = (Button) findViewById(R.id.searchParkingLocation);
 
 
-        searchParkingLocations = (FancyButton) findViewById(R.id.searchParkingLocation);
+         searchParkingLocations = (FancyButton)  findViewById(R.id.searchParkingLocation);
 
-        // searchParkingLocations = (Button) findViewById(R.id.searchParkingLocation);
+      // searchParkingLocations = (Button) findViewById(R.id.searchParkingLocation);
 
         searchParkingLocations.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -467,7 +470,19 @@ public class HomeScreenActivity extends AppCompatActivity
                 if (searchedLatLng == null) {
                     String message = " please select the destination adddress to find parking";
                     String title = " Select Location";
-                    ParkOnTheGo.getInstance().showAlert(HomeScreenActivity.this, message, title);
+//                    ParkOnTheGo.getInstance().showAlert(HomeScreenActivity.this, message, title);
+                    new SweetAlertDialog(HomeScreenActivity.this, SweetAlertDialog.ERROR_TYPE)
+                            .setTitleText("Please select a location")
+                            .setConfirmText("Ok")
+                            .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                                @Override
+                                public void onClick(SweetAlertDialog sDialog) {
+                                    sDialog.dismissWithAnimation();
+                                    //startActivity(new Intent(HomeScreenActivity.this, HomeScreenActivity.class));
+                                }
+                            })
+                            .show();
+
                 } else {
                     validator.validate();
 
@@ -475,6 +490,8 @@ public class HomeScreenActivity extends AppCompatActivity
 
             }
         });
+
+
 
 
         //Get profile from server
@@ -489,9 +506,10 @@ public class HomeScreenActivity extends AppCompatActivity
         navEmail.setText(pm.getEmail());
 
 
-    }
 
-    ////////////////////update current location method////////////////////////////////////
+
+    }
+////////////////////update current location method////////////////////////////////////
     public void updateLocation() {
         if (ContextCompat.checkSelfPermission(HomeScreenActivity.this,
                 Manifest.permission.ACCESS_FINE_LOCATION)
@@ -518,19 +536,19 @@ public class HomeScreenActivity extends AppCompatActivity
                 // result of the request.
             }
         }
-        // get current locaation(last known location)
-        Location loc = locationManager.getLastKnownLocation(NETWORK_PROVIDER);
-        if (latitude != null && longitude != null) {
-            return;
-        }
+            // get current locaation(last known location)
+            Location loc = locationManager.getLastKnownLocation(NETWORK_PROVIDER);
+            if (latitude != null && longitude != null) {
+               return;
+            }
 
-        if (loc != null) {
-            latitude = loc.getLatitude();
-            longitude = loc.getLongitude();
-        } else {
-            latitude = null;
-            longitude = null;
-        }
+            if (loc != null) {
+                latitude = loc.getLatitude();
+                longitude = loc.getLongitude();
+            } else {
+                latitude = null;
+                longitude = null;
+            }
 
     }
     //////////////////// update method ends////////////////////////////////////////////////
@@ -563,6 +581,7 @@ public class HomeScreenActivity extends AppCompatActivity
     //////////////////////////// get address method ends///////////////////////////////////////////
 
 
+
     @Override
     public void onValidationSucceeded() {
         String startDateValue = startDate.getText().toString();
@@ -571,8 +590,9 @@ public class HomeScreenActivity extends AppCompatActivity
         String endTimeValue = endTime.getText().toString();
         sDateTime = startDateValue + " " + startTimeValue;
         eDateTime = endDateValue + " " + endTimeValue;
-        Log.d("Data for getlocation", "onValidationSucceeded: " + sDateTime);
-        Log.d("Data for getlocation", "onValidationSucceeded: " + eDateTime);
+        Log.d("Data for getlocation", "onValidationSucceeded: "+sDateTime);
+        Log.d("Data for getlocation", "onValidationSucceeded: "+eDateTime);
+
 
 
         searchLocationsNearMe(userId, searchedLatLng.latitude, searchedLatLng.longitude, 5, sDateTime, eDateTime);
@@ -715,6 +735,7 @@ public class HomeScreenActivity extends AppCompatActivity
         } else if (id == R.id.nav_settings) {
 
 
+
             Intent intent = new Intent(HomeScreenActivity.this, SettingActivity.class);
             startActivity(intent);
             finish();
@@ -723,6 +744,7 @@ public class HomeScreenActivity extends AppCompatActivity
         } else if (id == R.id.nav_call) {
 
             final int MY_PERMISSIONS_REQUEST_CALL_PHONE = 1;
+
 
 
             if (ActivityCompat.checkSelfPermission(HomeScreenActivity.this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
@@ -751,6 +773,13 @@ public class HomeScreenActivity extends AppCompatActivity
             }
             Intent callIntent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:+1 669 220 8549"));
             startActivity(callIntent);
+
+
+
+
+
+
+
 
 
         } else if (id == R.id.nav_help) {
@@ -973,12 +1002,16 @@ public class HomeScreenActivity extends AppCompatActivity
             pm.updateFirstName(response.getData().getFirstName());
             pm.updateLastName(response.getData().getLastName());
             pm.updateEmail(response.getData().getEmail());
-            pm.updateUserName(response.getData().getFirstName() + " " + response.getData().getLastName());
+            pm.updateUserName(response.getData().getFirstName()+" "+response.getData().getLastName());
 
         } else {
 
         }
     }
+
+
+
+
 
 
 }

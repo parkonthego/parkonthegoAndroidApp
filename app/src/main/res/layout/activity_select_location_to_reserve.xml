@@ -114,14 +114,26 @@
           android:textColor="#008888"
           android:textSize="18sp" />
 
+    <TextView
+        android:id="@+id/selectLocationEndDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/selectLocationEndTime"
+        android:layout_alignBottom="@+id/selectLocationEndTime"
+        android:layout_alignStart="@+id/selectLocationStartDate"
+        android:text="05/20/2016"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="#008888"
+        android:textSize="18sp" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="#BBBBBB"
-        android:layout_alignBottom="@+id/locationLabelSLTR"
-        android:layout_alignEnd="@+id/selectLocation"
         android:id="@+id/linearLayout3"
-        android:orientation="horizontal"></LinearLayout>
+        android:orientation="horizontal"
+        android:layout_below="@+id/selectLocation"
+        android:layout_alignParentStart="true"></LinearLayout>
 
 
     <TextView
@@ -134,17 +146,6 @@
           android:textAppearance="?android:attr/textAppearanceLarge"
         android:layout_marginTop="25dp" />
 
-      <TextView
-          android:id="@+id/selectLocationEndDate"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_alignBaseline="@+id/selectLocationEndTime"
-          android:layout_alignBottom="@+id/selectLocationEndTime"
-          android:layout_alignStart="@+id/selectLocationStartDate"
-          android:text="05/20/2016"
-          android:textAppearance="?android:attr/textAppearanceMedium"
-          android:textColor="#008888"
-          android:textSize="18sp" />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="1dp"
@@ -166,14 +167,13 @@
           android:textColor="#008888"
           android:textSize="18sp" />
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="fill_parent"
         android:layout_height="1dp"
         android:background="#BBBBBB"
-        android:layout_below="@+id/textView2"
-        android:layout_alignEnd="@+id/selectLocation"
-        android:layout_marginTop="2dp"
         android:id="@+id/linearLayout4"
-        android:orientation="horizontal"></LinearLayout>
+        android:orientation="horizontal"
+        android:layout_below="@+id/textView2"
+        android:layout_alignParentEnd="true"></LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="1dp"
@@ -242,6 +242,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
         android:layout_marginLeft="100dp" />
+
 
     </LinearLayout>
 
