@@ -10,6 +10,7 @@ import com.google.gson.annotations.SerializedName;
 
 public class LocationData {
 
+
     @SerializedName("id")
     @Expose
     private String id;
@@ -31,6 +32,9 @@ public class LocationData {
     @SerializedName("updated_at")
     @Expose
     private String updatedAt;
+    @SerializedName("status")
+    @Expose
+    private Boolean status;
 
     /**
      * @return The id
@@ -129,4 +133,23 @@ public class LocationData {
     public void setUpdatedAt(String updatedAt) {
         this.updatedAt = updatedAt;
     }
+
+    /**
+     *
+     * @return
+     * The status
+     */
+    public Boolean getStatus() {
+        return status;
+    }
+
+    /**
+     *
+     * @param status
+     * The status
+     */
+    public void setStatus(Boolean status) {
+        this.status = status;
+    }
+
 }
