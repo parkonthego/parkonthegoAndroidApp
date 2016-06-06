@@ -103,7 +103,7 @@ public class ConfirmationActivity extends AppCompatActivity {
         cfnReserveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                saveReservation(locationObject.getId(), PreferencesManager.getInstance(mContext).getUserId(), startDateTime, endDateTime, 0.0);
+                saveReservation(locationObject.getId(), PreferencesManager.getInstance(mContext).getUserId(), startDateTime, endDateTime, totalPrice);
             }
         });
 
