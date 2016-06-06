@@ -22,6 +22,7 @@ import com.google.gson.Gson;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import edu.scu.smurali.parkonthego.R;
 import edu.scu.smurali.parkonthego.retrofit.reponses.SearchData;
 
@@ -62,6 +63,29 @@ public class LocationsOnMap extends FragmentActivity implements OnMapReadyCallba
         markerMap = new HashMap<Marker, SearchData>();
 
     }
+
+    @Override
+    public void onBackPressed() {
+        new SweetAlertDialog(LocationsOnMap.this, SweetAlertDialog.WARNING_TYPE)
+                .setTitleText("Are you Sure to Abort the Search")
+                .setConfirmText("Yes")
+                .setCancelText("Cancel")
+                .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                    @Override
+                    public void onClick(SweetAlertDialog sweetAlertDialog) {
+                        sweetAlertDialog.hide();
+                    }
+                })
+                .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                    @Override
+                    public void onClick(SweetAlertDialog sDialog) {
+                        sDialog.dismissWithAnimation();
+                        startActivity(new Intent(LocationsOnMap.this, HomeScreenActivity.class));
+                    }
+                })
+                .show();
+    }
+
     // set up the map with the location markers
     @Override
     public void onMapReady(GoogleMap googleMap) {
@@ -93,7 +117,12 @@ public class LocationsOnMap extends FragmentActivity implements OnMapReadyCallba
                     .title("" + price + " $/Hr").visible(true)
                     .icon(BitmapDescriptorFactory.fromResource(R.drawable.marker));
 
+          //  mMap.addMarker(custom).showInfoWindow();
+
             Marker mk = mMap.addMarker(custom);
+
+           // mk.showInfoWindow();
+
             markerMap.put(mk, locationList.get(i));
 
         }
@@ -148,6 +177,7 @@ public class LocationsOnMap extends FragmentActivity implements OnMapReadyCallba
             @Override
             public boolean onMarkerClick(Marker marker) {
                 return false;
+//
             }
         });
 

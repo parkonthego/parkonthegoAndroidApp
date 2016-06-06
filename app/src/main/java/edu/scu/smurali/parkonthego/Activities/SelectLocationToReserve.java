@@ -42,17 +42,21 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.gson.Gson;
 
 import java.io.UnsupportedEncodingException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import edu.scu.smurali.parkonthego.ParkOnTheGo;
 import edu.scu.smurali.parkonthego.R;
 import edu.scu.smurali.parkonthego.retrofit.reponses.LocationData;
@@ -87,6 +91,10 @@ public class SelectLocationToReserve extends FragmentActivity {
     private Context mContext;
     private String sDateTime = "", eDateTime = "";
     private String selectedLocation;
+
+
+    private DatePickerDialogFragment uDatePickerDialogFragment;
+    private TimePickerDialogFragment uTimePickerDialogFragment;
 
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
@@ -129,7 +137,8 @@ public class SelectLocationToReserve extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(layout.activity_select_location_to_reserve);
 
-
+        uDatePickerDialogFragment = new DatePickerDialogFragment();
+        uTimePickerDialogFragment = new TimePickerDialogFragment();
 
         Intent intent = getIntent();
         final LatLng location = (LatLng) intent.getExtras().get("ltdLng");
@@ -144,8 +153,25 @@ public class SelectLocationToReserve extends FragmentActivity {
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(SelectLocationToReserve.this,HomeScreenActivity.class);
-                startActivity(intent);
+                new SweetAlertDialog(SelectLocationToReserve.this, SweetAlertDialog.WARNING_TYPE)
+                        .setTitleText("Abort the Search??")
+                        .setConfirmText("Yes")
+                        .setCancelText("Cancel")
+                        .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                            @Override
+                            public void onClick(SweetAlertDialog sweetAlertDialog) {
+                                sweetAlertDialog.hide();
+                            }
+                        })
+                        .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                            @Override
+                            public void onClick(SweetAlertDialog sDialog) {
+                                sDialog.dismissWithAnimation();
+                                startActivity(new Intent(SelectLocationToReserve.this, HomeScreenActivity.class));
+                            }
+                        })
+                        .show();
+
             }
         });
 
@@ -159,9 +185,9 @@ public class SelectLocationToReserve extends FragmentActivity {
         startDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DialogFragment newFragment = new StartDatePickerFragment();
+                uDatePickerDialogFragment.setFlag(DatePickerDialogFragment.FLAG_START_DATE);
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
-                newFragment.show(ft, "datePicker");
+                uDatePickerDialogFragment.show(ft, "datePicker");
 
 
             }
@@ -170,27 +196,27 @@ public class SelectLocationToReserve extends FragmentActivity {
         startTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DialogFragment newFragment = new StartTimePickerFragment();
+                uTimePickerDialogFragment.setFlag(TimePickerDialogFragment.FLAG_START_TIME);
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
-                newFragment.show(ft, "timePicker");
+                uTimePickerDialogFragment.show(ft, "timePicker");
 
             }
         });
         endDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DialogFragment newFragment = new EndDatePickerFragment();
+                uDatePickerDialogFragment.setFlag(DatePickerDialogFragment.FLAG_END_DATE);
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
-                newFragment.show(ft, "datePicker");
+                uDatePickerDialogFragment.show(ft, "datePicker");
             }
         });
         endTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                DialogFragment newFragment = new EndTimePickerFragment();
+                uTimePickerDialogFragment.setFlag(TimePickerDialogFragment.FLAG_END_TIME);
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
-                newFragment.show(ft, "timePicker");
+                uTimePickerDialogFragment.show(ft, "timePicker");
 
 
             }
@@ -280,7 +306,8 @@ public class SelectLocationToReserve extends FragmentActivity {
                                 googleMap.addMarker(custom);
 
                                 googleMap.addMarker(new MarkerOptions().position(location)
-                                        .title("" + selectedLocationDescription));
+                                        .title("" + selectedLocationDescription)
+                                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.marker)));
 
 
                                 Polyline line = googleMap.addPolyline(new PolylineOptions()
@@ -288,13 +315,25 @@ public class SelectLocationToReserve extends FragmentActivity {
                                         .width(5)
                                         .color(Color.RED));
 
-                                CameraPosition cameraPosition = new CameraPosition.Builder().target(location).zoom(15.0f).build();
+                                CameraPosition cameraPosition = new CameraPosition.Builder().target(location).zoom(13.0f).build();
                                 CameraUpdate cameraUpdate = CameraUpdateFactory.newCameraPosition(cameraPosition);
                                 googleMap.moveCamera(cameraUpdate);
                                 googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
                                     @Override
                                     public void onMapClick(LatLng latLng) {
                                         ////////////////////////////////////////////////////////////////
+                                    }
+                                });
+
+                                googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+                                    @Override
+                                    public boolean onMarkerClick(Marker marker) {
+//                                        return true;
+                                        Uri gmmIntentUri = Uri.parse("google.streetview:cbll="+marker.getPosition().latitude+","+marker.getPosition().longitude+"&cbp=0,30,0,0,-15");
+                                        Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+                                        mapIntent.setPackage("com.google.android.apps.maps");
+                                        startActivity(mapIntent);
+                                        return true;
                                     }
                                 });
 
@@ -435,133 +474,240 @@ public class SelectLocationToReserve extends FragmentActivity {
         }
     }
 
-    // //////////////////////////////////date and time picker fragments ////////////////////////////////////////////////////////
-    public static class StartDatePickerFragment extends DialogFragment
-            implements DatePickerDialog.OnDateSetListener {
+    //////////////////////// date and time  picker fragments//////////////////////////////////////////
 
-//        private TextView homeStartDate, homeEndDate;
-
-        public StartDatePickerFragment() {
-        }
-
-        @Override
-        public Dialog onCreateDialog(Bundle savedInstanceState) {
-
-            // Use the current date as the default date in the picker
-            final Calendar c = Calendar.getInstance();
-            int year = c.get(Calendar.YEAR);
-            int month = c.get(Calendar.MONTH) + 1;
-            int day = c.get(Calendar.DAY_OF_MONTH);
-
-            // Create a new instance of DatePickerDialog and return it
-            return new DatePickerDialog(getActivity(), this, year, month, day);
-        }
-
-        public void onDateSet(DatePicker view, int year, int month, int day) {
-            // Do something with the date chosen by the user
-
-            //String date = month + "-" + day + "-" + "year";
-
-
-            startDate.setText(new StringBuilder().append(month).append("/")
-                    .append(day).append("/").append(year));
-
-
+    //Ini date picker
+    public void initDatePicker() {
+        try {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+            Calendar cal = Calendar.getInstance();
+            startDate.setText(dateFormat.format(cal.getTime()));
+            endDate.setText(dateFormat.format(cal.getTime()));
+        } catch (Exception ex) {
+            Log.e("parse error init ", "onCreateDialog: " + ex.getMessage());
         }
     }
 
-    public static class EndDatePickerFragment extends DialogFragment
-            implements DatePickerDialog.OnDateSetListener {
-
-//        private TextView homeStartDate, homeEndDate;
-
-        public EndDatePickerFragment() {
-        }
-
-        @Override
-        public Dialog onCreateDialog(Bundle savedInstanceState) {
-
-            // Use the current date as the default date in the picker
-            final Calendar c = Calendar.getInstance();
-            int year = c.get(Calendar.YEAR);
-            int month = c.get(Calendar.MONTH) + 1;
-            int day = c.get(Calendar.DAY_OF_MONTH);
-
-            // Create a new instance of DatePickerDialog and return it
-            return new DatePickerDialog(getActivity(), this, year, month, day);
-        }
-
-        public void onDateSet(DatePicker view, int year, int month, int day) {
-            // Do something with the date chosen by the user
-
-            //String date = month + "-" + day + "-" + "year";
-
-
-            endDate.setText(new StringBuilder().append(month).append("/")
-                    .append(day).append("/").append(year));
-
-
-        }
-    }
-
-    public static class StartTimePickerFragment extends DialogFragment
-            implements TimePickerDialog.OnTimeSetListener {
-
-        TextView homeStartTime, homeEndTime;
-
-
-        @Override
-        public Dialog onCreateDialog(Bundle savedInstanceState) {
-            // Use the current time as the default values for the picker
-            final Calendar c = Calendar.getInstance();
-            int hour = c.get(Calendar.HOUR_OF_DAY);
-            int minute = c.get(Calendar.MINUTE);
-
-            // Create a new instance of TimePickerDialog and return it
-            return new TimePickerDialog(getActivity(), this, hour, minute,
-                    DateFormat.is24HourFormat(getActivity()));
-        }
-
-        public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-            // Do something with the time chosen by the user
+    public void initTimePicker() {
+        try {
+            Calendar cal = Calendar.getInstance();
+            int hour = cal.get(Calendar.HOUR_OF_DAY);
+            int minute = cal.get(Calendar.MINUTE);
             String min = String.format("%02d", minute);
-
-            String time = hourOfDay + ":" + min;
-
+            String hou = String.format("%02d", hour);
+            String time = hou + ":" + min;
             startTime.setText(time);
-//            homeEndTime.setText(time);
+            hou = String.format("%02d", (hour + 1));
+            String endtime = hou + ":" + min;
+            endTime.setText(endtime);
+
+        } catch (Exception ex) {
+            Log.e("parse error init ", "onCreateDialog: " + ex.getMessage());
         }
     }
 
-    public static class EndTimePickerFragment extends DialogFragment
+    public static class DatePickerDialogFragment extends DialogFragment implements
+            DatePickerDialog.OnDateSetListener {
+        public static final int FLAG_START_DATE = 0;
+        public static final int FLAG_END_DATE = 1;
+
+        private int flag = 0;
+
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+
+            SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+            Date date;
+            Calendar calendar = Calendar.getInstance();
+            if (flag == FLAG_START_DATE) {
+                try {
+                    date = dateFormat.parse(startDate.getText().toString());
+                    calendar.setTime(date);
+                } catch (Exception ex) {
+                    Log.d("Date pull error", "onCreateDialog: " + ex.getMessage());
+                }
+            } else {
+                try {
+                    date = dateFormat.parse(endDate.getText().toString());
+                    calendar.setTime(date);
+                } catch (Exception ex) {
+                    Log.d("Date pull error", "onCreateDialog: " + ex.getMessage());
+                }
+            }
+
+
+            int year = calendar.get(Calendar.YEAR);
+            int month = calendar.get(Calendar.MONTH);
+            int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+            DatePickerDialog dt = new DatePickerDialog(getActivity(), this, year, month, day);
+            if (flag == FLAG_START_DATE) {
+                Calendar cal = Calendar.getInstance();
+                DatePicker datePicker = dt.getDatePicker();
+                datePicker.setMinDate(cal.getTimeInMillis());
+                return dt;
+            } else {
+                SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+                Log.d("date1", "onDateChanged: " + startDate.getText().toString());
+                try {
+                    Date d = sdf.parse(startDate.getText().toString());
+                    DatePicker datePicker = dt.getDatePicker();
+                    Log.d("timestamp", "onDateChanged: " + d.getTime());
+                    datePicker.setMinDate(d.getTime());
+                } catch (Exception ex) {
+                    Log.d("Date parse error", "onCreateDialog: " + ex.getMessage());
+                }
+                return dt;
+            }
+
+        }
+
+        public void setFlag(int i) {
+            flag = i;
+        }
+
+        @Override
+        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+            Calendar calendar = Calendar.getInstance();
+            calendar.set(year, monthOfYear, dayOfMonth);
+            SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
+            if (flag == FLAG_START_DATE) {
+                try {
+                    Date date1 = format.parse(format.format(calendar.getTime()));
+                    Date date2 = format.parse(endDate.getText().toString());
+                    if (date1.compareTo(date2) > 0) {
+                        endDate.setText(format.format(calendar.getTime()));
+                    }
+                } catch (Exception ex) {
+                    Log.d("Date parse error", "onDateSet: " + ex.getMessage());
+                }
+                startDate.setText(format.format(calendar.getTime()));
+            } else if (flag == FLAG_END_DATE) {
+                endDate.setText(format.format(calendar.getTime()));
+            }
+        }
+    }
+
+    /////////////////////////////////////////////////////////////////////////////////
+
+    ///////////////////////////////////////////////////////////////////////////////
+
+    public static class TimePickerDialogFragment extends DialogFragment
             implements TimePickerDialog.OnTimeSetListener {
 
-        TextView homeStartTime, homeEndTime;
+        public static final int FLAG_START_TIME = 0;
+        public static final int FLAG_END_TIME = 1;
 
+        private int flag = 0;
 
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
             // Use the current time as the default values for the picker
-            final Calendar c = Calendar.getInstance();
-            int hour = c.get(Calendar.HOUR_OF_DAY);
-            int minute = c.get(Calendar.MINUTE);
-
-            // Create a new instance of TimePickerDialog and return it
-            return new TimePickerDialog(getActivity(), this, hour, minute,
+            SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm");
+            Date date;
+            Calendar calendar = Calendar.getInstance();
+            if (flag == FLAG_START_TIME) {
+                try {
+                    date = dateFormat.parse(startDate.getText().toString() + " " + startTime.getText().toString());
+                    calendar.setTime(date);
+                } catch (Exception ex) {
+                    Log.d("Date pull error", "onCreateDialog: " + ex.getMessage());
+                }
+            } else {
+                try {
+                    date = dateFormat.parse(endDate.getText().toString() + " " + endTime.getText().toString());
+                    calendar.setTime(date);
+                } catch (Exception ex) {
+                    Log.d("Date pull error", "onCreateDialog: " + ex.getMessage());
+                }
+            }
+            int hour = calendar.get(Calendar.HOUR_OF_DAY);
+            int minute = calendar.get(Calendar.MINUTE);
+            TimePickerDialog tp = new TimePickerDialog(getActivity(), this, hour, minute,
                     DateFormat.is24HourFormat(getActivity()));
+            if (flag == FLAG_START_TIME) {
+                return tp;
+            } else {
+                // tp.updateTime(hour + 1, minute);
+                return tp;
+            }
+        }
+
+        public void setFlag(int i) {
+            flag = i;
         }
 
         public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-            // Do something with the time chosen by the user
+            Calendar calendar = Calendar.getInstance();
+            Date startDateTimeTemp;
+            Date endDateTimeTemp;
+            SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm");
             String min = String.format("%02d", minute);
+            String hou = String.format("%02d", hourOfDay);
 
-            String time = hourOfDay + ":" + min;
+            String time = hou + ":" + min;
+            if (flag == FLAG_START_TIME) {
+                try {
+                    startDateTimeTemp = dateFormat.parse(startDate.getText().toString() + " " + hourOfDay + ":" + minute);
+                    endDateTimeTemp = dateFormat.parse(endDate.getText().toString() + " " + endTime.getText().toString());
+                    Log.d("StartDate", "onTimeSet: " + startDateTimeTemp);
+                    Log.d("EndDate", "onTimeSet: " + endDateTimeTemp);
+                    if (startDateTimeTemp.compareTo(endDateTimeTemp) > 0 || startDateTimeTemp.compareTo(endDateTimeTemp) == 0) {
+                        startTime.setText(time);
+                        if (hourOfDay != 23) {
+                            String endhou = String.format("%02d", (hourOfDay + 1));
+                            String time2 = endhou + ":" + min;
+                            endTime.setText(time2);
+                            return;
+                        }else{
+                            Calendar c = Calendar.getInstance();
+                            c.setTime(endDateTimeTemp);
+                            c.add(Calendar.DATE, 1);
+                            SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
+                            endDate.setText(format.format(c.getTime()));
+                            String time2 = "00" + ":" + min;
+                            endTime.setText(time2);
+                            return;
+                        }
+                    }
+                } catch (Exception ex) {
+                    Log.d("Date pull error", "onCreateDialog: " + ex.getMessage());
+                }
+                startTime.setText(time);
+            } else if (flag == FLAG_END_TIME) {
+                try {
+                    startDateTimeTemp = dateFormat.parse(startDate.getText().toString() + " " + startTime.getText().toString());
+                    endDateTimeTemp = dateFormat.parse(endDate.getText().toString() + " " + hourOfDay + ":" + minute);
+                    Log.d("StartDate", "onTimeSet: " + startDateTimeTemp);
+                    Log.d("EndDate", "onTimeSet: " + endDateTimeTemp);
+                    if (startDateTimeTemp.compareTo(endDateTimeTemp) > 0 || startDateTimeTemp.compareTo(endDateTimeTemp) == 0) {
+                        if (hourOfDay != 0) {
+                            endTime.setText(time);
+                            String endhou = String.format("%02d", (hourOfDay - 1));
+                            String time2 = endhou + ":" + min;
+                            startTime.setText(time2);
+                        }else{
+                            Calendar c = Calendar.getInstance();
+                            c.setTime(startDateTimeTemp);
+                            c.add(Calendar.DATE, -1);
+                            SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
+                            startDate.setText(format.format(c.getTime()));
+                            String time2 = "23" + ":" + min;
+                            startTime.setText(time2);
+                            return;
+                        }
+                    }
+                } catch (Exception ex) {
+                    Log.d("Date pull error", "onCreateDialog: " + ex.getMessage());
+                }
+                endTime.setText(time);
+            }
 
-//            homeStartTime.setText(time);
-            endTime.setText(time);
         }
     }
-    /////////////////////////////////////////// date and time picker fragments end///////////////////////////////////////////////
+
+
+    ///////////////////////////////////////////////////// date and time picker fragments end/////////////////////////////////////////////////////////
 
 
     // class  to read  NDEF recorn from the nfc device/tag/////////////////////////
@@ -642,12 +788,12 @@ public class SelectLocationToReserve extends FragmentActivity {
                                 // set the map marker at the location of the parking
                                 MarkerOptions custom = new MarkerOptions().position(new LatLng(recognisedLocation.getLatitude(), recognisedLocation.getLongitude()))
                                         .title("" + recognisedLocation.getDescription())
-                                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
+                                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.marker));
 
                                 googleMap.addMarker(custom);
 
                                 // set the camera to the location plotted on map
-                                CameraPosition cameraPosition = new CameraPosition.Builder().target(new LatLng(recognisedLocation.getLatitude(), recognisedLocation.getLongitude())).zoom(15.0f).build();
+                                CameraPosition cameraPosition = new CameraPosition.Builder().target(new LatLng(recognisedLocation.getLatitude(), recognisedLocation.getLongitude())).zoom(13.0f).build();
                                 CameraUpdate cameraUpdate = CameraUpdateFactory.newCameraPosition(cameraPosition);
                                 googleMap.moveCamera(cameraUpdate);
                                 googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
