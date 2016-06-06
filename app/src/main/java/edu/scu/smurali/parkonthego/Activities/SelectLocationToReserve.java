@@ -53,6 +53,7 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import edu.scu.smurali.parkonthego.ParkOnTheGo;
 import edu.scu.smurali.parkonthego.R;
 import edu.scu.smurali.parkonthego.retrofit.reponses.LocationData;
@@ -144,8 +145,25 @@ public class SelectLocationToReserve extends FragmentActivity {
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(SelectLocationToReserve.this,HomeScreenActivity.class);
-                startActivity(intent);
+                new SweetAlertDialog(SelectLocationToReserve.this, SweetAlertDialog.WARNING_TYPE)
+                        .setTitleText("Abort the Search??")
+                        .setConfirmText("Yes")
+                        .setCancelText("Cancel")
+                        .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                            @Override
+                            public void onClick(SweetAlertDialog sweetAlertDialog) {
+                                sweetAlertDialog.hide();
+                            }
+                        })
+                        .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                            @Override
+                            public void onClick(SweetAlertDialog sDialog) {
+                                sDialog.dismissWithAnimation();
+                                startActivity(new Intent(SelectLocationToReserve.this, HomeScreenActivity.class));
+                            }
+                        })
+                        .show();
+
             }
         });
 
