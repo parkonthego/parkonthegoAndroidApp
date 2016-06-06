@@ -146,14 +146,14 @@ public class ReservationsActivity extends AppCompatActivity
                 }
 
 
-                if(childPosition==1)
-                {
-                    // Start the reservation
-                    Intent intent = new Intent(ReservationsActivity.this, StartReservationActivity.class);
-                    startActivity(intent);
-                }
+//                if(childPosition==1)
+//                {
+//                    // Start the reservation
+//                    Intent intent = new Intent(ReservationsActivity.this, StartReservationActivity.class);
+//                    startActivity(intent);
+//                }
 
-                if(childPosition==2)
+                if(childPosition==1)
                 {
                     // Have to delete the reservation
                     String desc = listDataHeader.get(groupPosition);
@@ -173,7 +173,7 @@ public class ReservationsActivity extends AppCompatActivity
 
                 }
 
-                if(childPosition==3)
+                if(childPosition==2)
                 {
                     // Have to Edit the reservation
                     // get the reservation details
@@ -283,7 +283,7 @@ public class ReservationsActivity extends AppCompatActivity
             List<String> reservationOption = new ArrayList<String>();
 
             reservationOption.add("Direction");
-            reservationOption.add("Start");
+           // reservationOption.add("Start");
             reservationOption.add("Cancel");
             reservationOption.add("Edit");
 
