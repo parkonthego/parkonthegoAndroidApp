@@ -122,7 +122,7 @@ public class EditReservationActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         final LatLng location = (LatLng) intent.getExtras().get("ltdLng");
-        final String title = intent.getExtras().getString("title");
+        final double priceOfParking = intent.getExtras().getDouble("price");
         final LatLng searchedLocation = (LatLng) intent.getExtras().get("searchedLocation");
         final String searchedLocationAddress = intent.getStringExtra("searchedLocationAddress");
         final ReservationData reservationData = (ReservationData)intent.getSerializableExtra("reservationData");
@@ -295,7 +295,9 @@ public class EditReservationActivity extends AppCompatActivity {
                 reservationData.getParkingId();
                 reservationData.getUserId();
                 String startDateTimeString =  startDate.getText().toString()+ " " +startTime.getText().toString();
-                String endDateTimeString =  endDate.getText().toString()+ " " +endDate.getText().toString();
+                String endDateTimeString =  endDate.getText().toString()+ " " +endTime.getText().toString();
+                Log.d("ERS", "onClick: " + sDateTime + " "+ eDateTime);
+                Log.d("ERS", "Edit reservation: " + startDateTimeString + " "+endDateTimeString);
                 Double hours = ParkOnTheGo.getInstance().getDateTimeDiff(startDateTimeString, endDateTimeString);
                 double totalPrice = new Double(hours * reservationData.getPrice());
 
@@ -400,7 +402,7 @@ public class EditReservationActivity extends AppCompatActivity {
             // Use the current date as the default date in the picker
             final Calendar c = Calendar.getInstance();
             int year = c.get(Calendar.YEAR);
-            int month = c.get(Calendar.MONTH);
+            int month = c.get(Calendar.MONTH) + 1 ;
             int day = c.get(Calendar.DAY_OF_MONTH);
 
             // Create a new instance of DatePickerDialog and return it
@@ -434,7 +436,7 @@ public class EditReservationActivity extends AppCompatActivity {
             // Use the current date as the default date in the picker
             final Calendar c = Calendar.getInstance();
             int year = c.get(Calendar.YEAR);
-            int month = c.get(Calendar.MONTH);
+            int month = c.get(Calendar.MONTH) + 1;
             int day = c.get(Calendar.DAY_OF_MONTH);
 
             // Create a new instance of DatePickerDialog and return it
@@ -530,6 +532,7 @@ public class EditReservationActivity extends AppCompatActivity {
                 public void onResponse(Call<ReservationUpdateResponse> call,
                                        Response<ReservationUpdateResponse> response) {
                     //ParkOnTheGo.getInstance().hideProgressDialog();
+                    Log.d("Edit reponse", "onResponse: "+response.code()+response.message()+response.body().getSuccess());
                     if (response.isSuccessful()) {
                         parseReservationUpdateResponse(response.body());
                     }
@@ -566,6 +569,7 @@ public class EditReservationActivity extends AppCompatActivity {
 
 
         } else {
+
 
         }
     }
