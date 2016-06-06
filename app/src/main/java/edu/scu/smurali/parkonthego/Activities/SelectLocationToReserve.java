@@ -129,6 +129,8 @@ public class SelectLocationToReserve extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(layout.activity_select_location_to_reserve);
 
+
+
         Intent intent = getIntent();
         final LatLng location = (LatLng) intent.getExtras().get("ltdLng");
         final String title = intent.getExtras().getString("title");
