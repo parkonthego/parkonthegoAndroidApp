@@ -107,14 +107,14 @@ public class SettingActivity extends AppCompatActivity
         }
 
 
-        changePassword = (TextView) findViewById(R.id.settingChangePassword);
-
-        changePassword.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
+//        changePassword = (TextView) findViewById(R.id.settingChangePassword);
+//
+//        changePassword.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//            }
+//        });
 
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -286,6 +286,7 @@ public class SettingActivity extends AppCompatActivity
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_save) {
             validator.validate();
+            //finish();
         }
 
         return super.onOptionsItemSelected(item);

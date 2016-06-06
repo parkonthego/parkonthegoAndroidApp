@@ -726,7 +726,7 @@ public class HomeScreenActivity extends AppCompatActivity
 
             final int MY_PERMISSIONS_REQUEST_CALL_PHONE = 1;
 
-            Intent callIntent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:+1 669 220 8549"));
+
 
             if (ActivityCompat.checkSelfPermission(HomeScreenActivity.this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
 
@@ -752,8 +752,9 @@ public class HomeScreenActivity extends AppCompatActivity
 
 
             }
+            Intent callIntent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:+1 669 220 8549"));
             startActivity(callIntent);
-            finish();
+
 
 
 

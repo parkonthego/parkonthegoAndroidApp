@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -24,6 +26,7 @@ import edu.scu.smurali.parkonthego.retrofit.reponses.ReservationCfnResponse;
 import edu.scu.smurali.parkonthego.retrofit.reponses.SearchData;
 import edu.scu.smurali.parkonthego.retrofit.services.ReservationServices;
 import edu.scu.smurali.parkonthego.util.PreferencesManager;
+import mehdi.sakout.fancybuttons.FancyButton;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -33,7 +36,8 @@ public class ConfirmationActivity extends AppCompatActivity {
     private TextView confirmationLocationTextView;
     private String selectedLocation;
     private String startDateTime, endDateTime;
-    private Button cfnReserveButton;
+  //  private Button cfnReserveButton;
+    private FancyButton cfnReserveButton;
     private Context mContext;
     private SearchData locationObject;
     private TextView confirmationStartDateTextView;
@@ -45,6 +49,7 @@ public class ConfirmationActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_confirmation);
+
         try {
             ActionBar actionBar = getSupportActionBar();
             actionBar.setTitle("Confirmation Page");
@@ -57,7 +62,9 @@ public class ConfirmationActivity extends AppCompatActivity {
             Log.d("Confirmation:", "onCreate: Null pointer in action bar " + ex.getMessage());
         }
 
-        cfnReserveButton = (Button) findViewById(R.id.confirmationReserveButton);
+       // cfnReserveButton = (Button) findViewById(R.id.confirmationReserveButton);
+
+        cfnReserveButton =(FancyButton) findViewById(R.id.confirmationReserveButton);
 
 
 //        ////////////////////////////////////////////////testing varun raparla/////////////////////////////////////////////////////////////////////////////
@@ -170,6 +177,30 @@ public class ConfirmationActivity extends AppCompatActivity {
 
         }
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.confirmation, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_cancel) {
+            Intent intent = new Intent(ConfirmationActivity.this,HomeScreenActivity.class);
+            startActivity(intent);
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
 
 }
 

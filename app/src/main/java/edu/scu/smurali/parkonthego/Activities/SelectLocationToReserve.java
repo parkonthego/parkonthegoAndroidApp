@@ -59,6 +59,7 @@ import edu.scu.smurali.parkonthego.retrofit.reponses.LocationData;
 import edu.scu.smurali.parkonthego.retrofit.reponses.LocationResponse;
 import edu.scu.smurali.parkonthego.retrofit.reponses.SearchData;
 import edu.scu.smurali.parkonthego.retrofit.services.LocationServices;
+import mehdi.sakout.fancybuttons.FancyButton;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -75,12 +76,14 @@ public class SelectLocationToReserve extends FragmentActivity {
     private static TextView startTime;
     private static TextView endDate;
     private static TextView endTime;
-    public LocationData recognisedLocation;
+    LocationData recognisedLocation;
 
     private MapFragment mSupportMapFragment;
     private NfcAdapter mNfcAdapter;
     private TextView selectLocation, price;
-    private Button selectLocationReserveButton;
+   // private Button selectLocationReserveButton;
+    private FancyButton selectLocationReserveButton;
+    private FancyButton cancelButton;
     private Context mContext;
     private String sDateTime = "", eDateTime = "";
     private String selectedLocation;
@@ -126,6 +129,8 @@ public class SelectLocationToReserve extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(layout.activity_select_location_to_reserve);
 
+
+
         Intent intent = getIntent();
         final LatLng location = (LatLng) intent.getExtras().get("ltdLng");
         final String title = intent.getExtras().getString("title");
@@ -135,6 +140,14 @@ public class SelectLocationToReserve extends FragmentActivity {
         Log.d("SelectionLocation json", "onCreate: " + selectedLocation);
         selectLocation = (TextView) findViewById(R.id.selectLocation);
         price = (TextView) findViewById(id.pricePerHour);
+        cancelButton = (FancyButton)findViewById(id.selectLocationCancelButton);
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(SelectLocationToReserve.this,HomeScreenActivity.class);
+                startActivity(intent);
+            }
+        });
 
 // date and time pickers////////////////////////////////////////////////////////////
 
@@ -300,7 +313,9 @@ public class SelectLocationToReserve extends FragmentActivity {
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
 
         // reserve button
-        selectLocationReserveButton = (Button) findViewById(R.id.selectLocationReserveButton);
+        //selectLocationReserveButton = (Button) findViewById(R.id.selectLocationReserveButton);
+
+        selectLocationReserveButton = (FancyButton) findViewById(R.id.selectLocationReserveButton);
 
         selectLocationReserveButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -675,6 +690,7 @@ public class SelectLocationToReserve extends FragmentActivity {
 
                         // ParkOnTheGo.getInstance().hideProgressDialog();
                         // ParkOnTheGo.getInstance().handleError(throwable);
+                        Log.d("varun", "onFailure: " + call);
                     }
                 });
             } else {
