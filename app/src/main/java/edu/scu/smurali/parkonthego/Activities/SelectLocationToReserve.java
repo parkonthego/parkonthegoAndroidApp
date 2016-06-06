@@ -675,6 +675,7 @@ public class SelectLocationToReserve extends FragmentActivity {
 
                         // ParkOnTheGo.getInstance().hideProgressDialog();
                         // ParkOnTheGo.getInstance().handleError(throwable);
+                        Log.d("varun", "onFailure: " + call);
                     }
                 });
             } else {
