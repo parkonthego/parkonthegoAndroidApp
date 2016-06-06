@@ -53,6 +53,7 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import edu.scu.smurali.parkonthego.ParkOnTheGo;
 import edu.scu.smurali.parkonthego.R;
 import edu.scu.smurali.parkonthego.retrofit.reponses.ProfileResponse;
@@ -464,7 +465,19 @@ public class HomeScreenActivity extends AppCompatActivity
                 if (searchedLatLng == null) {
                     String message = " please select the destination adddress to find parking";
                     String title = " Select Location";
-                    ParkOnTheGo.getInstance().showAlert(HomeScreenActivity.this, message, title);
+//                    ParkOnTheGo.getInstance().showAlert(HomeScreenActivity.this, message, title);
+                    new SweetAlertDialog(HomeScreenActivity.this, SweetAlertDialog.ERROR_TYPE)
+                            .setTitleText("Please select a location")
+                            .setConfirmText("Ok")
+                            .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                                @Override
+                                public void onClick(SweetAlertDialog sDialog) {
+                                    sDialog.dismissWithAnimation();
+                                    //startActivity(new Intent(HomeScreenActivity.this, HomeScreenActivity.class));
+                                }
+                            })
+                            .show();
+
                 } else {
                     validator.validate();
 
@@ -472,6 +485,7 @@ public class HomeScreenActivity extends AppCompatActivity
 
             }
         });
+
 
 
 
