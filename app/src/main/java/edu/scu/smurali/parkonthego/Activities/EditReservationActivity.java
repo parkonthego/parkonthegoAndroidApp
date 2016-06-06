@@ -64,6 +64,7 @@ import edu.scu.smurali.parkonthego.retrofit.reponses.ReservationUpdateResponse;
 import edu.scu.smurali.parkonthego.retrofit.reponses.SearchData;
 import edu.scu.smurali.parkonthego.retrofit.services.LocationServices;
 import edu.scu.smurali.parkonthego.retrofit.services.ReservationServices;
+import mehdi.sakout.fancybuttons.FancyButton;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -105,7 +106,7 @@ public class EditReservationActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_select_location_to_reserve);
+        setContentView(R.layout.activity_edit_reservation);
 
         try {
             ActionBar actionBar = getSupportActionBar();

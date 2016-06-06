@@ -42,6 +42,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
@@ -314,6 +315,18 @@ public class SelectLocationToReserve extends FragmentActivity {
                                     @Override
                                     public void onMapClick(LatLng latLng) {
                                         ////////////////////////////////////////////////////////////////
+                                    }
+                                });
+
+                                googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+                                    @Override
+                                    public boolean onMarkerClick(Marker marker) {
+//                                        return true;
+                                        Uri gmmIntentUri = Uri.parse("google.streetview:cbll="+marker.getPosition().latitude+","+marker.getPosition().longitude+"&cbp=0,30,0,0,-15");
+                                        Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+                                        mapIntent.setPackage("com.google.android.apps.maps");
+                                        startActivity(mapIntent);
+                                        return true;
                                     }
                                 });
 

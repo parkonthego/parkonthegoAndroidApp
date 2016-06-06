@@ -141,19 +141,28 @@ public class ReservationsActivity extends AppCompatActivity
 
                 if(childPosition==0)
                 {
-                   // Direction
-                    // Redirect to google map code
+                    String desc = listDataHeader.get(groupPosition);
+                    ReservationData clickedReservation = reservationListMap.get(desc);
+
+                    Uri gmmIntentUri = Uri.parse("google.navigation:q="+clickedReservation.getDescription());
+                    Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+                    mapIntent.setPackage("com.google.android.apps.maps");
+                    startActivity(mapIntent);
                 }
 
 
-//                if(childPosition==1)
-//                {
-//                    // Start the reservation
-//                    Intent intent = new Intent(ReservationsActivity.this, StartReservationActivity.class);
-//                    startActivity(intent);
-//                }
-
                 if(childPosition==1)
+                {
+                    String desc = listDataHeader.get(groupPosition);
+                    ReservationData clickedReservation = reservationListMap.get(desc);
+                    //                  ///////////////////////street view////////////////////
+                    Uri gmmIntentUri = Uri.parse("google.streetview:cbll="+clickedReservation.getLatitude()+","+clickedReservation.getLongitude()+"&cbp=0,30,0,0,-15");
+                    Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+                    mapIntent.setPackage("com.google.android.apps.maps");
+                    startActivity(mapIntent);
+                }
+
+                if(childPosition==3)
                 {
                     // Have to delete the reservation
                     String desc = listDataHeader.get(groupPosition);
@@ -281,10 +290,10 @@ public class ReservationsActivity extends AppCompatActivity
 
             List<String> reservationOption = new ArrayList<String>();
 
-            reservationOption.add("Direction");
-           // reservationOption.add("Start");
-            reservationOption.add("Cancel");
-            reservationOption.add("Edit");
+            reservationOption.add("Directions");
+            reservationOption.add("Street View");
+            reservationOption.add("Edit Reservation");
+            reservationOption.add("Cancel Reservation");
 
             List<ReservationData> reservationsData = response.getData();
             for (ReservationData rev : reservationsData) {
