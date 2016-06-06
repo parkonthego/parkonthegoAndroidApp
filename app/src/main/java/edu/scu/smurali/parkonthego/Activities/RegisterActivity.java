@@ -20,6 +20,7 @@ import edu.scu.smurali.parkonthego.R;
 import edu.scu.smurali.parkonthego.retrofit.reponses.SignUpResponse;
 import edu.scu.smurali.parkonthego.retrofit.services.UserServices;
 import edu.scu.smurali.parkonthego.util.PreferencesManager;
+import mehdi.sakout.fancybuttons.FancyButton;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -28,7 +29,8 @@ public class RegisterActivity extends AppCompatActivity {
 
     private Context mContext;
     private EditText regFirstName, regLastName, regEmail, regPassword, regCfnPassword;
-    private Button regButton;
+   // private Button regButton;
+    private FancyButton regButton;
 
 
     @Override
@@ -48,7 +50,8 @@ public class RegisterActivity extends AppCompatActivity {
             this.regPassword = (EditText) findViewById(R.id.regPassword);
             this.regCfnPassword = (EditText) findViewById(R.id.regCfnPassword);
 
-            this.regButton = (Button) findViewById(R.id.regRegisterButton);
+          //  this.regButton = (Button) findViewById(R.id.regRegisterButton);
+            this.regButton = (FancyButton) findViewById(R.id.regRegisterButton);
 
             this.regButton.setOnClickListener(new View.OnClickListener() {
                 @Override

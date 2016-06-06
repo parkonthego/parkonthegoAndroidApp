@@ -107,14 +107,14 @@ public class SettingActivity extends AppCompatActivity
         }
 
 
-        changePassword = (TextView) findViewById(R.id.settingChangePassword);
-
-        changePassword.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
+//        changePassword = (TextView) findViewById(R.id.settingChangePassword);
+//
+//        changePassword.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//            }
+//        });
 
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

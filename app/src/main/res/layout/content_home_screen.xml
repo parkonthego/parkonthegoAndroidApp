@@ -226,10 +226,12 @@
         android:id="@+id/currentLocationButton"
         android:layout_above="@+id/searchParkingLocation"
         android:layout_centerHorizontal="true"
-        android:background="#66CCFF"
-        android:textColor="#FFFFFF"
+        android:background="#FFFFFF"
+        android:textColor="#008888"
         android:layout_marginBottom="15dp"
         android:layout_marginLeft="75dp" />
+
+
 
        </LinearLayout>
 
