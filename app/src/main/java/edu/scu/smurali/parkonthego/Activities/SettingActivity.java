@@ -410,11 +410,22 @@ public class SettingActivity extends AppCompatActivity
 
     private void parseUpdateProfileResponse(UpdateProfileResponse response) {
         if (response.getSuccess() == true) {
-            Toast.makeText(getApplicationContext(), "Profile Updated" + response.getSuccess(), Toast.LENGTH_SHORT).show();
+       //     Toast.makeText(getApplicationContext(), "Profile Updated" + response.getSuccess(), Toast.LENGTH_SHORT).show();
             pm.updateFirstName(firstName.getText().toString());
             pm.updateLastName(lastName.getText().toString());
             pm.updateEmail(email.getText().toString());
             isDataChanged = false;
+            new SweetAlertDialog(this, SweetAlertDialog.SUCCESS_TYPE)
+                    .setTitleText("Profile saved")
+                    .setConfirmText("Ok")
+                    .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                        @Override
+                        public void onClick(SweetAlertDialog sDialog) {
+                            sDialog.dismissWithAnimation();
+                            startActivity(new Intent(SettingActivity.this, HomeScreenActivity.class));
+                        }
+                    })
+                    .show();
         } else {
             Toast.makeText(getApplicationContext(), "Update failed" + response.getSuccess(), Toast.LENGTH_SHORT).show();
         }

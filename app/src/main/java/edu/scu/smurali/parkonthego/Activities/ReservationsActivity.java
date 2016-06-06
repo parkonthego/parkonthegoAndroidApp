@@ -40,6 +40,7 @@ import java.util.List;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import edu.scu.smurali.parkonthego.ParkOnTheGo;
 import edu.scu.smurali.parkonthego.R;
+import edu.scu.smurali.parkonthego.retrofit.reponses.LoginData;
 import edu.scu.smurali.parkonthego.retrofit.reponses.ReservationCfnResponse;
 import edu.scu.smurali.parkonthego.retrofit.reponses.ReservationData;
 import edu.scu.smurali.parkonthego.retrofit.reponses.ReservationDeleteResponse;
@@ -183,7 +184,7 @@ public class ReservationsActivity extends AppCompatActivity
 
                     Intent intent = new Intent(ReservationsActivity.this, EditReservationActivity.class);
                     intent.putExtra("ltdLng", new LatLng(clickedReservation.getLatitude(),clickedReservation.getLongitude()));
-                    intent.putExtra("title", clickedReservation.getPrice());
+                    intent.putExtra("price", clickedReservation.getPrice());
                    intent.putExtra("searchedLocation", new LatLng(clickedReservation.getLatitude(),clickedReservation.getLongitude()));
                     intent.putExtra("searchedLocationAddress", clickedReservation.getDescription());
                     intent.putExtra("reservationData", (Serializable) clickedReservation);
@@ -246,9 +247,17 @@ public class ReservationsActivity extends AppCompatActivity
                 public void onResponse(Call<ReservationResponse> call,
                                        Response<ReservationResponse> response) {
                     //ParkOnTheGo.getInstance().hideProgressDialog();
+                    Log.d("Reservation parse", "parseResponse: "+response.code());
                     if (response.isSuccessful()) {
                         parseResponse(response.body());
+                    }else if(response.code() == 404){
+                        listDataHeader = new ArrayList<String>();
+                        listDataChild = new HashMap<String, List<String>>();
+                        listAdapter = new ExpandableListAdapter(mContext, listDataHeader, listDataChild);
+                        expListView.setAdapter(listAdapter);
+                        listAdapter.notifyDataSetChanged();
                     }
+
                 }
 
                 @Override
@@ -284,18 +293,23 @@ public class ReservationsActivity extends AppCompatActivity
                         rev.getStartingTime() + " " + rev.getEndTime();
                 listDataChild.put(temp, reservationOption);
                 listDataHeader.add(temp);
+                reservationListMap.put(temp,rev);
 
             }
             listAdapter = new ExpandableListAdapter(this, listDataHeader, listDataChild);
 
             //  setting list adapter
             expListView.setAdapter(listAdapter);
+            listAdapter.notifyDataSetChanged();
 
 
 
 
         } else {
-
+            listDataHeader = new ArrayList<String>();
+            listDataChild = new HashMap<String, List<String>>();
+            expListView.setAdapter(listAdapter);
+            listAdapter.notifyDataSetChanged();
         }
 
 
