@@ -96,7 +96,9 @@ public class HomeScreenActivity extends AppCompatActivity
     private String searchedAddress;
     private Context mContext;
     private String sDateTime, eDateTime;
-    private Button currentLocationButton;
+   // private Button currentLocationButton;
+
+    private FancyButton currentLocationButton;
 
     private TextView navUserName;
     private TextView navEmail;
@@ -145,7 +147,10 @@ public class HomeScreenActivity extends AppCompatActivity
         locationList = new ArrayList<SearchData>();
         final PreferencesManager pm = PreferencesManager.getInstance(mContext);
         userId = pm.getUserId();
-        currentLocationButton = (Button) findViewById(R.id.currentLocationButton);
+        //currentLocationButton = (Button) findViewById(R.id.currentLocationButton);
+
+        currentLocationButton = (FancyButton) findViewById(R.id.currentLocationButton);
+
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 /////////////////////////////////// permission checks start////////////////////////////////////////////////////////
 

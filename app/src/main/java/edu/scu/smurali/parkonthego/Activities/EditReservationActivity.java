@@ -88,7 +88,8 @@ public class EditReservationActivity extends AppCompatActivity {
     private MapFragment mSupportMapFragment;
     private NfcAdapter mNfcAdapter;
     private TextView selectLocation, price;
-    private Button selectLocationReserveButton;
+//    private Button selectLocationReserveButton;
+      private FancyButton selectLocationReserveButton;
     private Context mContext;
     private String sDateTime = "", eDateTime = "";
     private String selectedLocation;
@@ -295,7 +296,9 @@ public class EditReservationActivity extends AppCompatActivity {
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
 
 
-        selectLocationReserveButton = (Button)findViewById(R.id.selectLocationReserveButton);
+      //  selectLocationReserveButton = (Button)findViewById(R.id.selectLocationReserveButton);
+
+        selectLocationReserveButton = (FancyButton) findViewById(R.id.selectLocationReserveButton);
 
         selectLocationReserveButton.setOnClickListener(new View.OnClickListener() {
             @Override
