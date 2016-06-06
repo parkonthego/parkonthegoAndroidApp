@@ -170,6 +170,10 @@ public class ConfirmationActivity extends AppCompatActivity {
 
 
         } else {
+            new SweetAlertDialog(this, SweetAlertDialog.ERROR_TYPE)
+                    .setTitleText("Opps !")
+                    .setContentText("Reservation is conflicted with other reservation")
+                    .show();
 
         }
     }

@@ -585,6 +585,9 @@ public class HomeScreenActivity extends AppCompatActivity
         String endTimeValue = endTime.getText().toString();
         sDateTime = startDateValue + " " + startTimeValue;
         eDateTime = endDateValue + " " + endTimeValue;
+        Log.d("Data for getlocation", "onValidationSucceeded: "+sDateTime);
+        Log.d("Data for getlocation", "onValidationSucceeded: "+eDateTime);
+
 
 
         searchLocationsNearMe(userId, searchedLatLng.latitude, searchedLatLng.longitude, 5, sDateTime, eDateTime);
