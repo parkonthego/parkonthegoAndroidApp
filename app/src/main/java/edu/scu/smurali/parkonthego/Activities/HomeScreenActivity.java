@@ -48,8 +48,10 @@ import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
 import com.mobsandgeeks.saripaar.annotation.NotEmpty;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -85,7 +87,7 @@ public class HomeScreenActivity extends AppCompatActivity
     PlaceAutocompleteFragment autocompleteFragment;
     ArrayList<SearchData> locationList;
     ImageButton startDateButton, endDateButton, startTimeButton, endTimeButton;
-   // private Button searchParkingLocations;
+    // private Button searchParkingLocations;
 
     private FancyButton searchParkingLocations;
 
@@ -102,10 +104,10 @@ public class HomeScreenActivity extends AppCompatActivity
     protected Context context;
     private Double latitude, longitude;
 
-
-
-
     PreferencesManager pm;
+
+
+    private DatePickerDialogFragment uDatePickerDialogFragment;
 
 
     @Override
@@ -114,6 +116,7 @@ public class HomeScreenActivity extends AppCompatActivity
         setContentView(R.layout.activity_home_screen);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        uDatePickerDialogFragment = new DatePickerDialogFragment();
 
         mContext = this;
         pm = PreferencesManager.getInstance(mContext);
@@ -140,7 +143,7 @@ public class HomeScreenActivity extends AppCompatActivity
         locationList = new ArrayList<SearchData>();
         final PreferencesManager pm = PreferencesManager.getInstance(mContext);
         userId = pm.getUserId();
-        currentLocationButton = (Button)findViewById(R.id.currentLocationButton);
+        currentLocationButton = (Button) findViewById(R.id.currentLocationButton);
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 /////////////////////////////////// permission checks start////////////////////////////////////////////////////////
 
@@ -310,17 +313,15 @@ public class HomeScreenActivity extends AppCompatActivity
         //////////////////////////////////// permision checks end/////////////////////////////////////////////////
 
 
-
-      // current location button//
+        // current location button//
         currentLocationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 updateLocation();
-                searchedLatLng = new LatLng(latitude,longitude);
-                searchedAddress =  getCompleteAddressString( latitude, longitude );
+                searchedLatLng = new LatLng(latitude, longitude);
+                searchedAddress = getCompleteAddressString(latitude, longitude);
                 autocompleteFragment.setText(searchedAddress);
-
 
 
             }
@@ -361,9 +362,9 @@ public class HomeScreenActivity extends AppCompatActivity
             @Override
             public void onClick(View v) {
 
-                DialogFragment newFragment = new StartDatePickerFragment();
+                uDatePickerDialogFragment.setFlag(DatePickerDialogFragment.FLAG_START_DATE);
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
-                newFragment.show(ft, "datePicker");
+                uDatePickerDialogFragment.show(ft, "datePicker");
             }
         });
 
@@ -371,9 +372,9 @@ public class HomeScreenActivity extends AppCompatActivity
             @Override
             public void onClick(View v) {
 
-                DialogFragment newFragment = new EndDatePickerFragment();
+                uDatePickerDialogFragment.setFlag(DatePickerDialogFragment.FLAG_END_DATE);
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
-                newFragment.show(ft, "datePicker");
+                uDatePickerDialogFragment.show(ft, "datePicker");
             }
         });
         startTime.setOnClickListener(new View.OnClickListener() {
@@ -402,9 +403,9 @@ public class HomeScreenActivity extends AppCompatActivity
             @Override
             public void onClick(View v) {
 
-                DialogFragment newFragment = new StartDatePickerFragment();
+                uDatePickerDialogFragment.setFlag(DatePickerDialogFragment.FLAG_START_DATE);
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
-                newFragment.show(ft, "datePicker");
+                uDatePickerDialogFragment.show(ft, "datePicker");
 
             }
         });
@@ -412,11 +413,13 @@ public class HomeScreenActivity extends AppCompatActivity
         endDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DialogFragment newFragment = new EndDatePickerFragment();
+                uDatePickerDialogFragment.setFlag(DatePickerDialogFragment.FLAG_END_DATE);
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
-                newFragment.show(ft, "datePicker");
+                uDatePickerDialogFragment.show(ft, "datePicker");
             }
         });
+
+        initDatePicker();
 
 
 ///////////////////////////// navigation bar//////////////////////////////////
@@ -454,9 +457,9 @@ public class HomeScreenActivity extends AppCompatActivity
 //        searchParkingLocations = (Button) findViewById(R.id.searchParkingLocation);
 
 
-         searchParkingLocations = (FancyButton)  findViewById(R.id.searchParkingLocation);
+        searchParkingLocations = (FancyButton) findViewById(R.id.searchParkingLocation);
 
-      // searchParkingLocations = (Button) findViewById(R.id.searchParkingLocation);
+        // searchParkingLocations = (Button) findViewById(R.id.searchParkingLocation);
 
         searchParkingLocations.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -474,7 +477,6 @@ public class HomeScreenActivity extends AppCompatActivity
         });
 
 
-
         //Get profile from server
         getProfile();
 
@@ -487,10 +489,9 @@ public class HomeScreenActivity extends AppCompatActivity
         navEmail.setText(pm.getEmail());
 
 
-
-
     }
-////////////////////update current location method////////////////////////////////////
+
+    ////////////////////update current location method////////////////////////////////////
     public void updateLocation() {
         if (ContextCompat.checkSelfPermission(HomeScreenActivity.this,
                 Manifest.permission.ACCESS_FINE_LOCATION)
@@ -517,19 +518,19 @@ public class HomeScreenActivity extends AppCompatActivity
                 // result of the request.
             }
         }
-            // get current locaation(last known location)
-            Location loc = locationManager.getLastKnownLocation(NETWORK_PROVIDER);
-            if (latitude != null && longitude != null) {
-               return;
-            }
+        // get current locaation(last known location)
+        Location loc = locationManager.getLastKnownLocation(NETWORK_PROVIDER);
+        if (latitude != null && longitude != null) {
+            return;
+        }
 
-            if (loc != null) {
-                latitude = loc.getLatitude();
-                longitude = loc.getLongitude();
-            } else {
-                latitude = null;
-                longitude = null;
-            }
+        if (loc != null) {
+            latitude = loc.getLatitude();
+            longitude = loc.getLongitude();
+        } else {
+            latitude = null;
+            longitude = null;
+        }
 
     }
     //////////////////// update method ends////////////////////////////////////////////////
@@ -562,7 +563,6 @@ public class HomeScreenActivity extends AppCompatActivity
     //////////////////////////// get address method ends///////////////////////////////////////////
 
 
-
     @Override
     public void onValidationSucceeded() {
         String startDateValue = startDate.getText().toString();
@@ -571,9 +571,8 @@ public class HomeScreenActivity extends AppCompatActivity
         String endTimeValue = endTime.getText().toString();
         sDateTime = startDateValue + " " + startTimeValue;
         eDateTime = endDateValue + " " + endTimeValue;
-        Log.d("Data for getlocation", "onValidationSucceeded: "+sDateTime);
-        Log.d("Data for getlocation", "onValidationSucceeded: "+eDateTime);
-
+        Log.d("Data for getlocation", "onValidationSucceeded: " + sDateTime);
+        Log.d("Data for getlocation", "onValidationSucceeded: " + eDateTime);
 
 
         searchLocationsNearMe(userId, searchedLatLng.latitude, searchedLatLng.longitude, 5, sDateTime, eDateTime);
@@ -716,7 +715,6 @@ public class HomeScreenActivity extends AppCompatActivity
         } else if (id == R.id.nav_settings) {
 
 
-
             Intent intent = new Intent(HomeScreenActivity.this, SettingActivity.class);
             startActivity(intent);
             finish();
@@ -725,7 +723,6 @@ public class HomeScreenActivity extends AppCompatActivity
         } else if (id == R.id.nav_call) {
 
             final int MY_PERMISSIONS_REQUEST_CALL_PHONE = 1;
-
 
 
             if (ActivityCompat.checkSelfPermission(HomeScreenActivity.this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
@@ -756,13 +753,6 @@ public class HomeScreenActivity extends AppCompatActivity
             startActivity(callIntent);
 
 
-
-
-
-
-
-
-
         } else if (id == R.id.nav_help) {
 
             Intent intent = new Intent(HomeScreenActivity.this, HelpActivity.class);
@@ -785,80 +775,102 @@ public class HomeScreenActivity extends AppCompatActivity
     }
 
 
-
 //////////////////////// date and time  picker fragments//////////////////////////////////////////
 
-    public static class StartDatePickerFragment extends DialogFragment
-            implements DatePickerDialog.OnDateSetListener {
-
-//        private TextView homeStartDate, homeEndDate;
-
-        public StartDatePickerFragment() {
+    //Ini date picker
+    public void initDatePicker() {
+        try {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+            Calendar cal = Calendar.getInstance();
+            startDate.setText(dateFormat.format(cal.getTime()));
+            endDate.setText(dateFormat.format(cal.getTime()));
+        } catch (Exception ex) {
+            Log.e("parse error init ", "onCreateDialog: "+ex.getMessage() );
         }
+    }
+
+    public static class DatePickerDialogFragment extends DialogFragment implements
+            DatePickerDialog.OnDateSetListener {
+        public static final int FLAG_START_DATE = 0;
+        public static final int FLAG_END_DATE = 1;
+
+        private int flag = 0;
 
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
 
-            // Use the current date as the default date in the picker
-            final Calendar c = Calendar.getInstance();
-            int year = c.get(Calendar.YEAR);
-            int month = c.get(Calendar.MONTH) + 1;
-            int day = c.get(Calendar.DAY_OF_MONTH);
-            Log.d("Start Date Dialog", "onCreateDialog: " + year + " " + month + " " + day);
+            SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+            Date date;
+            Calendar calendar = Calendar.getInstance();
+            if (flag == FLAG_START_DATE) {
+                try {
+                    date = dateFormat.parse(startDate.getText().toString());
+                    calendar.setTime(date);
+                } catch (Exception ex) {
+                    Log.d("Date pull error", "onCreateDialog: " + ex.getMessage());
+                }
+            } else {
+                try {
+                    date = dateFormat.parse(endDate.getText().toString());
+                    calendar.setTime(date);
+                } catch (Exception ex) {
+                    Log.d("Date pull error", "onCreateDialog: " + ex.getMessage());
+                }
+            }
 
-            // Create a new instance of DatePickerDialog and return it
-            return new DatePickerDialog(getActivity(), this, year, month, day);
+
+            int year = calendar.get(Calendar.YEAR);
+            int month = calendar.get(Calendar.MONTH);
+            int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+            DatePickerDialog dt = new DatePickerDialog(getActivity(), this, year, month, day);
+            if (flag == FLAG_START_DATE) {
+                Calendar cal = Calendar.getInstance();
+                DatePicker datePicker = dt.getDatePicker();
+                datePicker.setMinDate(cal.getTimeInMillis());
+                return dt;
+            } else {
+                SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+                Log.d("date1", "onDateChanged: " + startDate.getText().toString());
+                try {
+                    Date d = sdf.parse(startDate.getText().toString());
+                    DatePicker datePicker = dt.getDatePicker();
+                    Log.d("timestamp", "onDateChanged: " + d.getTime());
+                    datePicker.setMinDate(d.getTime());
+                } catch (Exception ex) {
+                    Log.d("Date parse error", "onCreateDialog: " + ex.getMessage());
+                }
+                return dt;
+            }
+
         }
 
-        public void onDateSet(DatePicker view, int year, int month, int day) {
-            // Do something with the date chosen by the user
-
-            //String date = month + "-" + day + "-" + "year";
-
-
-            startDate.setText(new StringBuilder().append(month).append("/")
-                    .append(day).append("/").append(year));
-
-
-        }
-    }
-    ///////////////////////////////////////////////////////////////////////////////////////
-
-    //////////////////////////////////////////////////////////////////////////////////////
-
-    public static class EndDatePickerFragment extends DialogFragment
-            implements DatePickerDialog.OnDateSetListener {
-
-//        private TextView homeStartDate, homeEndDate;
-
-        public EndDatePickerFragment() {
+        public void setFlag(int i) {
+            flag = i;
         }
 
         @Override
-        public Dialog onCreateDialog(Bundle savedInstanceState) {
-
-            // Use the current date as the default date in the picker
-            final Calendar c = Calendar.getInstance();
-            int year = c.get(Calendar.YEAR);
-            int month = c.get(Calendar.MONTH) + 1;
-            int day = c.get(Calendar.DAY_OF_MONTH);
-
-            // Create a new instance of DatePickerDialog and return it
-            return new DatePickerDialog(getActivity(), this, year, month, day);
-        }
-
-        public void onDateSet(DatePicker view, int year, int month, int day) {
-            // Do something with the date chosen by the user
-
-            //String date = month + "-" + day + "-" + "year";
-
-
-            endDate.setText(new StringBuilder().append(month).append("/")
-                    .append(day).append("/").append(year));
-
-
+        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+            Calendar calendar = Calendar.getInstance();
+            calendar.set(year, monthOfYear, dayOfMonth);
+            SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
+            if (flag == FLAG_START_DATE) {
+                try{
+                Date date1 = format.parse(format.format(calendar.getTime()));
+                Date date2 = format.parse(endDate.getText().toString());
+                    if(date1.compareTo(date2)>0){
+                        endDate.setText(format.format(calendar.getTime()));
+                    }
+                } catch (Exception ex) {
+                    Log.d("Date parse error", "onDateSet: " + ex.getMessage());
+                }
+                startDate.setText(format.format(calendar.getTime()));
+            } else if (flag == FLAG_END_DATE) {
+                endDate.setText(format.format(calendar.getTime()));
+            }
         }
     }
+
     /////////////////////////////////////////////////////////////////////////////////
 
     ///////////////////////////////////////////////////////////////////////////////
@@ -961,16 +973,12 @@ public class HomeScreenActivity extends AppCompatActivity
             pm.updateFirstName(response.getData().getFirstName());
             pm.updateLastName(response.getData().getLastName());
             pm.updateEmail(response.getData().getEmail());
-            pm.updateUserName(response.getData().getFirstName()+" "+response.getData().getLastName());
+            pm.updateUserName(response.getData().getFirstName() + " " + response.getData().getLastName());
 
         } else {
 
         }
     }
-
-
-
-
 
 
 }
