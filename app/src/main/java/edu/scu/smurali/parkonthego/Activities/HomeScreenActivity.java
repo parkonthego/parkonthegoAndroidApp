@@ -61,6 +61,7 @@ import edu.scu.smurali.parkonthego.retrofit.reponses.SearchResponse;
 import edu.scu.smurali.parkonthego.retrofit.services.LocationServices;
 import edu.scu.smurali.parkonthego.retrofit.services.UserServices;
 import edu.scu.smurali.parkonthego.util.PreferencesManager;
+import mehdi.sakout.fancybuttons.FancyButton;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -84,7 +85,10 @@ public class HomeScreenActivity extends AppCompatActivity
     PlaceAutocompleteFragment autocompleteFragment;
     ArrayList<SearchData> locationList;
     ImageButton startDateButton, endDateButton, startTimeButton, endTimeButton;
-    private Button searchParkingLocations;
+   // private Button searchParkingLocations;
+
+    private FancyButton searchParkingLocations;
+
     private LatLng searchedLatLng;
     private String searchedAddress;
     private Context mContext;
@@ -447,7 +451,13 @@ public class HomeScreenActivity extends AppCompatActivity
         });
 
 
-        searchParkingLocations = (Button) findViewById(R.id.searchParkingLocation);
+//        searchParkingLocations = (Button) findViewById(R.id.searchParkingLocation);
+
+
+         searchParkingLocations = (FancyButton)  findViewById(R.id.searchParkingLocation);
+
+      // searchParkingLocations = (Button) findViewById(R.id.searchParkingLocation);
+
         searchParkingLocations.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
