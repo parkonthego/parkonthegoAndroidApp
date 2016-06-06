@@ -138,28 +138,9 @@ public class HomeScreenActivity extends AppCompatActivity
         userId = pm.getUserId();
         currentLocationButton = (Button)findViewById(R.id.currentLocationButton);
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-//        if (ActivityCompat.checkSelfPermission(HomeScreenActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-//            // TODO: Consider calling
-//            //    ActivityCompat#requestPermissions
-//            // here to request the missing permissions, and then overriding
-//            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-//            //                                          int[] grantResults)
-//            // to handle the case where the user grants the permission. See the documentation
-//            // for ActivityCompat#requestPermissions for more details.
-//           // return;
-//        }
-//        else {
-//
-//            // No explanation needed, we can request the permission.
-//
-//            ActivityCompat.requestPermissions(HomeScreenActivity.this,
-//                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-//                    100);
-//
-//            // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
-//            // app-defined int constant. The callback method gets the
-//            // result of the request.
-//        }
+/////////////////////////////////// permission checks start////////////////////////////////////////////////////////
+
+        //////////////fine location//////////////////////////////////////
         if (ContextCompat.checkSelfPermission(HomeScreenActivity.this,
                 Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
@@ -179,15 +160,13 @@ public class HomeScreenActivity extends AppCompatActivity
                 ActivityCompat.requestPermissions(HomeScreenActivity.this,
                         new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                         1);
-                ActivityCompat.requestPermissions(HomeScreenActivity.this,
-                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                        1);
 
                 // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
                 // app-defined int constant. The callback method gets the
                 // result of the request.
             }
         }
+        ////////////////////////course location///////////////////////////////////////////////////////////
         if (ContextCompat.checkSelfPermission(HomeScreenActivity.this,
                 Manifest.permission.ACCESS_COARSE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
@@ -207,23 +186,134 @@ public class HomeScreenActivity extends AppCompatActivity
                 ActivityCompat.requestPermissions(HomeScreenActivity.this,
                         new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
                         1);
-                ActivityCompat.requestPermissions(HomeScreenActivity.this,
-                        new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
-                        1);
+
 
                 // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
                 // app-defined int constant. The callback method gets the
                 // result of the request.
             }
         }
-        //locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,0,0,HomeScreenActivity.this);
+        ////////////////////////// internet///////////////////////////////////////////////////////
+        if (ContextCompat.checkSelfPermission(HomeScreenActivity.this,
+                Manifest.permission.INTERNET)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            // Should we show an explanation?
+            if (ActivityCompat.shouldShowRequestPermissionRationale(HomeScreenActivity.this,
+                    Manifest.permission.INTERNET)) {
+
+                // Show an expanation to the user *asynchronously* -- don't block
+                // this thread waiting for the user's response! After the user
+                // sees the explanation, try again to request the permission.
+
+            } else {
+
+                // No explanation needed, we can request the permission.
+
+                ActivityCompat.requestPermissions(HomeScreenActivity.this,
+                        new String[]{Manifest.permission.INTERNET},
+                        1);
+
+
+                // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
+                // app-defined int constant. The callback method gets the
+                // result of the request.
+            }
+        }
+
+        ////////////////////////////// call phone ///////////////////////////////////////////////
+        if (ContextCompat.checkSelfPermission(HomeScreenActivity.this,
+                Manifest.permission.CALL_PHONE)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            // Should we show an explanation?
+            if (ActivityCompat.shouldShowRequestPermissionRationale(HomeScreenActivity.this,
+                    Manifest.permission.CALL_PHONE)) {
+
+                // Show an expanation to the user *asynchronously* -- don't block
+                // this thread waiting for the user's response! After the user
+                // sees the explanation, try again to request the permission.
+
+            } else {
+
+                // No explanation needed, we can request the permission.
+
+                ActivityCompat.requestPermissions(HomeScreenActivity.this,
+                        new String[]{Manifest.permission.CALL_PHONE},
+                        1);
+
+
+                // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
+                // app-defined int constant. The callback method gets the
+                // result of the request.
+            }
+        }
+        //////////////////////////////////////nfc//////////////////////////////////////////////////////
+        if (ContextCompat.checkSelfPermission(HomeScreenActivity.this,
+                Manifest.permission.NFC)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            // Should we show an explanation?
+            if (ActivityCompat.shouldShowRequestPermissionRationale(HomeScreenActivity.this,
+                    Manifest.permission.NFC)) {
+
+                // Show an expanation to the user *asynchronously* -- don't block
+                // this thread waiting for the user's response! After the user
+                // sees the explanation, try again to request the permission.
+
+            } else {
+
+                // No explanation needed, we can request the permission.
+
+                ActivityCompat.requestPermissions(HomeScreenActivity.this,
+                        new String[]{Manifest.permission.NFC},
+                        1);
+
+
+                // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
+                // app-defined int constant. The callback method gets the
+                // result of the request.
+            }
+        }
+        /////////////////////////////////// write external storage///////////////////////////////////////////////////
+        if (ContextCompat.checkSelfPermission(HomeScreenActivity.this,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            // Should we show an explanation?
+            if (ActivityCompat.shouldShowRequestPermissionRationale(HomeScreenActivity.this,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+
+                // Show an expanation to the user *asynchronously* -- don't block
+                // this thread waiting for the user's response! After the user
+                // sees the explanation, try again to request the permission.
+
+            } else {
+
+                // No explanation needed, we can request the permission.
+
+                ActivityCompat.requestPermissions(HomeScreenActivity.this,
+                        new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                        1);
+
+
+                // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
+                // app-defined int constant. The callback method gets the
+                // result of the request.
+            }
+        }
+
+        //////////////////////////////////// permision checks end/////////////////////////////////////////////////
+
+
+
+      // current location button//
         currentLocationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+
                 updateLocation();
                 searchedLatLng = new LatLng(latitude,longitude);
-               // searchedAddress = place.getAddress().toString();
                 searchedAddress =  getCompleteAddressString( latitude, longitude );
                 autocompleteFragment.setText(searchedAddress);
 
@@ -233,6 +323,7 @@ public class HomeScreenActivity extends AppCompatActivity
         });
 
 
+//////////////////////date and time pickers/////////////////////////////////////
 
         startTimeButton = (ImageButton) findViewById(R.id.startTimeImageButton);
         endTimeButton = (ImageButton) findViewById(R.id.endTimeImageButton);
@@ -324,7 +415,7 @@ public class HomeScreenActivity extends AppCompatActivity
         });
 
 
-
+///////////////////////////// navigation bar//////////////////////////////////
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -334,7 +425,7 @@ public class HomeScreenActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
+///////////////////////// google search fragment////////////////////////////////////
         autocompleteFragment = (PlaceAutocompleteFragment)
                 getFragmentManager().findFragmentById(R.id.place_autocomplete_fragment);
         autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
@@ -389,7 +480,7 @@ public class HomeScreenActivity extends AppCompatActivity
 
 
     }
-
+////////////////////update current location method////////////////////////////////////
     public void updateLocation() {
         if (ContextCompat.checkSelfPermission(HomeScreenActivity.this,
                 Manifest.permission.ACCESS_FINE_LOCATION)
@@ -416,7 +507,7 @@ public class HomeScreenActivity extends AppCompatActivity
                 // result of the request.
             }
         }
-
+            // get current locaation(last known location)
             Location loc = locationManager.getLastKnownLocation(NETWORK_PROVIDER);
             if (latitude != null && longitude != null) {
                return;
@@ -431,6 +522,10 @@ public class HomeScreenActivity extends AppCompatActivity
             }
 
     }
+    //////////////////// update method ends////////////////////////////////////////////////
+
+
+    /////////////////////////convert lat ang long to readable address//////////////////////
     private String getCompleteAddressString(double LATITUDE, double LONGITUDE) {
         String strAdd = "";
         Geocoder geocoder = new Geocoder(this, Locale.getDefault());
@@ -454,6 +549,7 @@ public class HomeScreenActivity extends AppCompatActivity
         }
         return strAdd;
     }
+    //////////////////////////// get address method ends///////////////////////////////////////////
 
 
 
@@ -634,7 +730,7 @@ public class HomeScreenActivity extends AppCompatActivity
 
                     ActivityCompat.requestPermissions(HomeScreenActivity.this,
                             new String[]{Manifest.permission.CALL_PHONE},
-                            MY_PERMISSIONS_REQUEST_CALL_PHONE);
+                            1);
 
                     // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
                     // app-defined int constant. The callback method gets the
@@ -676,7 +772,7 @@ public class HomeScreenActivity extends AppCompatActivity
 
 
 
-
+//////////////////////// date and time  picker fragments//////////////////////////////////////////
 
     public static class StartDatePickerFragment extends DialogFragment
             implements DatePickerDialog.OnDateSetListener {
@@ -712,6 +808,9 @@ public class HomeScreenActivity extends AppCompatActivity
 
         }
     }
+    ///////////////////////////////////////////////////////////////////////////////////////
+
+    //////////////////////////////////////////////////////////////////////////////////////
 
     public static class EndDatePickerFragment extends DialogFragment
             implements DatePickerDialog.OnDateSetListener {
@@ -746,6 +845,9 @@ public class HomeScreenActivity extends AppCompatActivity
 
         }
     }
+    /////////////////////////////////////////////////////////////////////////////////
+
+    ///////////////////////////////////////////////////////////////////////////////
 
     public static class StartTimePickerFragment extends DialogFragment
             implements TimePickerDialog.OnTimeSetListener {
@@ -774,6 +876,9 @@ public class HomeScreenActivity extends AppCompatActivity
 //            homeEndTime.setText(time);
         }
     }
+    ///////////////////////////////////////////////////////////////////////////
+
+    //////////////////////////////////////////////////////////////////////////////
 
     public static class EndTimePickerFragment extends DialogFragment
             implements TimePickerDialog.OnTimeSetListener {
@@ -803,6 +908,8 @@ public class HomeScreenActivity extends AppCompatActivity
             endTime.setText(time);
         }
     }
+
+    ///////////////////////////////////////////////////// date and time picker fragments end/////////////////////////////////////////////////////////
 
     public void getProfile() {
 
