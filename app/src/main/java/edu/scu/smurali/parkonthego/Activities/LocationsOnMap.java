@@ -117,11 +117,11 @@ public class LocationsOnMap extends FragmentActivity implements OnMapReadyCallba
                     .title("" + price + " $/Hr").visible(true)
                     .icon(BitmapDescriptorFactory.fromResource(R.drawable.marker));
 
-//            mMap.addMarker(custom).showInfoWindow();
+          //  mMap.addMarker(custom).showInfoWindow();
 
             Marker mk = mMap.addMarker(custom);
 
-//            mk.showInfoWindow();
+           // mk.showInfoWindow();
 
             markerMap.put(mk, locationList.get(i));
 
@@ -177,6 +177,7 @@ public class LocationsOnMap extends FragmentActivity implements OnMapReadyCallba
             @Override
             public boolean onMarkerClick(Marker marker) {
                 return false;
+//
             }
         });
 

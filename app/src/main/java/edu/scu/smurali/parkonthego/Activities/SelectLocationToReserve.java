@@ -298,7 +298,8 @@ public class SelectLocationToReserve extends FragmentActivity {
                                 googleMap.addMarker(custom);
 
                                 googleMap.addMarker(new MarkerOptions().position(location)
-                                        .title("" + selectedLocationDescription));
+                                        .title("" + selectedLocationDescription)
+                                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.marker)));
 
 
                                 Polyline line = googleMap.addPolyline(new PolylineOptions()
@@ -306,7 +307,7 @@ public class SelectLocationToReserve extends FragmentActivity {
                                         .width(5)
                                         .color(Color.RED));
 
-                                CameraPosition cameraPosition = new CameraPosition.Builder().target(location).zoom(15.0f).build();
+                                CameraPosition cameraPosition = new CameraPosition.Builder().target(location).zoom(13.0f).build();
                                 CameraUpdate cameraUpdate = CameraUpdateFactory.newCameraPosition(cameraPosition);
                                 googleMap.moveCamera(cameraUpdate);
                                 googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
@@ -660,12 +661,12 @@ public class SelectLocationToReserve extends FragmentActivity {
                                 // set the map marker at the location of the parking
                                 MarkerOptions custom = new MarkerOptions().position(new LatLng(recognisedLocation.getLatitude(), recognisedLocation.getLongitude()))
                                         .title("" + recognisedLocation.getDescription())
-                                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
+                                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.marker));
 
                                 googleMap.addMarker(custom);
 
                                 // set the camera to the location plotted on map
-                                CameraPosition cameraPosition = new CameraPosition.Builder().target(new LatLng(recognisedLocation.getLatitude(), recognisedLocation.getLongitude())).zoom(15.0f).build();
+                                CameraPosition cameraPosition = new CameraPosition.Builder().target(new LatLng(recognisedLocation.getLatitude(), recognisedLocation.getLongitude())).zoom(13.0f).build();
                                 CameraUpdate cameraUpdate = CameraUpdateFactory.newCameraPosition(cameraPosition);
                                 googleMap.moveCamera(cameraUpdate);
                                 googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
