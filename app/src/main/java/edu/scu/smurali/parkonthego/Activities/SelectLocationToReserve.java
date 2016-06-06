@@ -59,6 +59,7 @@ import edu.scu.smurali.parkonthego.retrofit.reponses.LocationData;
 import edu.scu.smurali.parkonthego.retrofit.reponses.LocationResponse;
 import edu.scu.smurali.parkonthego.retrofit.reponses.SearchData;
 import edu.scu.smurali.parkonthego.retrofit.services.LocationServices;
+import mehdi.sakout.fancybuttons.FancyButton;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -80,7 +81,8 @@ public class SelectLocationToReserve extends FragmentActivity {
     private MapFragment mSupportMapFragment;
     private NfcAdapter mNfcAdapter;
     private TextView selectLocation, price;
-    private Button selectLocationReserveButton;
+   // private Button selectLocationReserveButton;
+    private FancyButton selectLocationReserveButton;
     private Context mContext;
     private String sDateTime = "", eDateTime = "";
     private String selectedLocation;
@@ -300,7 +302,9 @@ public class SelectLocationToReserve extends FragmentActivity {
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
 
         // reserve button
-        selectLocationReserveButton = (Button) findViewById(R.id.selectLocationReserveButton);
+        //selectLocationReserveButton = (Button) findViewById(R.id.selectLocationReserveButton);
+
+        selectLocationReserveButton = (FancyButton) findViewById(R.id.selectLocationReserveButton);
 
         selectLocationReserveButton.setOnClickListener(new View.OnClickListener() {
             @Override
