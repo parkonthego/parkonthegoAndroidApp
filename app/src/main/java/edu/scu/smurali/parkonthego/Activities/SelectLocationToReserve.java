@@ -83,6 +83,7 @@ public class SelectLocationToReserve extends FragmentActivity {
     private TextView selectLocation, price;
    // private Button selectLocationReserveButton;
     private FancyButton selectLocationReserveButton;
+    private FancyButton cancelButton;
     private Context mContext;
     private String sDateTime = "", eDateTime = "";
     private String selectedLocation;
@@ -137,6 +138,14 @@ public class SelectLocationToReserve extends FragmentActivity {
         Log.d("SelectionLocation json", "onCreate: " + selectedLocation);
         selectLocation = (TextView) findViewById(R.id.selectLocation);
         price = (TextView) findViewById(id.pricePerHour);
+        cancelButton = (FancyButton)findViewById(id.selectLocationCancelButton);
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(SelectLocationToReserve.this,HomeScreenActivity.class);
+                startActivity(intent);
+            }
+        });
 
 // date and time pickers////////////////////////////////////////////////////////////
 

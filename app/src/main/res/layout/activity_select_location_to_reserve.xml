@@ -211,9 +211,29 @@
         fancy:fb_radius="30dp"
         fancy:fb_text="CONTINUE"
         fancy:fb_textColor="#FFFFFF"
+        android:layout_below="@+id/priceLabelSLTR"
+        android:layout_alignEnd="@+id/linearLayout3"
+        android:layout_toEndOf="@+id/selectLocationEndDate" />
+
+    <mehdi.sakout.fancybuttons.FancyButton
+        android:id="@+id/selectLocationCancelButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingBottom="10dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:paddingTop="10dp"
+        fancy:fb_borderColor="#FFFFFF"
+        fancy:fb_borderWidth="1dp"
+        fancy:fb_defaultColor="#008888"
+        fancy:fb_focusColor="#008800"
+        fancy:fb_iconPosition="bottom"
+        fancy:fb_radius="30dp"
+        fancy:fb_text="Cancel"
+        fancy:fb_textColor="#FFFFFF"
         android:layout_alignParentBottom="true"
-        android:layout_alignEnd="@+id/linearLayout5"
         android:layout_alignParentStart="true" />
+
 
 
 
