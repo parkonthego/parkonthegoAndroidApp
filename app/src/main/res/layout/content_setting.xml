@@ -80,17 +80,6 @@
 
          </android.support.design.widget.TextInputLayout>
 
-        <Button
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:text="Change Password"
-            android:id="@+id/settingChangePassword"
-            android:layout_marginTop="50dp"
-            android:textColor="#FFFFFF"
-            android:background="#008888"
-            android:layout_below="@+id/view"
-            android:layout_alignParentEnd="true" />
-
     </RelativeLayout>
 
 </RelativeLayout>

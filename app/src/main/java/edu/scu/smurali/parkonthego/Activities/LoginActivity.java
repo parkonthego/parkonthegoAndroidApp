@@ -26,6 +26,7 @@ import edu.scu.smurali.parkonthego.R;
 import edu.scu.smurali.parkonthego.retrofit.reponses.LoginResponse;
 import edu.scu.smurali.parkonthego.retrofit.services.UserServices;
 import edu.scu.smurali.parkonthego.util.PreferencesManager;
+import mehdi.sakout.fancybuttons.FancyButton;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -33,7 +34,8 @@ import retrofit2.Response;
 public class LoginActivity extends AppCompatActivity implements Validator.ValidationListener {
 
     public final int permissions = 100;
-    private Button login, register;
+  //  private Button login, register;
+    private FancyButton login, register;
     private Button maps;
     private TextView forgotPassword;
     private CheckBox stayLoggedIn;
@@ -69,8 +71,11 @@ public class LoginActivity extends AppCompatActivity implements Validator.Valida
         } catch (NullPointerException ex) {
             Log.d("Login", "onCreate: Null pointer in action bar " + ex.getMessage());
         }
-        login = (Button) findViewById(R.id.logInButton);
-        register = (Button) findViewById(R.id.registerButton);
+//        login = (Button) findViewById(R.id.logInButton);
+//        register = (Button) findViewById(R.id.registerButton);
+
+        login = (FancyButton) findViewById(R.id.logInButton);
+        register = (FancyButton) findViewById(R.id.registerButton);
 
         // maps = (Button)findViewById(R.id.maps);
         forgotPassword = (TextView) findViewById(R.id.forgotPasswordEmail);

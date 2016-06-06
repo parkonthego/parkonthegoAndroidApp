@@ -24,6 +24,7 @@ import edu.scu.smurali.parkonthego.retrofit.reponses.ReservationCfnResponse;
 import edu.scu.smurali.parkonthego.retrofit.reponses.SearchData;
 import edu.scu.smurali.parkonthego.retrofit.services.ReservationServices;
 import edu.scu.smurali.parkonthego.util.PreferencesManager;
+import mehdi.sakout.fancybuttons.FancyButton;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -33,7 +34,8 @@ public class ConfirmationActivity extends AppCompatActivity {
     private TextView confirmationLocationTextView;
     private String selectedLocation;
     private String startDateTime, endDateTime;
-    private Button cfnReserveButton;
+  //  private Button cfnReserveButton;
+    private FancyButton cfnReserveButton;
     private Context mContext;
     private SearchData locationObject;
     private TextView confirmationStartDateTextView;
@@ -57,7 +59,9 @@ public class ConfirmationActivity extends AppCompatActivity {
             Log.d("Confirmation:", "onCreate: Null pointer in action bar " + ex.getMessage());
         }
 
-        cfnReserveButton = (Button) findViewById(R.id.confirmationReserveButton);
+       // cfnReserveButton = (Button) findViewById(R.id.confirmationReserveButton);
+
+        cfnReserveButton =(FancyButton) findViewById(R.id.confirmationReserveButton);
 
 
 //        ////////////////////////////////////////////////testing varun raparla/////////////////////////////////////////////////////////////////////////////
