@@ -751,7 +751,7 @@ public class HomeScreenActivity extends AppCompatActivity
             }
             Intent callIntent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:+1 669 220 8549"));
             startActivity(callIntent);
-            finish();
+
 
 
 

@@ -286,6 +286,7 @@ public class SettingActivity extends AppCompatActivity
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_save) {
             validator.validate();
+            //finish();
         }
 
         return super.onOptionsItemSelected(item);
