@@ -526,7 +526,7 @@ public class EditReservationActivity extends AppCompatActivity {
 //                    .login_signin), mContext.getString(R.string.login_please_wait));
 
             Call<ReservationUpdateResponse> call = reservationServices.updateReservation(reservationId,parkingId, userId, sDateTime, eDatetTime, totalPrice);
-            Log.d("Calling", "register: " + call + " " + parkingId + " " + userId + " " + sDateTime + " " + eDatetTime + " " + totalPrice);
+            Log.d("Calling", "register: " + call + " " +reservationId +" " + parkingId + " " + userId + " " + sDateTime + " " + eDatetTime + " " + totalPrice);
             call.enqueue(new Callback<ReservationUpdateResponse>() {
                 @Override
                 public void onResponse(Call<ReservationUpdateResponse> call,
@@ -563,13 +563,17 @@ public class EditReservationActivity extends AppCompatActivity {
                         public void onClick(SweetAlertDialog sDialog) {
                             sDialog.dismissWithAnimation();
                             startActivity(new Intent(EditReservationActivity.this, ReservationsActivity.class));
+                            finish();
                         }
                     })
                     .show();
 
 
         } else {
-
+            new SweetAlertDialog(this, SweetAlertDialog.ERROR_TYPE)
+                    .setTitleText("Opps !")
+                    .setContentText("Reservation is conflicted with other reservation")
+                    .show();
 
         }
     }
