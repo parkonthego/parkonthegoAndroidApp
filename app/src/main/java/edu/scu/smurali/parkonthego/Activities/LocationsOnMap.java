@@ -41,6 +41,8 @@ public class LocationsOnMap extends FragmentActivity implements OnMapReadyCallba
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        ////////////////////// permission check////////////////
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) !=
                 PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
@@ -60,17 +62,7 @@ public class LocationsOnMap extends FragmentActivity implements OnMapReadyCallba
         markerMap = new HashMap<Marker, SearchData>();
 
     }
-
-
-    /**
-     * Manipulates the map once available.
-     * This callback is triggered when the map is ready to be used.
-     * This is where we can add markers or lines, add listeners or move the camera. In this case,
-     * we just add a marker near Sydney, Australia.
-     * If Google Play services is not installed on the device, the user will be prompted to install
-     * it inside the SupportMapFragment. This method will only be triggered once the user has
-     * installed Google Play services and returned to the app.
-     */
+    // set up the map with the location markers
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
@@ -84,13 +76,7 @@ public class LocationsOnMap extends FragmentActivity implements OnMapReadyCallba
         final String endDatetime = intent.getStringExtra("endDateTime");
         final LatLng searchedLocation = new LatLng(searchedLocationLat, searchedLocationLong);
 
-
-
-        //locationList.
-
-
-        // Add a marker in Sydney and move the camera
-
+// check if any locations available newar searched location and plot the destination location on map////////
         if (locationList.size() > 0) {
             MarkerOptions custom = new MarkerOptions().position(new LatLng(searchedLocationLat, searchedLocationLong)).title("Destination:" + searchedLocationAddress)
                     .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
@@ -100,12 +86,9 @@ public class LocationsOnMap extends FragmentActivity implements OnMapReadyCallba
 
 
         }
-
+/////// plot all the available parkings near the locations///////////////////////////////
         for (int i = 0; i < locationList.size(); i++) {
             String price = new Double(locationList.get(i).getPrice()).toString();
-            //  Log.d("data", "onMapReady: "+locationList.get(i).getDescription());
-//            MarkerOptions custom = new MarkerOptions().position(new LatLng(locationList.get(i).getLatitude(), locationList.get(i).getLongitude()))
-//                    .title("" + price + " $/Hr").visible(true);
             MarkerOptions custom = new MarkerOptions().position(new LatLng(locationList.get(i).getLatitude(), locationList.get(i).getLongitude()))
                     .title("" + price + " $/Hr").visible(true)
                     .icon(BitmapDescriptorFactory.fromResource(R.drawable.marker));
@@ -114,10 +97,7 @@ public class LocationsOnMap extends FragmentActivity implements OnMapReadyCallba
             markerMap.put(mk, locationList.get(i));
 
         }
-
-
-        //   mMap.addMarker(new MarkerOptions().position(locationList.get(4)).rotation(15));
-
+////////////////// move the camera to searched location ///////////////////////
         mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(searchedLocationLat, searchedLocationLong)));
 
 
@@ -132,7 +112,7 @@ public class LocationsOnMap extends FragmentActivity implements OnMapReadyCallba
         }
         mMap.getUiSettings().setMyLocationButtonEnabled(true);
 
-
+/////////////////  on map info window click------- navigates to confirmation page---------------------------
         mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
             @Override
             public void onInfoWindowClick(Marker marker) {
@@ -163,20 +143,10 @@ public class LocationsOnMap extends FragmentActivity implements OnMapReadyCallba
 
             }
         });
-
+// on marker click
         mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(Marker marker) {
-//                LatLng clickedLocation= marker.getPosition();
-//                String title = marker.getTitle();
-//                Intent intent = new Intent(LocationsOnMap.this ,SelectLocationToReserve.class);
-//                intent.putExtra("ltdLng",clickedLocation);
-//                intent.putExtra("title", title);
-//                intent.putExtra("searchedLocation",searchedLocation);
-//                intent.putExtra("activityName","LocationsOnMap");
-//
-//                startActivity(intent);
-
                 return false;
             }
         });
@@ -194,13 +164,7 @@ public class LocationsOnMap extends FragmentActivity implements OnMapReadyCallba
 
 
     }
-//    public void highlightMarker(Marker marker, Boolean highlight ) {
-//        int color = "#FE7569";
-//        if (highlight) {
-//            color = "#0000FF";
-//        }
-//        marker.setImage(getIcon(color).image);
-//    }
+
 
 }
 
