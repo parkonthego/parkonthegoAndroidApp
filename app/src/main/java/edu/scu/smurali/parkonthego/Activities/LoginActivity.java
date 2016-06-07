@@ -87,6 +87,9 @@ public class LoginActivity extends AppCompatActivity implements Validator.Valida
         if (pManager.getUserId() > -1) {
             if(pManager.getUserId()==8)
             {
+                Log.d("user id from shared preferences", "onCreate: " + pManager.getUserId());
+                Log.d("user name from shared preferences", "onCreate: " + pManager.getEmail());
+
                 PreferencesManager.getInstance(LoginActivity.this).clear();
             }
             else {
