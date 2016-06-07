@@ -114,8 +114,10 @@ public class EditReservationActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_reservation);
+        mContext = this;
         uDatePickerDialogFragment = new DatePickerDialogFragment();
         uTimePickerDialogFragment = new TimePickerDialogFragment();
+        uTimePickerDialogFragment.setTempCntext(mContext);
 
         try {
             ActionBar actionBar = getSupportActionBar();
@@ -123,7 +125,7 @@ public class EditReservationActivity extends AppCompatActivity {
             actionBar.setIcon(R.mipmap.ic_park);
             //  actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setDisplayShowHomeEnabled(true);
-            mContext = this;
+
             // actionBar.setHomeButtonEnabled(true);
         } catch (NullPointerException ex) {
             Log.d("Confirmation:", "onCreate: Null pointer in action bar " + ex.getMessage());
@@ -519,6 +521,15 @@ public class EditReservationActivity extends AppCompatActivity {
         public static final int FLAG_START_TIME = 0;
         public static final int FLAG_END_TIME = 1;
 
+        public Context getTempCntext() {
+            return tempCntext;
+        }
+
+        public void setTempCntext(Context tempCntext) {
+            this.tempCntext = tempCntext;
+        }
+
+        Context tempCntext;
         private int flag = 0;
 
         @Override
@@ -562,6 +573,7 @@ public class EditReservationActivity extends AppCompatActivity {
             Calendar calendar = Calendar.getInstance();
             Date startDateTimeTemp;
             Date endDateTimeTemp;
+            Date currentTimeTemp;
             SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm");
             String min = String.format("%02d", minute);
             String hou = String.format("%02d", hourOfDay);
@@ -571,9 +583,17 @@ public class EditReservationActivity extends AppCompatActivity {
                 try {
                     startDateTimeTemp = dateFormat.parse(startDate.getText().toString() + " " + hourOfDay + ":" + minute);
                     endDateTimeTemp = dateFormat.parse(endDate.getText().toString() + " " + endTime.getText().toString());
+                    currentTimeTemp = dateFormat.parse(dateFormat.format(calendar.getTime()));
                     Log.d("StartDate", "onTimeSet: " + startDateTimeTemp);
                     Log.d("EndDate", "onTimeSet: " + endDateTimeTemp);
-                    if (startDateTimeTemp.compareTo(endDateTimeTemp) > 0 || startDateTimeTemp.compareTo(endDateTimeTemp) == 0) {
+                    if(startDateTimeTemp.compareTo(currentTimeTemp) < 0){
+                        new SweetAlertDialog(tempCntext, SweetAlertDialog.ERROR_TYPE)
+                                .setTitleText("Oops...")
+                                .setContentText("You can't select past time")
+                                .show();
+
+                    }
+                    else if (startDateTimeTemp.compareTo(endDateTimeTemp) > 0 || startDateTimeTemp.compareTo(endDateTimeTemp) == 0) {
                         startTime.setText(time);
                         if (hourOfDay != 23) {
                             String endhou = String.format("%02d", (hourOfDay + 1));
@@ -593,15 +613,22 @@ public class EditReservationActivity extends AppCompatActivity {
                     }
                 } catch (Exception ex) {
                     Log.d("Date pull error", "onCreateDialog: " + ex.getMessage());
+                    startTime.setText(time);
                 }
-                startTime.setText(time);
+
             } else if (flag == FLAG_END_TIME) {
                 try {
                     startDateTimeTemp = dateFormat.parse(startDate.getText().toString() + " " + startTime.getText().toString());
                     endDateTimeTemp = dateFormat.parse(endDate.getText().toString() + " " + hourOfDay + ":" + minute);
+                    currentTimeTemp = dateFormat.parse(dateFormat.format(calendar.getTime()));
                     Log.d("StartDate", "onTimeSet: " + startDateTimeTemp);
                     Log.d("EndDate", "onTimeSet: " + endDateTimeTemp);
-                    if (startDateTimeTemp.compareTo(endDateTimeTemp) > 0 || startDateTimeTemp.compareTo(endDateTimeTemp) == 0) {
+                    if(endDateTimeTemp.compareTo(currentTimeTemp) < 0){
+                        new SweetAlertDialog(tempCntext, SweetAlertDialog.ERROR_TYPE)
+                                .setTitleText("Oops...")
+                                .setContentText("You can't select past time")
+                                .show();
+                    }else if (startDateTimeTemp.compareTo(endDateTimeTemp) > 0 || startDateTimeTemp.compareTo(endDateTimeTemp) == 0) {
                         if (hourOfDay != 0) {
                             endTime.setText(time);
                             String endhou = String.format("%02d", (hourOfDay - 1));
@@ -620,8 +647,9 @@ public class EditReservationActivity extends AppCompatActivity {
                     }
                 } catch (Exception ex) {
                     Log.d("Date pull error", "onCreateDialog: " + ex.getMessage());
+                    endTime.setText(time);
                 }
-                endTime.setText(time);
+
             }
 
         }
