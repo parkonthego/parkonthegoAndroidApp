@@ -118,9 +118,10 @@ public class HomeScreenActivity extends AppCompatActivity
         setContentView(R.layout.activity_home_screen);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        mContext = this;
         uDatePickerDialogFragment = new DatePickerDialogFragment();
         uTimePickerDialogFragment = new TimePickerDialogFragment();
-        mContext = this;
+        uTimePickerDialogFragment.setTempCntext(mContext);
         pm = PreferencesManager.getInstance(mContext);
         try {
             ActionBar actionBar = getSupportActionBar();
@@ -828,6 +829,7 @@ public class HomeScreenActivity extends AppCompatActivity
 
         private int flag = 0;
 
+
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
 
@@ -913,6 +915,15 @@ public class HomeScreenActivity extends AppCompatActivity
         public static final int FLAG_START_TIME = 0;
         public static final int FLAG_END_TIME = 1;
 
+        public Context getTempCntext() {
+            return tempCntext;
+        }
+
+        public void setTempCntext(Context tempCntext) {
+            this.tempCntext = tempCntext;
+        }
+
+        Context tempCntext;
         private int flag = 0;
 
         @Override
@@ -956,6 +967,7 @@ public class HomeScreenActivity extends AppCompatActivity
             Calendar calendar = Calendar.getInstance();
             Date startDateTimeTemp;
             Date endDateTimeTemp;
+            Date currentTimeTemp;
             SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm");
             String min = String.format("%02d", minute);
             String hou = String.format("%02d", hourOfDay);
@@ -965,9 +977,17 @@ public class HomeScreenActivity extends AppCompatActivity
                 try {
                     startDateTimeTemp = dateFormat.parse(startDate.getText().toString() + " " + hourOfDay + ":" + minute);
                     endDateTimeTemp = dateFormat.parse(endDate.getText().toString() + " " + endTime.getText().toString());
+                    currentTimeTemp = dateFormat.parse(dateFormat.format(calendar.getTime()));
                     Log.d("StartDate", "onTimeSet: " + startDateTimeTemp);
                     Log.d("EndDate", "onTimeSet: " + endDateTimeTemp);
-                    if (startDateTimeTemp.compareTo(endDateTimeTemp) > 0 || startDateTimeTemp.compareTo(endDateTimeTemp) == 0) {
+                    if(startDateTimeTemp.compareTo(currentTimeTemp) < 0){
+                        new SweetAlertDialog(tempCntext, SweetAlertDialog.ERROR_TYPE)
+                                .setTitleText("Oops...")
+                                .setContentText("You can't select past time")
+                                .show();
+
+                    }
+                    else if (startDateTimeTemp.compareTo(endDateTimeTemp) > 0 || startDateTimeTemp.compareTo(endDateTimeTemp) == 0) {
                         startTime.setText(time);
                         if (hourOfDay != 23) {
                             String endhou = String.format("%02d", (hourOfDay + 1));
@@ -987,15 +1007,22 @@ public class HomeScreenActivity extends AppCompatActivity
                     }
                 } catch (Exception ex) {
                     Log.d("Date pull error", "onCreateDialog: " + ex.getMessage());
+                    startTime.setText(time);
                 }
-                startTime.setText(time);
+
             } else if (flag == FLAG_END_TIME) {
                 try {
                     startDateTimeTemp = dateFormat.parse(startDate.getText().toString() + " " + startTime.getText().toString());
                     endDateTimeTemp = dateFormat.parse(endDate.getText().toString() + " " + hourOfDay + ":" + minute);
+                    currentTimeTemp = dateFormat.parse(dateFormat.format(calendar.getTime()));
                     Log.d("StartDate", "onTimeSet: " + startDateTimeTemp);
                     Log.d("EndDate", "onTimeSet: " + endDateTimeTemp);
-                    if (startDateTimeTemp.compareTo(endDateTimeTemp) > 0 || startDateTimeTemp.compareTo(endDateTimeTemp) == 0) {
+                    if(endDateTimeTemp.compareTo(currentTimeTemp) < 0){
+                        new SweetAlertDialog(tempCntext, SweetAlertDialog.ERROR_TYPE)
+                                .setTitleText("Oops...")
+                                .setContentText("You can't select past time")
+                                .show();
+                    }else if (startDateTimeTemp.compareTo(endDateTimeTemp) > 0 || startDateTimeTemp.compareTo(endDateTimeTemp) == 0) {
                         if (hourOfDay != 0) {
                             endTime.setText(time);
                             String endhou = String.format("%02d", (hourOfDay - 1));
@@ -1014,8 +1041,9 @@ public class HomeScreenActivity extends AppCompatActivity
                     }
                 } catch (Exception ex) {
                     Log.d("Date pull error", "onCreateDialog: " + ex.getMessage());
+                    endTime.setText(time);
                 }
-                endTime.setText(time);
+
             }
 
         }
