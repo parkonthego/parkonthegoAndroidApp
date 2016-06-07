@@ -87,6 +87,7 @@ public class LoginActivity extends AppCompatActivity implements Validator.Valida
         if (pManager.getUserId() > -1) {
             Intent intent = new Intent(LoginActivity.this, HomeScreenActivity.class);
             startActivity(intent);
+            finish();
         }
 
         login.setOnClickListener(new View.OnClickListener() {
