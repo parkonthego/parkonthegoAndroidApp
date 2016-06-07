@@ -982,10 +982,11 @@ public class HomeScreenActivity extends AppCompatActivity
                     Log.d("EndDate", "onTimeSet: " + endDateTimeTemp);
                     Log.d("CuurentDate", "onTimeSet: " + currentTimeTemp);
                     Log.d("Compare value", "onTimeSet: "+startDateTimeTemp.compareTo(currentTimeTemp));
-                    if(startDateTimeTemp.compareTo(currentTimeTemp) < 0){
+                    Log.d("Compare value", "onTimeSet: "+endDateTimeTemp.compareTo(currentTimeTemp));
+                    if(startDateTimeTemp.compareTo(currentTimeTemp) < 0 || endDateTimeTemp.compareTo(currentTimeTemp) < 0){
                         new SweetAlertDialog(tempCntext, SweetAlertDialog.ERROR_TYPE)
                                 .setTitleText("Oops...")
-                                .setContentText("You can't select past time")
+                                .setContentText("You can't select start or end past time")
                                 .show();
 
                     }
@@ -1021,10 +1022,13 @@ public class HomeScreenActivity extends AppCompatActivity
                     currentTimeTemp = dateFormat.parse(dateFormat.format(calendar.getTime()));
                     Log.d("StartDate", "onTimeSet: " + startDateTimeTemp);
                     Log.d("EndDate", "onTimeSet: " + endDateTimeTemp);
-                    if(endDateTimeTemp.compareTo(currentTimeTemp) < 0){
+                    Log.d("CuurentDate", "onTimeSet: " + currentTimeTemp);
+                    Log.d("Compare value", "onTimeSet: "+startDateTimeTemp.compareTo(currentTimeTemp));
+                    Log.d("Compare value", "onTimeSet: "+endDateTimeTemp.compareTo(currentTimeTemp));
+                    if(endDateTimeTemp.compareTo(currentTimeTemp) < 0 || startDateTimeTemp.compareTo(currentTimeTemp) < 0){
                         new SweetAlertDialog(tempCntext, SweetAlertDialog.ERROR_TYPE)
                                 .setTitleText("Oops...")
-                                .setContentText("You can't select past time")
+                                .setContentText("You can't select start or end past time")
                                 .show();
                     }else if (startDateTimeTemp.compareTo(endDateTimeTemp) > 0 || startDateTimeTemp.compareTo(endDateTimeTemp) == 0) {
                         if (hourOfDay != 0) {
