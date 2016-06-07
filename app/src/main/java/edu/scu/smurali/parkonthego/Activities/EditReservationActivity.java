@@ -312,6 +312,31 @@ public class EditReservationActivity extends AppCompatActivity {
                 Double hours = ParkOnTheGo.getInstance().getDateTimeDiff(startDateTimeString, endDateTimeString);
                 double totalPrice = new Double(hours * reservationData.getPrice());
 
+                Calendar calendar = Calendar.getInstance();
+                Date startDateTimeTemp;
+                Date endDateTimeTemp;
+                Date currentTimeTemp;
+                SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm");
+                try {
+                    startDateTimeTemp = dateFormat.parse(startDate.getText().toString() + " " + startTime.getText().toString());
+                    endDateTimeTemp = dateFormat.parse(endDate.getText().toString() + " " + endTime.getText().toString());
+                    currentTimeTemp = dateFormat.parse(dateFormat.format(calendar.getTime()));
+                    Log.d("StartDate", "onTimeSet: " + startDateTimeTemp);
+                    Log.d("EndDate", "onTimeSet: " + endDateTimeTemp);
+                    Log.d("CuurentDate", "onTimeSet: " + currentTimeTemp);
+                    Log.d("Compare value", "onTimeSet: " + startDateTimeTemp.compareTo(currentTimeTemp));
+                    Log.d("Compare value", "onTimeSet: " + endDateTimeTemp.compareTo(currentTimeTemp));
+                    if (startDateTimeTemp.compareTo(currentTimeTemp) < 0 || endDateTimeTemp.compareTo(currentTimeTemp) < 0) {
+                        new SweetAlertDialog(mContext, SweetAlertDialog.ERROR_TYPE)
+                                .setTitleText("Oops...")
+                                .setContentText("You can't select start or end past time")
+                                .show();
+
+                        return;
+                    }
+                } catch (Exception ex) {
+                    Log.d("parse error", "onValidationSucceeded: " + ex.getMessage());
+                }
                 updateReservation(reservationData.getId(), reservationData.getParkingId(),reservationData.getUserId(),startDateTimeString,endDateTimeString,totalPrice);
 
 
