@@ -668,6 +668,8 @@ public class SelectLocationToReserve extends FragmentActivity {
                     currentTimeTemp = dateFormat.parse(dateFormat.format(calendar.getTime()));
                     Log.d("StartDate", "onTimeSet: " + startDateTimeTemp);
                     Log.d("EndDate", "onTimeSet: " + endDateTimeTemp);
+                    Log.d("CuurentDate", "onTimeSet: " + currentTimeTemp);
+                    Log.d("Compare value", "onTimeSet: "+startDateTimeTemp.compareTo(currentTimeTemp));
                     if(startDateTimeTemp.compareTo(currentTimeTemp) < 0){
                         new SweetAlertDialog(tempCntext, SweetAlertDialog.ERROR_TYPE)
                                 .setTitleText("Oops...")
@@ -692,6 +694,8 @@ public class SelectLocationToReserve extends FragmentActivity {
                             endTime.setText(time2);
                             return;
                         }
+                    }else{
+                        startTime.setText(time);
                     }
                 } catch (Exception ex) {
                     Log.d("Date pull error", "onCreateDialog: " + ex.getMessage());
@@ -726,6 +730,8 @@ public class SelectLocationToReserve extends FragmentActivity {
                             startTime.setText(time2);
                             return;
                         }
+                    }else{
+                        endTime.setText(time);
                     }
                 } catch (Exception ex) {
                     Log.d("Date pull error", "onCreateDialog: " + ex.getMessage());
