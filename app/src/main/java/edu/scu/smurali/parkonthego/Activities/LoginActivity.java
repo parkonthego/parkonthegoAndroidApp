@@ -85,9 +85,16 @@ public class LoginActivity extends AppCompatActivity implements Validator.Valida
         pwd = (EditText) findViewById(R.id.loginPasswordEditText);
 
         if (pManager.getUserId() > -1) {
-            Intent intent = new Intent(LoginActivity.this, HomeScreenActivity.class);
-            startActivity(intent);
-            finish();
+            if(pManager.getUserId()==8)
+            {
+                PreferencesManager.getInstance(LoginActivity.this).clear();
+            }
+            else {
+                Log.d("user id from shared preferences", "onCreate: " + pManager.getUserId());
+                Intent intent = new Intent(LoginActivity.this, HomeScreenActivity.class);
+                startActivity(intent);
+                finish();
+            }
         }
 
         login.setOnClickListener(new View.OnClickListener() {

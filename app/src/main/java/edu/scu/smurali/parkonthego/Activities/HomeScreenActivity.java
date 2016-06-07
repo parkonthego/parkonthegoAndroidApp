@@ -176,6 +176,8 @@ public class HomeScreenActivity extends AppCompatActivity
                         new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                         1);
 
+
+
                 // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
                 // app-defined int constant. The callback method gets the
                 // result of the request.
@@ -771,8 +773,11 @@ public class HomeScreenActivity extends AppCompatActivity
             final int MY_PERMISSIONS_REQUEST_CALL_PHONE = 1;
 
 
-            if (ActivityCompat.checkSelfPermission(HomeScreenActivity.this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+            if (ContextCompat.checkSelfPermission(HomeScreenActivity.this,
+                    Manifest.permission.CALL_PHONE)
+                    != PackageManager.PERMISSION_GRANTED) {
 
+                // Should we show an explanation?
                 if (ActivityCompat.shouldShowRequestPermissionRationale(HomeScreenActivity.this,
                         Manifest.permission.CALL_PHONE)) {
 
@@ -788,12 +793,11 @@ public class HomeScreenActivity extends AppCompatActivity
                             new String[]{Manifest.permission.CALL_PHONE},
                             1);
 
+
                     // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
                     // app-defined int constant. The callback method gets the
                     // result of the request.
                 }
-
-
             }
             Intent callIntent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:+1 669 220 8549"));
             startActivity(callIntent);
