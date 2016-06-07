@@ -136,9 +136,10 @@ public class SelectLocationToReserve extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(layout.activity_select_location_to_reserve);
-
+        mContext=this;
         uDatePickerDialogFragment = new DatePickerDialogFragment();
         uTimePickerDialogFragment = new TimePickerDialogFragment();
+        uTimePickerDialogFragment.setTempCntext(mContext);
 
         Intent intent = getIntent();
         final LatLng location = (LatLng) intent.getExtras().get("ltdLng");
@@ -221,6 +222,10 @@ public class SelectLocationToReserve extends FragmentActivity {
 
             }
         });
+
+
+        initDatePicker();
+        initTimePicker();
 
 
         ArrayList<SearchData> locationList = (ArrayList<SearchData>) intent.getSerializableExtra("listOfLocations");
@@ -360,7 +365,31 @@ public class SelectLocationToReserve extends FragmentActivity {
             @Override
             public void onClick(View v) {
 
+                Calendar calendar = Calendar.getInstance();
+                Date startDateTimeTemp;
+                Date endDateTimeTemp;
+                Date currentTimeTemp;
+                SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm");
+                try {
+                    startDateTimeTemp = dateFormat.parse(startDate.getText().toString() + " " + startTime.getText().toString());
+                    endDateTimeTemp = dateFormat.parse(endDate.getText().toString() + " " + endTime.getText().toString());
+                    currentTimeTemp = dateFormat.parse(dateFormat.format(calendar.getTime()));
+                    Log.d("StartDate", "onTimeSet: " + startDateTimeTemp);
+                    Log.d("EndDate", "onTimeSet: " + endDateTimeTemp);
+                    Log.d("CuurentDate", "onTimeSet: " + currentTimeTemp);
+                    Log.d("Compare value", "onTimeSet: " + startDateTimeTemp.compareTo(currentTimeTemp));
+                    Log.d("Compare value", "onTimeSet: " + endDateTimeTemp.compareTo(currentTimeTemp));
+                    if (startDateTimeTemp.compareTo(currentTimeTemp) < 0 || endDateTimeTemp.compareTo(currentTimeTemp) < 0) {
+                        new SweetAlertDialog(mContext, SweetAlertDialog.ERROR_TYPE)
+                                .setTitleText("Oops...")
+                                .setContentText("You can't select start or end past time")
+                                .show();
 
+                        return;
+                    }
+                } catch (Exception ex) {
+                    Log.d("parse error", "onValidationSucceeded: " + ex.getMessage());
+                }
                 Intent intent = new Intent(SelectLocationToReserve.this, ConfirmationActivity.class);
                 intent.putExtra("location", location);
                 String startDateTime = startDate.getText().toString() + " " + startTime.getText().toString();
@@ -598,6 +627,15 @@ public class SelectLocationToReserve extends FragmentActivity {
         public static final int FLAG_START_TIME = 0;
         public static final int FLAG_END_TIME = 1;
 
+        public Context getTempCntext() {
+            return tempCntext;
+        }
+
+        public void setTempCntext(Context tempCntext) {
+            this.tempCntext = tempCntext;
+        }
+
+        Context tempCntext;
         private int flag = 0;
 
         @Override
@@ -641,6 +679,7 @@ public class SelectLocationToReserve extends FragmentActivity {
             Calendar calendar = Calendar.getInstance();
             Date startDateTimeTemp;
             Date endDateTimeTemp;
+            Date currentTimeTemp;
             SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm");
             String min = String.format("%02d", minute);
             String hou = String.format("%02d", hourOfDay);
@@ -650,9 +689,20 @@ public class SelectLocationToReserve extends FragmentActivity {
                 try {
                     startDateTimeTemp = dateFormat.parse(startDate.getText().toString() + " " + hourOfDay + ":" + minute);
                     endDateTimeTemp = dateFormat.parse(endDate.getText().toString() + " " + endTime.getText().toString());
+                    currentTimeTemp = dateFormat.parse(dateFormat.format(calendar.getTime()));
                     Log.d("StartDate", "onTimeSet: " + startDateTimeTemp);
                     Log.d("EndDate", "onTimeSet: " + endDateTimeTemp);
-                    if (startDateTimeTemp.compareTo(endDateTimeTemp) > 0 || startDateTimeTemp.compareTo(endDateTimeTemp) == 0) {
+                    Log.d("CuurentDate", "onTimeSet: " + currentTimeTemp);
+                    Log.d("Compare value", "onTimeSet: "+startDateTimeTemp.compareTo(currentTimeTemp));
+                    Log.d("Compare value", "onTimeSet: "+endDateTimeTemp.compareTo(currentTimeTemp));
+                    if(startDateTimeTemp.compareTo(currentTimeTemp) < 0 || endDateTimeTemp.compareTo(currentTimeTemp) < 0){
+                        new SweetAlertDialog(tempCntext, SweetAlertDialog.ERROR_TYPE)
+                                .setTitleText("Oops...")
+                                .setContentText("You can't select start or end past time")
+                                .show();
+
+                    }
+                    else if (startDateTimeTemp.compareTo(endDateTimeTemp) > 0 || startDateTimeTemp.compareTo(endDateTimeTemp) == 0) {
                         startTime.setText(time);
                         if (hourOfDay != 23) {
                             String endhou = String.format("%02d", (hourOfDay + 1));
@@ -669,18 +719,30 @@ public class SelectLocationToReserve extends FragmentActivity {
                             endTime.setText(time2);
                             return;
                         }
+                    }else{
+                        startTime.setText(time);
                     }
                 } catch (Exception ex) {
                     Log.d("Date pull error", "onCreateDialog: " + ex.getMessage());
+                    startTime.setText(time);
                 }
-                startTime.setText(time);
+
             } else if (flag == FLAG_END_TIME) {
                 try {
                     startDateTimeTemp = dateFormat.parse(startDate.getText().toString() + " " + startTime.getText().toString());
                     endDateTimeTemp = dateFormat.parse(endDate.getText().toString() + " " + hourOfDay + ":" + minute);
+                    currentTimeTemp = dateFormat.parse(dateFormat.format(calendar.getTime()));
                     Log.d("StartDate", "onTimeSet: " + startDateTimeTemp);
                     Log.d("EndDate", "onTimeSet: " + endDateTimeTemp);
-                    if (startDateTimeTemp.compareTo(endDateTimeTemp) > 0 || startDateTimeTemp.compareTo(endDateTimeTemp) == 0) {
+                    Log.d("CuurentDate", "onTimeSet: " + currentTimeTemp);
+                    Log.d("Compare value", "onTimeSet: "+startDateTimeTemp.compareTo(currentTimeTemp));
+                    Log.d("Compare value", "onTimeSet: "+endDateTimeTemp.compareTo(currentTimeTemp));
+                    if(endDateTimeTemp.compareTo(currentTimeTemp) < 0 || startDateTimeTemp.compareTo(currentTimeTemp) < 0){
+                        new SweetAlertDialog(tempCntext, SweetAlertDialog.ERROR_TYPE)
+                                .setTitleText("Oops...")
+                                .setContentText("You can't select start or end past time")
+                                .show();
+                    }else if (startDateTimeTemp.compareTo(endDateTimeTemp) > 0 || startDateTimeTemp.compareTo(endDateTimeTemp) == 0) {
                         if (hourOfDay != 0) {
                             endTime.setText(time);
                             String endhou = String.format("%02d", (hourOfDay - 1));
@@ -696,16 +758,18 @@ public class SelectLocationToReserve extends FragmentActivity {
                             startTime.setText(time2);
                             return;
                         }
+                    }else{
+                        endTime.setText(time);
                     }
                 } catch (Exception ex) {
                     Log.d("Date pull error", "onCreateDialog: " + ex.getMessage());
+                    endTime.setText(time);
                 }
-                endTime.setText(time);
+
             }
 
         }
     }
-
 
     ///////////////////////////////////////////////////// date and time picker fragments end/////////////////////////////////////////////////////////
 
