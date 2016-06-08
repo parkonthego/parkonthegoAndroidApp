@@ -141,6 +141,7 @@ public class ReservationsActivity extends AppCompatActivity
 
                 if(childPosition==0)
                 {
+                    // set directions
                     String desc = listDataHeader.get(groupPosition);
                     ReservationData clickedReservation = reservationListMap.get(desc);
 
@@ -153,6 +154,7 @@ public class ReservationsActivity extends AppCompatActivity
 
                 if(childPosition==1)
                 {
+                    // street view
                     String desc = listDataHeader.get(groupPosition);
                     ReservationData clickedReservation = reservationListMap.get(desc);
                     //                  ///////////////////////street view////////////////////
@@ -202,6 +204,7 @@ public class ReservationsActivity extends AppCompatActivity
                     intent.putExtra("startDateTime", clickedReservation.getStartingTime());
                     intent.putExtra("endDateTime", clickedReservation.getEndTime());
                     startActivity(intent);
+                    finish();
 
 
 
@@ -388,12 +391,9 @@ public class ReservationsActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
+        Intent intent = new Intent(ReservationsActivity.this,HomeScreenActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
@@ -455,7 +455,7 @@ public class ReservationsActivity extends AppCompatActivity
 
             }
             startActivity(callIntent);
-            finish();
+
 
 
         } else if (id == R.id.nav_help) {

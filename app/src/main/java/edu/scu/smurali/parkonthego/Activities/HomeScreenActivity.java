@@ -91,12 +91,14 @@ public class HomeScreenActivity extends AppCompatActivity
     // private Button searchParkingLocations;
 
     private FancyButton searchParkingLocations;
-
+    int backButtonCount=0;
     private LatLng searchedLatLng;
     private String searchedAddress;
     private Context mContext;
     private String sDateTime, eDateTime;
-    private Button currentLocationButton;
+   // private Button currentLocationButton;
+
+    private FancyButton currentLocationButton;
 
     private TextView navUserName;
     private TextView navEmail;
@@ -146,7 +148,10 @@ public class HomeScreenActivity extends AppCompatActivity
         locationList = new ArrayList<SearchData>();
         final PreferencesManager pm = PreferencesManager.getInstance(mContext);
         userId = pm.getUserId();
-        currentLocationButton = (Button) findViewById(R.id.currentLocationButton);
+        //currentLocationButton = (Button) findViewById(R.id.currentLocationButton);
+
+        currentLocationButton = (FancyButton) findViewById(R.id.currentLocationButton);
+
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 /////////////////////////////////// permission checks start////////////////////////////////////////////////////////
 
@@ -170,6 +175,8 @@ public class HomeScreenActivity extends AppCompatActivity
                 ActivityCompat.requestPermissions(HomeScreenActivity.this,
                         new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                         1);
+
+
 
                 // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
                 // app-defined int constant. The callback method gets the
@@ -704,11 +711,21 @@ public class HomeScreenActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
+        {
+
+            if(backButtonCount >= 1)
+            {
+                backButtonCount=0;
+                Intent intent = new Intent(Intent.ACTION_MAIN);
+                intent.addCategory(Intent.CATEGORY_HOME);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+            }
+            else
+            {
+                Toast.makeText(this, "Press the back button once again to close the application.", Toast.LENGTH_SHORT).show();
+                backButtonCount++;
+            }
         }
     }
 
@@ -766,8 +783,11 @@ public class HomeScreenActivity extends AppCompatActivity
             final int MY_PERMISSIONS_REQUEST_CALL_PHONE = 1;
 
 
-            if (ActivityCompat.checkSelfPermission(HomeScreenActivity.this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+            if (ContextCompat.checkSelfPermission(HomeScreenActivity.this,
+                    Manifest.permission.CALL_PHONE)
+                    != PackageManager.PERMISSION_GRANTED) {
 
+                // Should we show an explanation?
                 if (ActivityCompat.shouldShowRequestPermissionRationale(HomeScreenActivity.this,
                         Manifest.permission.CALL_PHONE)) {
 
@@ -783,12 +803,11 @@ public class HomeScreenActivity extends AppCompatActivity
                             new String[]{Manifest.permission.CALL_PHONE},
                             1);
 
+
                     // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
                     // app-defined int constant. The callback method gets the
                     // result of the request.
                 }
-
-
             }
             Intent callIntent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:+1 669 220 8549"));
             startActivity(callIntent);

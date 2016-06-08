@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import edu.scu.smurali.parkonthego.R;
+import edu.scu.smurali.parkonthego.util.PreferencesManager;
 
 
 public class Splashscreen extends Activity {
@@ -19,6 +20,7 @@ public class Splashscreen extends Activity {
         Window window = getWindow();
         window.setFormat(PixelFormat.RGBA_8888);
     }
+
     /** Called when the activity is first created. */
     Thread splashTread;
     @Override
@@ -50,9 +52,11 @@ public class Splashscreen extends Activity {
                         sleep(100);
                         waited += 100;
                     }
+
+
                     Intent intent = new Intent(Splashscreen.this,
                             LoginActivity.class);
-                   // intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                   intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                     startActivity(intent);
                     Splashscreen.this.finish();
                 } catch (InterruptedException e) {
