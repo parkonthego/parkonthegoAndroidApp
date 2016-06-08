@@ -233,6 +233,7 @@ public class SettingActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             Intent intent = new Intent(SettingActivity.this,HomeScreenActivity.class);
             startActivity(intent);
+            finish();
         } else if(isDataChanged){
 
             new SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)
@@ -265,6 +266,7 @@ public class SettingActivity extends AppCompatActivity
         else {
             Intent intent = new Intent(SettingActivity.this,HomeScreenActivity.class);
             startActivity(intent);
+            finish();
         }
 
 
