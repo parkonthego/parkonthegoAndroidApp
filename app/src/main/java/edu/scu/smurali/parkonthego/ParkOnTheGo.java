@@ -258,6 +258,8 @@ public class ParkOnTheGo extends MultiDexApplication {
             long diff = d2.getTime() - d1.getTime();
 
             double diffHours = diff / (60.0 * 60.0 * 1000.0);
+            diffHours = Math.round(diffHours * 100);
+            diffHours = diffHours/100;
 
         return  diffHours;
         }catch(Exception ex){
