@@ -143,7 +143,7 @@ public class HelpActivity extends AppCompatActivity
 
             }
             startActivity(callIntent);
-            finish();
+
 
 
 

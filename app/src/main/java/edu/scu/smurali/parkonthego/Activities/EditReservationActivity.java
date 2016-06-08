@@ -373,6 +373,13 @@ public class EditReservationActivity extends AppCompatActivity {
     }
 
     @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(EditReservationActivity.this,ReservationsActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+    @Override
     public void onStop() {
         super.onStop();
 

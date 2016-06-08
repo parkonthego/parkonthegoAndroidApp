@@ -3,6 +3,7 @@ package edu.scu.smurali.parkonthego.Activities;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.content.IntentCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -163,8 +164,9 @@ public class ConfirmationActivity extends AppCompatActivity {
                         @Override
                         public void onClick(SweetAlertDialog sDialog) {
                             sDialog.dismissWithAnimation();
-                            Intent intent = new Intent(ConfirmationActivity.this, HomeScreenActivity.class);
-                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            Intent intent = new Intent(getApplicationContext(), HomeScreenActivity.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | IntentCompat.FLAG_ACTIVITY_CLEAR_TASK);
                             startActivity(intent);
                             ConfirmationActivity.this.finish();
 

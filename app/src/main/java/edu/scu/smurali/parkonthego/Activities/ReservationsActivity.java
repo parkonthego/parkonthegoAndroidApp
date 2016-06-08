@@ -455,7 +455,7 @@ public class ReservationsActivity extends AppCompatActivity
 
             }
             startActivity(callIntent);
-            finish();
+
 
 
         } else if (id == R.id.nav_help) {
