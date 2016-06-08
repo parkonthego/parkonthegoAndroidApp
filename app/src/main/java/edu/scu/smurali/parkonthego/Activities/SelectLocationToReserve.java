@@ -136,6 +136,7 @@ public class SelectLocationToReserve extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(layout.activity_select_location_to_reserve);
+        ParkOnTheGo.getInstance().setCurrentActivityContext(this);
         mContext=this;
         uDatePickerDialogFragment = new DatePickerDialogFragment();
         uTimePickerDialogFragment = new TimePickerDialogFragment();
@@ -895,12 +896,13 @@ public class SelectLocationToReserve extends FragmentActivity {
             if (ParkOnTheGo.getInstance().isConnectedToInterNet()) {
                 LocationServices locationServices = ParkOnTheGo.getInstance().getLocationServices();
                 Call<LocationResponse> call = locationServices.getLocationDetails(id);
+                ParkOnTheGo.getInstance().showProgressDialog();
                 Log.d("Calling", "register: " + call);
                 call.enqueue(new Callback<LocationResponse>() {
                     @Override
                     public void onResponse(Call<LocationResponse> call,
                                            Response<LocationResponse> response) {
-
+                        ParkOnTheGo.getInstance().hideProgressDialog();
                         if (response.isSuccessful()) {
                             parseResponse(response.body());
                         }
@@ -910,8 +912,8 @@ public class SelectLocationToReserve extends FragmentActivity {
                     public void onFailure(Call<LocationResponse> call, Throwable throwable) {
                         Toast.makeText(getApplicationContext(), "Request failed" + throwable, Toast.LENGTH_SHORT).show();
 
-                        // ParkOnTheGo.getInstance().hideProgressDialog();
-                        // ParkOnTheGo.getInstance().handleError(throwable);
+                         ParkOnTheGo.getInstance().hideProgressDialog();
+                         ParkOnTheGo.getInstance().handleError(throwable);
                         Log.d("varun", "onFailure: " + call);
                     }
                 });
@@ -921,7 +923,7 @@ public class SelectLocationToReserve extends FragmentActivity {
         }
 
         private void parseResponse(LocationResponse response) {
-            Toast.makeText(getApplicationContext(), "Login Sucess" + response.getSuccess(), Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getApplicationContext(), "Login Sucess" + response.getSuccess(), Toast.LENGTH_SHORT).show();
             if (response.getSuccess() == true) {
                 //PreferencesManager pm = PreferencesManager.getInstance(mContext);
                 // Log.d("Data", "parseResponse: " + response.getData().size() );

@@ -72,6 +72,7 @@ public class SettingActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
+        ParkOnTheGo.getInstance().setCurrentActivityContext(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -389,7 +390,6 @@ public class SettingActivity extends AppCompatActivity
 
         if (ParkOnTheGo.getInstance().isConnectedToInterNet()) {
             UserServices userServices = ParkOnTheGo.getInstance().getUserServices();
-            // ParkOnTheGo.getInstance().showProgressDialog("Login", "Please Wait");
             ParkOnTheGo.getInstance().showProgressDialog();
             Call<UpdateProfileResponse> call = userServices.updateProfile(PreferencesManager.getInstance(mContext).getUserId(),firstNameText,lastNameText,emailText);
             Log.d("Calling", "Get profile: " + call);

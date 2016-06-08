@@ -50,6 +50,7 @@ public class ConfirmationActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_confirmation);
+        ParkOnTheGo.getInstance().setCurrentActivityContext(this);
 
         try {
             ActionBar actionBar = getSupportActionBar();
@@ -125,8 +126,7 @@ public class ConfirmationActivity extends AppCompatActivity {
 
         if (ParkOnTheGo.getInstance().isConnectedToInterNet()) {
             ReservationServices reservationServices = ParkOnTheGo.getInstance().getReservationServices();
-//            ParkOnTheGo.getInstance().showProgressDialog(mContext.getString(R.string
-//                    .login_signin), mContext.getString(R.string.login_please_wait));
+            ParkOnTheGo.getInstance().showProgressDialog();
 
             Call<ReservationCfnResponse> call = reservationServices.createReservation(parkingId, userId, sDateTime, eDatetTime, totalPrice);
             Log.d("Calling", "register: " + call + " " + parkingId + " " + userId + " " + sDateTime + " " + eDatetTime + " " + totalPrice);
@@ -134,7 +134,7 @@ public class ConfirmationActivity extends AppCompatActivity {
                 @Override
                 public void onResponse(Call<ReservationCfnResponse> call,
                                        Response<ReservationCfnResponse> response) {
-                    //ParkOnTheGo.getInstance().hideProgressDialog();
+                    ParkOnTheGo.getInstance().hideProgressDialog();
                     if (response.isSuccessful()) {
                         parseResponse(response.body());
                     }
@@ -144,9 +144,8 @@ public class ConfirmationActivity extends AppCompatActivity {
                 public void onFailure(Call<ReservationCfnResponse> call, Throwable throwable) {
                     Toast.makeText(getApplicationContext(), "Request failed " + throwable, Toast.LENGTH_SHORT).show();
                     Log.d("Failed", "onFailure: " + throwable);
-
-                    // ParkOnTheGo.getInstance().hideProgressDialog();
-                    // ParkOnTheGo.getInstance().handleError(throwable);
+                     ParkOnTheGo.getInstance().hideProgressDialog();
+                     ParkOnTheGo.getInstance().handleError(throwable);
                 }
             });
         } else {
@@ -155,7 +154,7 @@ public class ConfirmationActivity extends AppCompatActivity {
     }
 
     private void parseResponse(ReservationCfnResponse response) {
-        Toast.makeText(getApplicationContext(), "Login Sucess" + response.getSuccess(), Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getApplicationContext(), "Login Sucess" + response.getSuccess(), Toast.LENGTH_SHORT).show();
         if (response.getSuccess() == true) {
             new SweetAlertDialog(this, SweetAlertDialog.SUCCESS_TYPE)
                     .setTitleText("Reservation saved")

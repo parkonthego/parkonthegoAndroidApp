@@ -21,6 +21,7 @@ import com.mobsandgeeks.saripaar.annotation.Password;
 
 import java.util.List;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import edu.scu.smurali.parkonthego.ParkOnTheGo;
 import edu.scu.smurali.parkonthego.R;
 import edu.scu.smurali.parkonthego.retrofit.reponses.LoginResponse;
@@ -54,6 +55,7 @@ public class LoginActivity extends AppCompatActivity implements Validator.Valida
         
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        ParkOnTheGo.getInstance().setCurrentActivityContext(this);
         this.mContext = this;
         pManager = PreferencesManager.getInstance(mContext);
 
@@ -83,17 +85,17 @@ public class LoginActivity extends AppCompatActivity implements Validator.Valida
         stayLoggedIn = (CheckBox) findViewById(R.id.stayLoggedInCheckBox);
         email = (EditText) findViewById(R.id.loignEmailEditText);
         pwd = (EditText) findViewById(R.id.loginPasswordEditText);
-
+        Log.d("UserId bc", "onCreate: " + pManager.getUserId());
         if (pManager.getUserId() > -1) {
             if(pManager.getUserId()==8)
             {
-                Log.d("user id from shared preferences", "onCreate: " + pManager.getUserId());
-                Log.d("user name from shared preferences", "onCreate: " + pManager.getEmail());
+                Log.d("user id from shared p", "onCreate: " + pManager.getUserId());
+                Log.d("user name from shared p", "onCreate: " + pManager.getEmail());
 
                 PreferencesManager.getInstance(LoginActivity.this).clear();
             }
             else {
-                Log.d("user id from shared preferences", "onCreate: " + pManager.getUserId());
+                Log.d("user id from shared p", "onCreate: " + pManager.getUserId());
                 Intent intent = new Intent(LoginActivity.this, HomeScreenActivity.class);
                 startActivity(intent);
                 finish();
@@ -176,14 +178,14 @@ public class LoginActivity extends AppCompatActivity implements Validator.Valida
 
         if (ParkOnTheGo.getInstance().isConnectedToInterNet()) {
             UserServices userServices = ParkOnTheGo.getInstance().getUserServices();
-            ParkOnTheGo.getInstance().showProgressDialog("Login", "Please Wait");
+            ParkOnTheGo.getInstance().showProgressDialog();
             Call<LoginResponse> call = userServices.login(email, password);
             Log.d("Calling", "register: " + call);
             call.enqueue(new Callback<LoginResponse>() {
                 @Override
                 public void onResponse(Call<LoginResponse> call,
                                        Response<LoginResponse> response) {
-                    //ParkOnTheGo.getInstance().hideProgressDialog();
+                    ParkOnTheGo.getInstance().hideProgressDialog();
                     if (response.isSuccessful()) {
                         parseResponse(response.body());
                     }
@@ -191,9 +193,10 @@ public class LoginActivity extends AppCompatActivity implements Validator.Valida
 
                 @Override
                 public void onFailure(Call<LoginResponse> call, Throwable throwable) {
+                    ParkOnTheGo.getInstance().hideProgressDialog();
                     Toast.makeText(getApplicationContext(), "Request failed" + throwable, Toast.LENGTH_SHORT).show();
 
-                    // ParkOnTheGo.getInstance().hideProgressDialog();
+
                     // ParkOnTheGo.getInstance().handleError(throwable);
                 }
             });
@@ -203,7 +206,7 @@ public class LoginActivity extends AppCompatActivity implements Validator.Valida
     }
 
     private void parseResponse(LoginResponse response) {
-        Toast.makeText(getApplicationContext(), "Login Sucess" + response.getSuccess(), Toast.LENGTH_SHORT).show();
+       // Toast.makeText(getApplicationContext(), "Login Sucess" + response.getSuccess(), Toast.LENGTH_SHORT).show();
         if (response.getSuccess() == true) {
             PreferencesManager pm = PreferencesManager.getInstance(mContext);
             pm.updateUserId(response.getData().getId());
@@ -215,7 +218,10 @@ public class LoginActivity extends AppCompatActivity implements Validator.Valida
             finish();
 
         } else {
-
+            new SweetAlertDialog(mContext, SweetAlertDialog.ERROR_TYPE)
+                    .setTitleText("Oops...")
+                    .setContentText("Invalid credentials")
+                    .show();
         }
     }
 

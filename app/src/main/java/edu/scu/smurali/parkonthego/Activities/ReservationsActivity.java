@@ -77,6 +77,7 @@ public class ReservationsActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reservations);
+        ParkOnTheGo.getInstance().setCurrentActivityContext(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         mContext = this;
@@ -223,9 +224,9 @@ public class ReservationsActivity extends AppCompatActivity
 
             @Override
             public void onGroupExpand(int groupPosition) {
-                Toast.makeText(getApplicationContext(),
-                        listDataHeader.get(groupPosition) + " Expanded",
-                        Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(),
+                  //      listDataHeader.get(groupPosition) + " Expanded",
+                  //      Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -234,9 +235,9 @@ public class ReservationsActivity extends AppCompatActivity
             @Override
             public void onGroupCollapse(int groupPosition) {
 
-                Toast.makeText(getApplicationContext(),
-                        listDataHeader.get(groupPosition) + " Collapsed",
-                        Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(),
+                  //      listDataHeader.get(groupPosition) + " Collapsed",
+                  //      Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -249,15 +250,14 @@ public class ReservationsActivity extends AppCompatActivity
 
         if (ParkOnTheGo.getInstance().isConnectedToInterNet()) {
             ReservationServices reservationServices = ParkOnTheGo.getInstance().getReservationServices();
-//            ParkOnTheGo.getInstance().showProgressDialog(mContext.getString(R.string
-//                    .login_signin), mContext.getString(R.string.login_please_wait));
+            ParkOnTheGo.getInstance().showProgressDialog();
             Call<ReservationResponse> call = reservationServices.getUserReservations(PreferencesManager.getInstance(mContext).getUserId());
             Log.d("Calling", "Reservation: " + call);
             call.enqueue(new Callback<ReservationResponse>() {
                 @Override
                 public void onResponse(Call<ReservationResponse> call,
                                        Response<ReservationResponse> response) {
-                    //ParkOnTheGo.getInstance().hideProgressDialog();
+                    ParkOnTheGo.getInstance().hideProgressDialog();
                     Log.d("Reservation parse", "parseResponse: "+response.code());
                     if (response.isSuccessful()) {
                         parseResponse(response.body());
@@ -275,8 +275,8 @@ public class ReservationsActivity extends AppCompatActivity
                 public void onFailure(Call<ReservationResponse> call, Throwable throwable) {
                     Toast.makeText(getApplicationContext(), "Request failed" + throwable, Toast.LENGTH_SHORT).show();
 
-                    // ParkOnTheGo.getInstance().hideProgressDialog();
-                    // ParkOnTheGo.getInstance().handleError(throwable);
+                     ParkOnTheGo.getInstance().hideProgressDialog();
+                     ParkOnTheGo.getInstance().handleError(throwable);
                 }
             });
         } else {
@@ -285,7 +285,7 @@ public class ReservationsActivity extends AppCompatActivity
     }
 
     private void parseResponse(ReservationResponse response) {
-        Toast.makeText(getApplicationContext(), "Reservation Data Sucess " + response.getSuccess(), Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getApplicationContext(), "Reservation Data Sucess " + response.getSuccess(), Toast.LENGTH_SHORT).show();
         if (response.getSuccess() == true) {
             listDataHeader = new ArrayList<String>();
             listDataChild = new HashMap<String, List<String>>();
@@ -312,10 +312,6 @@ public class ReservationsActivity extends AppCompatActivity
             //  setting list adapter
             expListView.setAdapter(listAdapter);
             listAdapter.notifyDataSetChanged();
-
-
-
-
         } else {
             listDataHeader = new ArrayList<String>();
             listDataChild = new HashMap<String, List<String>>();
@@ -361,21 +357,21 @@ public class ReservationsActivity extends AppCompatActivity
 
             if (Math.abs(dY) < SWIPE_MAX_OFF_PATH && Math.abs(velocityX) >= SWIPE_THRESHOLD_VELOCITY && Math.abs(dX) >= SWIPE_MIN_DISTANCE ) {
                 if (dX > 0) {
-                    Toast.makeText(getApplicationContext(), "Right Swipe", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getApplicationContext(), "Right Swipe", Toast.LENGTH_SHORT).show();
 
 //                    listAdapter.listDataHeader.remove(position);
 //                    listAdapter.notifyDataSetChanged();
 
                 } else {
-                    Toast.makeText(getApplicationContext(), "Left Swipe", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getApplicationContext(), "Left Swipe", Toast.LENGTH_SHORT).show();
                 }
                 return true;
             }
             else if (Math.abs(dX) < SWIPE_MAX_OFF_PATH && Math.abs(velocityY)>=SWIPE_THRESHOLD_VELOCITY && Math.abs(dY)>=SWIPE_MIN_DISTANCE ) {
                 if (dY>0) {
-                    Toast.makeText(getApplicationContext(), "Up Swipe", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getApplicationContext(), "Up Swipe", Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(getApplicationContext(), "Down Swipe", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getApplicationContext(), "Down Swipe", Toast.LENGTH_SHORT).show();
                 }
                 return true;
             }
@@ -501,8 +497,7 @@ public class ReservationsActivity extends AppCompatActivity
 
         if (ParkOnTheGo.getInstance().isConnectedToInterNet()) {
             ReservationServices reservationServices = ParkOnTheGo.getInstance().getReservationServices();
-//            ParkOnTheGo.getInstance().showProgressDialog(mContext.getString(R.string
-//                    .login_signin), mContext.getString(R.string.login_please_wait));
+            ParkOnTheGo.getInstance().showProgressDialog();
 
             Log.d("ID", "deleteReservation: "+reservationId.toString());
             Call<ReservationDeleteResponse> call = reservationServices.deleteReservation(reservationId.toString());
@@ -511,7 +506,7 @@ public class ReservationsActivity extends AppCompatActivity
                 @Override
                 public void onResponse(Call<ReservationDeleteResponse> call,
                                        Response<ReservationDeleteResponse> response) {
-                    //ParkOnTheGo.getInstance().hideProgressDialog();
+                    ParkOnTheGo.getInstance().hideProgressDialog();
                     if (response.isSuccessful()) {
                         parseDeleteReservationResponse(response.body());
                     }
@@ -521,9 +516,8 @@ public class ReservationsActivity extends AppCompatActivity
                 public void onFailure(Call<ReservationDeleteResponse> call, Throwable throwable) {
                     Toast.makeText(getApplicationContext(), "Request failed " + throwable, Toast.LENGTH_SHORT).show();
                     Log.d("Failed", "onFailure: " + throwable);
-
-                    // ParkOnTheGo.getInstance().hideProgressDialog();
-                    // ParkOnTheGo.getInstance().handleError(throwable);
+                     ParkOnTheGo.getInstance().hideProgressDialog();
+                     ParkOnTheGo.getInstance().handleError(throwable);
                 }
             });
         } else {
@@ -549,7 +543,10 @@ public class ReservationsActivity extends AppCompatActivity
 
 
         } else {
-
+            new SweetAlertDialog(mContext, SweetAlertDialog.ERROR_TYPE)
+                    .setTitleText("Oops...")
+                    .setContentText("Somthing went wrong, Please try later")
+                    .show();
         }
     }
 }

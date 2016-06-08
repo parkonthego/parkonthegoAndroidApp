@@ -5,6 +5,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
+import edu.scu.smurali.parkonthego.ParkOnTheGo;
 import edu.scu.smurali.parkonthego.R;
 
 public class StopReservationActivity extends AppCompatActivity {
@@ -13,6 +14,7 @@ public class StopReservationActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stop_reservation);
+        ParkOnTheGo.getInstance().setCurrentActivityContext(this);
         try {
             ActionBar actionBar = getSupportActionBar();
             actionBar.setTitle("ParkOnTheGo");

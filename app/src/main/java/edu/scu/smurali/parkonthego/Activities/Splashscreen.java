@@ -10,6 +10,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import edu.scu.smurali.parkonthego.ParkOnTheGo;
 import edu.scu.smurali.parkonthego.R;
 import edu.scu.smurali.parkonthego.util.PreferencesManager;
 
@@ -27,6 +28,7 @@ public class Splashscreen extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splashscreen);
+        ParkOnTheGo.getInstance().setCurrentActivityContext(this);
         StartAnimations();
     }
     private void StartAnimations() {

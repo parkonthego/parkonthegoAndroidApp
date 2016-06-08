@@ -118,6 +118,7 @@ public class HomeScreenActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_screen);
+        ParkOnTheGo.getInstance().setCurrentActivityContext(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         mContext = this;
@@ -652,15 +653,14 @@ public class HomeScreenActivity extends AppCompatActivity
 
         if (ParkOnTheGo.getInstance().isConnectedToInterNet()) {
             LocationServices locationServices = ParkOnTheGo.getInstance().getLocationServices();
-//            ParkOnTheGo.getInstance().showProgressDialog(mContext.getString(R.string
-//                    .login_signin), mContext.getString(R.string.login_please_wait));
+            ParkOnTheGo.getInstance().showProgressDialog();
             Call<SearchResponse> call = locationServices.getLocationsNearMe(id, lat, lng, distance, sDateTime, eDateTime);
             Log.d("Calling", "register: " + call);
             call.enqueue(new Callback<SearchResponse>() {
                 @Override
                 public void onResponse(Call<SearchResponse> call,
                                        Response<SearchResponse> response) {
-                    //ParkOnTheGo.getInstance().hideProgressDialog();
+                    ParkOnTheGo.getInstance().hideProgressDialog();
                     if (response.isSuccessful()) {
                         parseResponse(response.body());
                     }
@@ -670,8 +670,8 @@ public class HomeScreenActivity extends AppCompatActivity
                 public void onFailure(Call<SearchResponse> call, Throwable throwable) {
                     Toast.makeText(getApplicationContext(), "Request failed" + throwable, Toast.LENGTH_SHORT).show();
 
-                    // ParkOnTheGo.getInstance().hideProgressDialog();
-                    // ParkOnTheGo.getInstance().handleError(throwable);
+                     ParkOnTheGo.getInstance().hideProgressDialog();
+                     ParkOnTheGo.getInstance().handleError(throwable);
                 }
             });
         } else {
@@ -680,7 +680,7 @@ public class HomeScreenActivity extends AppCompatActivity
     }
 
     private void parseResponse(SearchResponse response) {
-        Toast.makeText(getApplicationContext(), "Login Sucess" + response.getSuccess(), Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getApplicationContext(), "Login Sucess" + response.getSuccess(), Toast.LENGTH_SHORT).show();
         if (response.getSuccess() == true) {
             PreferencesManager pm = PreferencesManager.getInstance(mContext);
             Log.d("Data", "parseResponse: " + response.getData().size());
@@ -1122,7 +1122,6 @@ public class HomeScreenActivity extends AppCompatActivity
 
         if (ParkOnTheGo.getInstance().isConnectedToInterNet()) {
             UserServices userServices = ParkOnTheGo.getInstance().getUserServices();
-            // ParkOnTheGo.getInstance().showProgressDialog("Login", "Please Wait");
             ParkOnTheGo.getInstance().showProgressDialog();
             Call<ProfileResponse> call = userServices.getProfile(PreferencesManager.getInstance(mContext).getUserId());
             Log.d("Calling", "Get profile: " + call);
@@ -1131,6 +1130,7 @@ public class HomeScreenActivity extends AppCompatActivity
                 public void onResponse(Call<ProfileResponse> call,
                                        Response<ProfileResponse> response) {
                     ParkOnTheGo.getInstance().hideProgressDialog();
+                    Log.d("login", "onResponse: "+response.code()+response.body()+response.message());
                     if (response.isSuccessful()) {
                         parseProfileResponse(response.body());
                     }
@@ -1150,6 +1150,7 @@ public class HomeScreenActivity extends AppCompatActivity
     }
 
     private void parseProfileResponse(ProfileResponse response) {
+        Log.d("Login Response", "parseProfileResponse: "+response.getSuccess());
         if (response.getSuccess() == true) {
             pm.updateFirstName(response.getData().getFirstName());
             pm.updateLastName(response.getData().getLastName());
@@ -1157,7 +1158,10 @@ public class HomeScreenActivity extends AppCompatActivity
             pm.updateUserName(response.getData().getFirstName() + " " + response.getData().getLastName());
 
         } else {
-
+            new SweetAlertDialog(mContext, SweetAlertDialog.ERROR_TYPE)
+                    .setTitleText("Oops...")
+                    .setContentText("Somthing went wrong, Please try later")
+                    .show();
         }
     }
 

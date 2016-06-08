@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
+import edu.scu.smurali.parkonthego.ParkOnTheGo;
 import edu.scu.smurali.parkonthego.R;
 import edu.scu.smurali.parkonthego.retrofit.reponses.SearchData;
 
@@ -38,6 +39,7 @@ public class LocationsOnMap extends FragmentActivity implements OnMapReadyCallba
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_locations_on_map);
+        ParkOnTheGo.getInstance().setCurrentActivityContext(this);
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);

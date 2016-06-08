@@ -15,6 +15,7 @@ import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import edu.scu.smurali.parkonthego.ParkOnTheGo;
 import edu.scu.smurali.parkonthego.R;
 import edu.scu.smurali.parkonthego.retrofit.reponses.SignUpResponse;
@@ -37,6 +38,7 @@ public class RegisterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+        ParkOnTheGo.getInstance().setCurrentActivityContext(this);
         try {
             ActionBar actionBar = getSupportActionBar();
             actionBar.setTitle("Register");
@@ -130,8 +132,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         if (ParkOnTheGo.getInstance().isConnectedToInterNet()) {
             UserServices userServices = ParkOnTheGo.getInstance().getUserServices();
-//            ParkOnTheGo.getInstance().showProgressDialog(mContext.getString(R.string
-//                    .login_signin), mContext.getString(R.string.login_please_wait));
+            ParkOnTheGo.getInstance().showProgressDialog();
             Call<SignUpResponse> call = userServices.createNewUser(data.get("firstName").toString(), data.get("lastName").toString(), data.get("email").toString(), data.get("password").toString());
             Log.d("Calling", "register: " + call);
             call.enqueue(new Callback<SignUpResponse>() {
@@ -146,10 +147,10 @@ public class RegisterActivity extends AppCompatActivity {
 
                 @Override
                 public void onFailure(Call<SignUpResponse> call, Throwable throwable) {
-                    Toast.makeText(getApplicationContext(), "Request failed" + throwable, Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getApplicationContext(), "Request failed" + throwable, Toast.LENGTH_SHORT).show();
 
-                    // ParkOnTheGo.getInstance().hideProgressDialog();
-                    // ParkOnTheGo.getInstance().handleError(throwable);
+                     ParkOnTheGo.getInstance().hideProgressDialog();
+                     ParkOnTheGo.getInstance().handleError(throwable);
                 }
             });
         } else {
@@ -158,7 +159,7 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void parseResponse(SignUpResponse response) {
-        Toast.makeText(getApplicationContext(), "Request Sucess" + response.getSuccess(), Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getApplicationContext(), "Request Sucess" + response.getSuccess(), Toast.LENGTH_SHORT).show();
         if (response.getSuccess() == true) {
             PreferencesManager pm = PreferencesManager.getInstance(mContext);
             pm.updateUserId(response.getData().getId());
@@ -169,7 +170,10 @@ public class RegisterActivity extends AppCompatActivity {
             finish();
 
         } else {
-
+            new SweetAlertDialog(mContext, SweetAlertDialog.ERROR_TYPE)
+                    .setTitleText("Oops...")
+                    .setContentText("Somthing went wrong, Please try later")
+                    .show();
         }
     }
 }

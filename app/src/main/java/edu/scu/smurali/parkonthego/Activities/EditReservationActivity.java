@@ -115,6 +115,7 @@ public class EditReservationActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_reservation);
+        ParkOnTheGo.getInstance().setCurrentActivityContext(this);
         mContext = this;
         uDatePickerDialogFragment = new DatePickerDialogFragment();
         uTimePickerDialogFragment = new TimePickerDialogFragment();
@@ -720,16 +721,14 @@ public class EditReservationActivity extends AppCompatActivity {
 
         if (ParkOnTheGo.getInstance().isConnectedToInterNet()) {
             ReservationServices reservationServices = ParkOnTheGo.getInstance().getReservationServices();
-//            ParkOnTheGo.getInstance().showProgressDialog(mContext.getString(R.string
-//                    .login_signin), mContext.getString(R.string.login_please_wait));
-
+            ParkOnTheGo.getInstance().showProgressDialog();
             Call<ReservationUpdateResponse> call = reservationServices.updateReservation(reservationId,parkingId, userId, sDateTime, eDatetTime, totalPrice);
             Log.d("Calling", "register: " + call + " " +reservationId +" " + parkingId + " " + userId + " " + sDateTime + " " + eDatetTime + " " + totalPrice);
             call.enqueue(new Callback<ReservationUpdateResponse>() {
                 @Override
                 public void onResponse(Call<ReservationUpdateResponse> call,
                                        Response<ReservationUpdateResponse> response) {
-                    //ParkOnTheGo.getInstance().hideProgressDialog();
+                    ParkOnTheGo.getInstance().hideProgressDialog();
                     Log.d("Edit reponse", "onResponse: "+response.code()+response.message()+response.body().getSuccess());
                     if (response.isSuccessful()) {
                         parseReservationUpdateResponse(response.body());
@@ -741,8 +740,8 @@ public class EditReservationActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Request failed " + throwable, Toast.LENGTH_SHORT).show();
                     Log.d("Failed", "onFailure: " + throwable);
 
-                    // ParkOnTheGo.getInstance().hideProgressDialog();
-                    // ParkOnTheGo.getInstance().handleError(throwable);
+                     ParkOnTheGo.getInstance().hideProgressDialog();
+                     ParkOnTheGo.getInstance().handleError(throwable);
                 }
             });
         } else {

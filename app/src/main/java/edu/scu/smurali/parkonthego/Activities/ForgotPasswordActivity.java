@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import edu.scu.smurali.parkonthego.ParkOnTheGo;
 import edu.scu.smurali.parkonthego.R;
 
 public class ForgotPasswordActivity extends AppCompatActivity {
@@ -22,6 +23,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
 
 
         super.onCreate(savedInstanceState);
+        ParkOnTheGo.getInstance().setCurrentActivityContext(this);
         setContentView(R.layout.activity_forgot_password);
         try {
             ActionBar actionBar = getSupportActionBar();

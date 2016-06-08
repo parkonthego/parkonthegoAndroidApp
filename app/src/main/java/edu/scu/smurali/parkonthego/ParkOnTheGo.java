@@ -1,6 +1,7 @@
 package edu.scu.smurali.parkonthego;
 
 import android.app.ProgressDialog;
+import android.graphics.Color;
 import android.support.multidex.MultiDex;
 import android.support.multidex.MultiDexApplication;
 import android.app.Application;
@@ -18,6 +19,7 @@ import com.google.android.gms.common.GoogleApiAvailability;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import edu.scu.smurali.parkonthego.retrofit.services.LocationServices;
 import edu.scu.smurali.parkonthego.retrofit.services.ReservationServices;
 import edu.scu.smurali.parkonthego.retrofit.services.UserServices;
@@ -34,7 +36,7 @@ public class ParkOnTheGo extends MultiDexApplication {
     private static Context mContext;
     private static Context mApplicationContext;
     private Retrofit mRetrofit;
-    private static ProgressDialog  progressDialog;
+    private static SweetAlertDialog pDialog;
 
 
 
@@ -214,16 +216,11 @@ public class ParkOnTheGo extends MultiDexApplication {
      */
     public void showProgressDialog() {
         try {
-            if (progressDialog != null && progressDialog.isShowing()) {
-                progressDialog.dismiss();
-            }
-            progressDialog = new ProgressDialog(getCurrentActivityContext());
-            progressDialog.setMessage(getCurrentActivityContext().getString(
-                    R.string.loading_data));
-            progressDialog.setCancelable(false);
-            if (!progressDialog.isShowing()) {
-                progressDialog.show();
-            }
+            pDialog = new SweetAlertDialog(mContext, SweetAlertDialog.PROGRESS_TYPE);
+            pDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
+            pDialog.setTitleText("Loading");
+            pDialog.setCancelable(false);
+            pDialog.show();
         } catch (Exception e) {
             Log.d("Park on the go", "showProgressDialog");
         }
@@ -235,8 +232,8 @@ public class ParkOnTheGo extends MultiDexApplication {
      */
     public void hideProgressDialog() {
         try {
-            if (progressDialog != null && progressDialog.isShowing()) {
-                progressDialog.dismiss();
+            if (pDialog != null && pDialog.isShowing()) {
+                pDialog.dismiss();
             }
         } catch (Exception e) {
             Log.d("Park on the go", "hideProgressDialog");
