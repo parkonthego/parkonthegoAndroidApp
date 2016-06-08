@@ -96,7 +96,9 @@ public class HomeScreenActivity extends AppCompatActivity
     private String searchedAddress;
     private Context mContext;
     private String sDateTime, eDateTime;
-    private Button currentLocationButton;
+   // private Button currentLocationButton;
+
+    private FancyButton currentLocationButton;
 
     private TextView navUserName;
     private TextView navEmail;
@@ -146,7 +148,10 @@ public class HomeScreenActivity extends AppCompatActivity
         locationList = new ArrayList<SearchData>();
         final PreferencesManager pm = PreferencesManager.getInstance(mContext);
         userId = pm.getUserId();
-        currentLocationButton = (Button) findViewById(R.id.currentLocationButton);
+        //currentLocationButton = (Button) findViewById(R.id.currentLocationButton);
+
+        currentLocationButton = (FancyButton) findViewById(R.id.currentLocationButton);
+
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 /////////////////////////////////// permission checks start////////////////////////////////////////////////////////
 
@@ -170,6 +175,8 @@ public class HomeScreenActivity extends AppCompatActivity
                 ActivityCompat.requestPermissions(HomeScreenActivity.this,
                         new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                         1);
+
+
 
                 // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
                 // app-defined int constant. The callback method gets the
@@ -584,6 +591,32 @@ public class HomeScreenActivity extends AppCompatActivity
         String startTimeValue = startTime.getText().toString();
         String endDateValue = endDate.getText().toString();
         String endTimeValue = endTime.getText().toString();
+        Calendar calendar = Calendar.getInstance();
+        Date startDateTimeTemp;
+        Date endDateTimeTemp;
+        Date currentTimeTemp;
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm");
+        try {
+            startDateTimeTemp = dateFormat.parse(startDate.getText().toString() + " " + startTime.getText().toString());
+            endDateTimeTemp = dateFormat.parse(endDate.getText().toString() + " " + endTime.getText().toString());
+            currentTimeTemp = dateFormat.parse(dateFormat.format(calendar.getTime()));
+            Log.d("StartDate", "onTimeSet: " + startDateTimeTemp);
+            Log.d("EndDate", "onTimeSet: " + endDateTimeTemp);
+            Log.d("CuurentDate", "onTimeSet: " + currentTimeTemp);
+            Log.d("Compare value", "onTimeSet: " + startDateTimeTemp.compareTo(currentTimeTemp));
+            Log.d("Compare value", "onTimeSet: " + endDateTimeTemp.compareTo(currentTimeTemp));
+            if (startDateTimeTemp.compareTo(currentTimeTemp) < 0 || endDateTimeTemp.compareTo(currentTimeTemp) < 0) {
+                new SweetAlertDialog(mContext, SweetAlertDialog.ERROR_TYPE)
+                        .setTitleText("Oops...")
+                        .setContentText("You can't select start or end past time")
+                        .show();
+
+                return;
+            }
+        } catch (Exception ex) {
+            Log.d("parse error", "onValidationSucceeded: " + ex.getMessage());
+        }
+
         sDateTime = startDateValue + " " + startTimeValue;
         eDateTime = endDateValue + " " + endTimeValue;
         Log.d("Data for getlocation", "onValidationSucceeded: " + sDateTime);
@@ -740,8 +773,11 @@ public class HomeScreenActivity extends AppCompatActivity
             final int MY_PERMISSIONS_REQUEST_CALL_PHONE = 1;
 
 
-            if (ActivityCompat.checkSelfPermission(HomeScreenActivity.this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+            if (ContextCompat.checkSelfPermission(HomeScreenActivity.this,
+                    Manifest.permission.CALL_PHONE)
+                    != PackageManager.PERMISSION_GRANTED) {
 
+                // Should we show an explanation?
                 if (ActivityCompat.shouldShowRequestPermissionRationale(HomeScreenActivity.this,
                         Manifest.permission.CALL_PHONE)) {
 
@@ -757,12 +793,11 @@ public class HomeScreenActivity extends AppCompatActivity
                             new String[]{Manifest.permission.CALL_PHONE},
                             1);
 
+
                     // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
                     // app-defined int constant. The callback method gets the
                     // result of the request.
                 }
-
-
             }
             Intent callIntent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:+1 669 220 8549"));
             startActivity(callIntent);
@@ -981,23 +1016,22 @@ public class HomeScreenActivity extends AppCompatActivity
                     Log.d("StartDate", "onTimeSet: " + startDateTimeTemp);
                     Log.d("EndDate", "onTimeSet: " + endDateTimeTemp);
                     Log.d("CuurentDate", "onTimeSet: " + currentTimeTemp);
-                    Log.d("Compare value", "onTimeSet: "+startDateTimeTemp.compareTo(currentTimeTemp));
-                    Log.d("Compare value", "onTimeSet: "+endDateTimeTemp.compareTo(currentTimeTemp));
-                    if(startDateTimeTemp.compareTo(currentTimeTemp) < 0 || endDateTimeTemp.compareTo(currentTimeTemp) < 0){
+                    Log.d("Compare value", "onTimeSet: " + startDateTimeTemp.compareTo(currentTimeTemp));
+                    Log.d("Compare value", "onTimeSet: " + endDateTimeTemp.compareTo(currentTimeTemp));
+                    if (startDateTimeTemp.compareTo(currentTimeTemp) < 0 || endDateTimeTemp.compareTo(currentTimeTemp) < 0) {
                         new SweetAlertDialog(tempCntext, SweetAlertDialog.ERROR_TYPE)
                                 .setTitleText("Oops...")
                                 .setContentText("You can't select start or end past time")
                                 .show();
 
-                    }
-                    else if (startDateTimeTemp.compareTo(endDateTimeTemp) > 0 || startDateTimeTemp.compareTo(endDateTimeTemp) == 0) {
+                    } else if (startDateTimeTemp.compareTo(endDateTimeTemp) > 0 || startDateTimeTemp.compareTo(endDateTimeTemp) == 0) {
                         startTime.setText(time);
                         if (hourOfDay != 23) {
                             String endhou = String.format("%02d", (hourOfDay + 1));
                             String time2 = endhou + ":" + min;
                             endTime.setText(time2);
                             return;
-                        }else{
+                        } else {
                             Calendar c = Calendar.getInstance();
                             c.setTime(endDateTimeTemp);
                             c.add(Calendar.DATE, 1);
@@ -1007,7 +1041,7 @@ public class HomeScreenActivity extends AppCompatActivity
                             endTime.setText(time2);
                             return;
                         }
-                    }else{
+                    } else {
                         startTime.setText(time);
                     }
                 } catch (Exception ex) {
@@ -1023,20 +1057,20 @@ public class HomeScreenActivity extends AppCompatActivity
                     Log.d("StartDate", "onTimeSet: " + startDateTimeTemp);
                     Log.d("EndDate", "onTimeSet: " + endDateTimeTemp);
                     Log.d("CuurentDate", "onTimeSet: " + currentTimeTemp);
-                    Log.d("Compare value", "onTimeSet: "+startDateTimeTemp.compareTo(currentTimeTemp));
-                    Log.d("Compare value", "onTimeSet: "+endDateTimeTemp.compareTo(currentTimeTemp));
-                    if(endDateTimeTemp.compareTo(currentTimeTemp) < 0 || startDateTimeTemp.compareTo(currentTimeTemp) < 0){
+                    Log.d("Compare value", "onTimeSet: " + startDateTimeTemp.compareTo(currentTimeTemp));
+                    Log.d("Compare value", "onTimeSet: " + endDateTimeTemp.compareTo(currentTimeTemp));
+                    if (endDateTimeTemp.compareTo(currentTimeTemp) < 0 || startDateTimeTemp.compareTo(currentTimeTemp) < 0) {
                         new SweetAlertDialog(tempCntext, SweetAlertDialog.ERROR_TYPE)
                                 .setTitleText("Oops...")
                                 .setContentText("You can't select start or end past time")
                                 .show();
-                    }else if (startDateTimeTemp.compareTo(endDateTimeTemp) > 0 || startDateTimeTemp.compareTo(endDateTimeTemp) == 0) {
+                    } else if (startDateTimeTemp.compareTo(endDateTimeTemp) > 0 || startDateTimeTemp.compareTo(endDateTimeTemp) == 0) {
                         if (hourOfDay != 0) {
                             endTime.setText(time);
                             String endhou = String.format("%02d", (hourOfDay - 1));
                             String time2 = endhou + ":" + min;
                             startTime.setText(time2);
-                        }else{
+                        } else {
                             Calendar c = Calendar.getInstance();
                             c.setTime(startDateTimeTemp);
                             c.add(Calendar.DATE, -1);
@@ -1046,7 +1080,7 @@ public class HomeScreenActivity extends AppCompatActivity
                             startTime.setText(time2);
                             return;
                         }
-                    }else{
+                    } else {
                         endTime.setText(time);
                     }
                 } catch (Exception ex) {
