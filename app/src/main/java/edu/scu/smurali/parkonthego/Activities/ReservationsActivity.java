@@ -141,6 +141,7 @@ public class ReservationsActivity extends AppCompatActivity
 
                 if(childPosition==0)
                 {
+                    // set directions
                     String desc = listDataHeader.get(groupPosition);
                     ReservationData clickedReservation = reservationListMap.get(desc);
 
@@ -153,6 +154,7 @@ public class ReservationsActivity extends AppCompatActivity
 
                 if(childPosition==1)
                 {
+                    // street view
                     String desc = listDataHeader.get(groupPosition);
                     ReservationData clickedReservation = reservationListMap.get(desc);
                     //                  ///////////////////////street view////////////////////
