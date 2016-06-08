@@ -48,22 +48,15 @@ public class Splashscreen extends Activity {
                 try {
                     int waited = 0;
                     // Splash screen pause time
-                    while (waited < 2500) {
+                    while (waited < 3500) {
                         sleep(100);
                         waited += 100;
                     }
 
-//                    if(firstTimeAppLaunch<0)
-//                    {
-//                        PreferencesManager.getInstance(Splashscreen.this).clear();
-//                        firstTimeAppLaunch++;
-//
-//                    }
+
                     Intent intent = new Intent(Splashscreen.this,
                             LoginActivity.class);
                    intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);
                     Splashscreen.this.finish();
                 } catch (InterruptedException e) {
