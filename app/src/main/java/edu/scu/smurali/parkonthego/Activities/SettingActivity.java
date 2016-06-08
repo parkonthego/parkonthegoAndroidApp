@@ -231,7 +231,8 @@ public class SettingActivity extends AppCompatActivity
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
+            Intent intent = new Intent(SettingActivity.this,HomeScreenActivity.class);
+            startActivity(intent);
         } else if(isDataChanged){
 
             new SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)
@@ -251,7 +252,10 @@ public class SettingActivity extends AppCompatActivity
                         public void onClick(SweetAlertDialog sDialog) {
                             sDialog.dismissWithAnimation();
                             isDataChanged = false;
-                            goback();
+                            Intent intent = new Intent(SettingActivity.this,HomeScreenActivity.class);
+                            startActivity(intent);
+                            finish();
+                            //goback();
                         }
 
 
@@ -259,7 +263,8 @@ public class SettingActivity extends AppCompatActivity
                     .show();
         }
         else {
-            super.onBackPressed();
+            Intent intent = new Intent(SettingActivity.this,HomeScreenActivity.class);
+            startActivity(intent);
         }
 
 

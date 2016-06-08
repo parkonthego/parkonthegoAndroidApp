@@ -163,7 +163,11 @@ public class ConfirmationActivity extends AppCompatActivity {
                         @Override
                         public void onClick(SweetAlertDialog sDialog) {
                             sDialog.dismissWithAnimation();
-                            startActivity(new Intent(ConfirmationActivity.this, HomeScreenActivity.class));
+                            Intent intent = new Intent(ConfirmationActivity.this, HomeScreenActivity.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(intent);
+                            ConfirmationActivity.this.finish();
+
                         }
                     })
                     .show();

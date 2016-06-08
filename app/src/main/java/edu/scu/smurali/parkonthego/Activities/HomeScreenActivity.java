@@ -91,7 +91,7 @@ public class HomeScreenActivity extends AppCompatActivity
     // private Button searchParkingLocations;
 
     private FancyButton searchParkingLocations;
-
+    int backButtonCount=0;
     private LatLng searchedLatLng;
     private String searchedAddress;
     private Context mContext;
@@ -711,11 +711,21 @@ public class HomeScreenActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
+        {
+
+            if(backButtonCount >= 1)
+            {
+                backButtonCount=0;
+                Intent intent = new Intent(Intent.ACTION_MAIN);
+                intent.addCategory(Intent.CATEGORY_HOME);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+            }
+            else
+            {
+                Toast.makeText(this, "Press the back button once again to close the application.", Toast.LENGTH_SHORT).show();
+                backButtonCount++;
+            }
         }
     }
 
