@@ -839,9 +839,21 @@ public class HomeScreenActivity extends AppCompatActivity
             String hou = String.format("%02d", hour);
             String time = hou + ":" + min;
             startTime.setText(time);
-            hou = String.format("%02d", (hour + 1));
-            String endtime = hou + ":" + min;
-            endTime.setText(endtime);
+
+            if (hour != 23) {
+                String endhou = String.format("%02d", (hour + 1));
+                String time2 = endhou + ":" + min;
+                endTime.setText(time2);
+                return;
+            } else {
+                Calendar c = Calendar.getInstance();
+                c.add(Calendar.DATE, 1);
+                SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
+                endDate.setText(format.format(c.getTime()));
+                String time2 = "00" + ":" + min;
+                endTime.setText(time2);
+                return;
+            }
 
         } catch (Exception ex) {
             Log.e("parse error init ", "onCreateDialog: " + ex.getMessage());
