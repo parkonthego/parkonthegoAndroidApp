@@ -102,6 +102,16 @@ public class LoginActivity extends AppCompatActivity implements Validator.Valida
             }
         }
 
+        forgotPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new SweetAlertDialog(mContext, SweetAlertDialog.SUCCESS_TYPE)
+                        .setTitleText("Confirmation")
+                        .setContentText("Password reset email has been sent to you registered email")
+                        .show();
+            }
+        });
+
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

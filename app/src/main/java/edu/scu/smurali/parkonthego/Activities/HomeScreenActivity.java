@@ -7,6 +7,7 @@ import android.app.DialogFragment;
 import android.app.FragmentTransaction;
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -24,6 +25,7 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.format.DateFormat;
@@ -118,7 +120,6 @@ public class HomeScreenActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_screen);
-        ParkOnTheGo.getInstance().setCurrentActivityContext(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         mContext = this;
@@ -328,13 +329,16 @@ public class HomeScreenActivity extends AppCompatActivity
         currentLocationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                updateLocation();
-                searchedLatLng = new LatLng(latitude, longitude);
-                searchedAddress = getCompleteAddressString(latitude, longitude);
-                autocompleteFragment.setText(searchedAddress);
-
-
+                try {
+                    updateLocation();
+                    if (latitude != null && longitude != null) {
+                        searchedLatLng = new LatLng(latitude, longitude);
+                        searchedAddress = getCompleteAddressString(latitude, longitude);
+                        autocompleteFragment.setText(searchedAddress);
+                    }
+                }catch(Exception ex){
+                    Log.d("Denied permision", "onClick: User denied gps permision "+ex.getMessage());
+                }
             }
         });
 
@@ -541,20 +545,63 @@ public class HomeScreenActivity extends AppCompatActivity
                 // result of the request.
             }
         }
-        // get current locaation(last known location)
-        Location loc = locationManager.getLastKnownLocation(NETWORK_PROVIDER);
-        if (latitude != null && longitude != null) {
-            return;
+        final LocationManager manager = (LocationManager) getSystemService( Context.LOCATION_SERVICE );
+
+        if ( !manager.isProviderEnabled( LocationManager.GPS_PROVIDER ) ) {
+            buildAlertMessageNoGps();
+
+        }else {
+            // get current locaation(last known location)
+            Location loc = locationManager.getLastKnownLocation(NETWORK_PROVIDER);
+            if (latitude != null && longitude != null) {
+                return;
+            }
+
+            if (loc != null) {
+                latitude = loc.getLatitude();
+                longitude = loc.getLongitude();
+            } else {
+                latitude = null;
+                longitude = null;
+            }
         }
 
-        if (loc != null) {
-            latitude = loc.getLatitude();
-            longitude = loc.getLongitude();
-        } else {
-            latitude = null;
-            longitude = null;
-        }
-
+    }
+    private void buildAlertMessageNoGps() {
+        new SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)
+                .setTitleText("GPS permission")
+                .setContentText("Your GPS seems to be disabled, do you want to enable it?")
+                .setCancelText("No")
+                .setConfirmText("Ok")
+                .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                    @Override
+                    public void onClick(SweetAlertDialog sDialog) {
+                        sDialog.cancel();
+                    }
+                })
+                .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                    @Override
+                    public void onClick(SweetAlertDialog sDialog) {
+                        startActivity(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+                        sDialog.dismissWithAnimation();
+                    }
+                })
+                .show();
+//        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+//        builder.setMessage("Your GPS seems to be disabled, do you want to enable it?")
+//                .setCancelable(false)
+//                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+//                    public void onClick(@SuppressWarnings("unused") final DialogInterface dialog, @SuppressWarnings("unused") final int id) {
+//                        startActivity(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+//                    }
+//                })
+//                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+//                    public void onClick(final DialogInterface dialog, @SuppressWarnings("unused") final int id) {
+//                        dialog.cancel();
+//                    }
+//                });
+//        final AlertDialog alert = builder.create();
+//        alert.show();
     }
     //////////////////// update method ends////////////////////////////////////////////////
 
@@ -653,14 +700,15 @@ public class HomeScreenActivity extends AppCompatActivity
 
         if (ParkOnTheGo.getInstance().isConnectedToInterNet()) {
             LocationServices locationServices = ParkOnTheGo.getInstance().getLocationServices();
-            ParkOnTheGo.getInstance().showProgressDialog();
+//            ParkOnTheGo.getInstance().showProgressDialog(mContext.getString(R.string
+//                    .login_signin), mContext.getString(R.string.login_please_wait));
             Call<SearchResponse> call = locationServices.getLocationsNearMe(id, lat, lng, distance, sDateTime, eDateTime);
             Log.d("Calling", "register: " + call);
             call.enqueue(new Callback<SearchResponse>() {
                 @Override
                 public void onResponse(Call<SearchResponse> call,
                                        Response<SearchResponse> response) {
-                    ParkOnTheGo.getInstance().hideProgressDialog();
+                    //ParkOnTheGo.getInstance().hideProgressDialog();
                     if (response.isSuccessful()) {
                         parseResponse(response.body());
                     }
@@ -670,8 +718,8 @@ public class HomeScreenActivity extends AppCompatActivity
                 public void onFailure(Call<SearchResponse> call, Throwable throwable) {
                     Toast.makeText(getApplicationContext(), "Request failed" + throwable, Toast.LENGTH_SHORT).show();
 
-                     ParkOnTheGo.getInstance().hideProgressDialog();
-                     ParkOnTheGo.getInstance().handleError(throwable);
+                    // ParkOnTheGo.getInstance().hideProgressDialog();
+                    // ParkOnTheGo.getInstance().handleError(throwable);
                 }
             });
         } else {
@@ -680,7 +728,7 @@ public class HomeScreenActivity extends AppCompatActivity
     }
 
     private void parseResponse(SearchResponse response) {
-        //Toast.makeText(getApplicationContext(), "Login Sucess" + response.getSuccess(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), "Login Sucess" + response.getSuccess(), Toast.LENGTH_SHORT).show();
         if (response.getSuccess() == true) {
             PreferencesManager pm = PreferencesManager.getInstance(mContext);
             Log.d("Data", "parseResponse: " + response.getData().size());
@@ -1122,6 +1170,7 @@ public class HomeScreenActivity extends AppCompatActivity
 
         if (ParkOnTheGo.getInstance().isConnectedToInterNet()) {
             UserServices userServices = ParkOnTheGo.getInstance().getUserServices();
+            // ParkOnTheGo.getInstance().showProgressDialog("Login", "Please Wait");
             ParkOnTheGo.getInstance().showProgressDialog();
             Call<ProfileResponse> call = userServices.getProfile(PreferencesManager.getInstance(mContext).getUserId());
             Log.d("Calling", "Get profile: " + call);
@@ -1130,7 +1179,6 @@ public class HomeScreenActivity extends AppCompatActivity
                 public void onResponse(Call<ProfileResponse> call,
                                        Response<ProfileResponse> response) {
                     ParkOnTheGo.getInstance().hideProgressDialog();
-                    Log.d("login", "onResponse: "+response.code()+response.body()+response.message());
                     if (response.isSuccessful()) {
                         parseProfileResponse(response.body());
                     }
@@ -1150,7 +1198,6 @@ public class HomeScreenActivity extends AppCompatActivity
     }
 
     private void parseProfileResponse(ProfileResponse response) {
-        Log.d("Login Response", "parseProfileResponse: "+response.getSuccess());
         if (response.getSuccess() == true) {
             pm.updateFirstName(response.getData().getFirstName());
             pm.updateLastName(response.getData().getLastName());
@@ -1158,10 +1205,7 @@ public class HomeScreenActivity extends AppCompatActivity
             pm.updateUserName(response.getData().getFirstName() + " " + response.getData().getLastName());
 
         } else {
-            new SweetAlertDialog(mContext, SweetAlertDialog.ERROR_TYPE)
-                    .setTitleText("Oops...")
-                    .setContentText("Somthing went wrong, Please try later")
-                    .show();
+
         }
     }
 

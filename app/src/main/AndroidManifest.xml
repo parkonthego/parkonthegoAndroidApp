@@ -23,21 +23,21 @@
     <application
         android:name=".ParkOnTheGo"
         android:allowBackup="true"
+        android:fullBackupContent="@xml/back_schema"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        tools:replace="android:icon"
-        android:fullBackupContent="@xml/back_schema">
+        tools:replace="android:icon">
         <activity
             android:name=".Activities.LoginActivity"
             android:noHistory="false"
             android:screenOrientation="portrait">
 
             <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.MAIN" />-->
+            <!--<action android:name="android.intent.action.MAIN" />-->
 
-                <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--<category android:name="android.intent.category.LAUNCHER" />-->
             <!--</intent-filter>-->
         </activity>
         <activity
@@ -112,8 +112,10 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".Activities.EditReservationActivity" />
-        <activity android:name=".Activities.Splashscreen"
-                  android:theme="@style/Theme.Transparent">
+        <activity
+            android:name=".Activities.Splashscreen"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Transparent">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
